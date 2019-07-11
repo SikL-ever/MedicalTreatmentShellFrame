@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.dingtao.common.core.WDActivity;
+import com.dingtao.common.util.Constant;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.fragment.HomePagerFragement;
@@ -15,7 +17,7 @@ import com.wd.health.fragment.WardmateFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
-
+@Route(path = Constant.ACTIVITY_LOGIN_MAIN)
 public class MainActivity extends WDActivity {
     @BindView(R2.id.mainfragment)
     FrameLayout mainfragment;

@@ -101,7 +101,11 @@ public abstract class WDPresenter<T> {
                 public void accept(Result result) throws Exception {
                     running = false;
                     if (result.getStatus().equals("0000")) {
-                        dataCall.success(result.getResult(), args);
+                        if (result.result==null){
+                            dataCall.success(result);
+                        }else{
+                            dataCall.success(result.getResult(), args);
+                        }
                     }else{
                         dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }
