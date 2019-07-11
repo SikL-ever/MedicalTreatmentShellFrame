@@ -1,46 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity"
-    android:orientation="vertical">
+    android:background="#fff">
+
     <FrameLayout
+        android:id="@+id/mainfragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
-        android:id="@+id/mainfragment">
+        android:layout_height="match_parent">
     </FrameLayout>
     <RadioGroup
+        android:background="@drawable/the_bottom_bar"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_60"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:id="@+id/mainradio">
         <RadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_5"
+            android:checked="true"
+            android:background="@drawable/page_home"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:button="@null"
-            android:text="1"
             android:id="@+id/bt1"
             android:gravity="center"/>
-        <RadioButton
+        <View
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <RadioButton
+           android:background="@drawable/common_tab_circle_n"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
             android:button="@null"
-            android:text="2"
             android:id="@+id/bt2"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/dp_50"
+            />
         <RadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:background="@drawable/common_tab_circle_s"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
             android:button="@null"
-            android:text="3"
+            android:id="@+id/bt4"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/dp_50"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <RadioButton
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@drawable/page_video"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:button="@null"
             android:id="@+id/bt3"
             android:gravity="center"/>
     </RadioGroup>
-</LinearLayout>
+    <RelativeLayout
+        android:background="#000"
+        android:visibility="gone"
+        android:id="@+id/mainshowhide"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/mainbt"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:background="@drawable/common_icon_on_slippery_n"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</RelativeLayout>
