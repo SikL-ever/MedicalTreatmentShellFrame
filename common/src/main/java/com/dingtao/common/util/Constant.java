@@ -9,10 +9,13 @@ public class Constant {
     //变量模板，这么定义变量
     //没个变量后边注释上你是那个页面
     //public final static String ACTIVITY_URL_SET = "/main/SetActivity";//那个页面
-    //如何使用变量看experiment包下的Activity
-    public final static String ACTIVITY_Ti = "/common/TiActivity";
-
+    //如何使用变量看登录模块里面activity
     //-----------佀常勇----都不要动我的开放登录变量，谁动谁傻叉-----
+
+    public final static String ACTIVITY_LOGIN_GUIDANCE = "/login/GuidanceActivity";//引导页
+    public final static String ACTIVITY_LOGIN_LOGIN = "/login/LoginActivity";//登录页
+    public final static String ACTIVITY_LOGIN_FIND = "/login/FindPassActivity";//找回密码页面页
+    public final static String ACTIVITY_LOGIN_REGISTER = "/login/RegisterActivity";//注册面页
 
     //-----------佀常勇----都不要动我的开放登录变量，谁动谁傻叉-----
 
@@ -26,9 +29,5 @@ public class Constant {
 
     //-----------李芳先----首页模块随便动，我看提交历史删你库-----
 
-
-    //-----------赵瑞摇----首页模块随便动，我看提交历史删你库-----
-
-    //-----------赵瑞摇----首页模块随便动，我看提交历史删你库-----
 
 }
