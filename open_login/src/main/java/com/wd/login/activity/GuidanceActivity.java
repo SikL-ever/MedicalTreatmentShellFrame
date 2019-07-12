@@ -53,7 +53,7 @@ public class GuidanceActivity extends WDActivity {
         boolean twoflay = two.getBoolean("twoflay", false);
         if (twoflay){
             //进入登录页面
-            intentByRouter(Constant.ACTIVITY_LOGIN_MAIN);
+            intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
             finish();
         }
         //创建集合
@@ -115,7 +115,7 @@ public class GuidanceActivity extends WDActivity {
                 edit.putBoolean("twoflay",true);
                 edit.commit();
                 //进入登录页面
-                intentByRouter(Constant.ACTIVITY_LOGIN_MAIN);
+                intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                 finish();
             }
         });

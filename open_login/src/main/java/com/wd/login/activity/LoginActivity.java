@@ -18,12 +18,16 @@ import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.dao.DaoMaster;
+import com.dingtao.common.dao.LoginBeanDao;
 import com.dingtao.common.util.Constant;
 import com.wd.login.R;
 import com.wd.login.R2;
 import com.wd.login.presenter.LoginPresenter;
 import com.wd.login.util.RsaCoder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +54,7 @@ public class LoginActivity extends WDActivity {
     ImageView passhideshow;
     private  boolean pasVisibile = false;//密码显示隐藏
     private LoginPresenter loginPresenter;
-
+    private LoginBeanDao dao;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
@@ -58,6 +62,8 @@ public class LoginActivity extends WDActivity {
 
     @Override
     protected void initView() {
+        //创建数据库
+        dao=DaoMaster.newDevSession(LoginActivity.this,LoginBeanDao.TABLENAME).getLoginBeanDao();
         //p层
         loginPresenter = new LoginPresenter(new getlogindata());
         //登录点击
@@ -127,6 +133,18 @@ public class LoginActivity extends WDActivity {
     class getlogindata implements DataCall<LoginBean> {
         @Override
         public void success(LoginBean data, Object... args) {
+            //先清空
+            List<LoginBean> loginBeans = dao.loadAll();
+            for (int i = 0; i < loginBeans.size(); i++) {
+                LoginBean loginBean = loginBeans.get(i);
+                if (loginBean.ttt==2){
+                    loginBean.ttt=1;
+                }
+            }
+            data.ttt=2;
+            dao.insertOrReplaceInTx(loginBeans);
+            dao.insertOrReplaceInTx(data);
+
             //跳转跳转
             intentByRouter(Constant.ACTIVITY_LOGIN_MAIN);
             finish();

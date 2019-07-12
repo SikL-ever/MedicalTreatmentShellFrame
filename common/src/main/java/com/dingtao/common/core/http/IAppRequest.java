@@ -4,6 +4,8 @@ package com.dingtao.common.core.http;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.login.LoginBean;
+import com.dingtao.common.bean.video.TopBean;
+import com.dingtao.common.bean.video.VideoBean;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
@@ -48,6 +51,16 @@ public interface IAppRequest {
     Observable<Result> anewpass(@Field("email") String email,
                                 @Field("pwd1") String pwd1,
                                 @Field("pwd2") String pwd2);
+    //1.查询健康讲堂类目
+    @GET("user/video/v1/findVideoCategoryList")
+    Observable<Result<List<TopBean>>> topdata();
+    //根据视频类目查询视频列表
+    @GET("user/video/v1/findVideoVoList")
+    Observable<Result<List<VideoBean>>> videodata(@Header("userId") String userId,
+                                                  @Header("sessionId") String sessionId,
+                                                  @Query("categoryId") int categoryId,
+                                                  @Query("page") int page,
+                                                  @Query("count") int count);
     //sichangyong-------------------------------------------------------------------别动我的
 
 

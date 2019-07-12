@@ -14,11 +14,14 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.util.Constant;
+import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.fragment.HomePagerFragement;
 import com.wd.health.fragment.VideoFragment;
 import com.wd.health.fragment.WardmateFragment;
+
+import java.util.List;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -146,6 +149,12 @@ public class MainActivity extends WDActivity {
         });
         //点击发表病友圈
 
+        //进行用户判断//判断用户时候登陆这
+        LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
+        List<String> intt = loginDaoUtil.intt(MainActivity.this);
+        if (intt == null) {
+            Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+        }
     }
     //写一个方法
 
