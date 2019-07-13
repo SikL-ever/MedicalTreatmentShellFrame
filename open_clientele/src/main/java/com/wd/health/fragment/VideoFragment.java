@@ -2,9 +2,11 @@ package com.wd.health.fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dingtao.common.bean.video.TopBean;
@@ -62,6 +64,12 @@ public class VideoFragment extends WDFragment {
     RecyclerView videotoprecycler;
     @BindView(R2.id.videoimage)
     ImageView videoimage;
+    @BindView(R2.id.topimage)
+    ImageView topimage;
+    @BindView(R2.id.topimagetwo)
+    ImageView topimagetwo;
+    @BindView(R2.id.toplayout)
+    RelativeLayout toplayout;
     private TopPresenter topPresenter;
     private VideoPresenter videoPresenter;
     private List<String> urlList = new ArrayList<>();
@@ -75,13 +83,13 @@ public class VideoFragment extends WDFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            page--;
-            handler.sendEmptyMessageDelayed(1, 1000);
-            if (page == 0) {
-                videotoprecycler.setVisibility(View.GONE);
-                page=3;
-                handler.removeMessages(1);
-            }
+                page--;
+                handler.sendEmptyMessageDelayed(1, 1000);
+                if (page == 0) {
+                    videotoprecycler.setVisibility(View.GONE);
+                    page = 3;
+                    handler.removeMessages(1);
+                }
         }
     };
 
@@ -114,7 +122,7 @@ public class VideoFragment extends WDFragment {
             public void data(String da) {
                 int id = Integer.parseInt(da);
                 videoPresenter.reqeust(uid, sid, id, 1, 10);
-                page=3;
+                page = 3;
             }
         });
         //点击下拉
@@ -125,6 +133,15 @@ public class VideoFragment extends WDFragment {
                 handler.sendEmptyMessageDelayed(1, 1000);
             }
         });
+
+        /*pagerAdapter.setVideoCallBack(new VerticalViewPagerAdapter.VideoCallBack() {
+            @Override
+            public void getdata(int id) {
+                Log.i("aaa", "getdata: "+id+"");
+            }
+        });*/
+
+
     }
 
     //顶部栏的数据
@@ -133,6 +150,7 @@ public class VideoFragment extends WDFragment {
         public void success(List<TopBean> data, Object... args) {
             topRecyclerAdapter.add(data);
         }
+
         @Override
         public void fail(ApiException data, Object... args) {
         }
@@ -145,7 +163,11 @@ public class VideoFragment extends WDFragment {
             urlList.clear();
             for (int i = 0; i < data.size(); i++) {
                 VideoBean videoBean = data.get(i);
-                urlList.add(videoBean.originalUrl);
+                if (videoBean.whetherBuy==2){//2是没有购买1是购买
+                    urlList.add(videoBean.shearUrl);
+                }else{
+                    urlList.add(videoBean.originalUrl);
+                }
             }
             inittView();
             addListener();
@@ -161,10 +183,11 @@ public class VideoFragment extends WDFragment {
     public void onResume() {
         super.onResume();
         //为顶部栏发送handle
-        boolean vdeodata = ((MainActivity) getActivity()).vdeodata();
-        if (vdeodata){
+        videotoprecycler.setVisibility(View.VISIBLE);
+      /*  boolean vdeodata = ((MainActivity) getActivity()).vdeodata();
+        if (vdeodata) {*/
             handler.sendEmptyMessageDelayed(1, 1000);
-        }
+       /* }*/
         //进行用户判断//判断用户时候登陆这
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(getContext());
@@ -173,7 +196,9 @@ public class VideoFragment extends WDFragment {
         } else {
             uid = intt.get(0);
             sid = intt.get(1);
+            //Log.i("aaa", "onResume: "+intt.get(0)+"---"+intt.get(1));
             videoPresenter.reqeust(intt.get(0), intt.get(1), 1, 1, 10);
+            toplayout.setVisibility(View.GONE);
         }
         topPresenter.reqeust();
     }

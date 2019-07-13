@@ -1,8 +1,10 @@
 package com.wd.health.adapter.videoadapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import java.util.List;
@@ -43,11 +45,9 @@ public class VerticalViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-
         if (mCurTransaction == null) {
             mCurTransaction = fragmentManager.beginTransaction();
         }
-
         VideoMovieFragment fragment = new VideoMovieFragment();
         if (urlList != null && urlList.size() > 0) {
             Bundle bundle = new Bundle();
@@ -58,6 +58,8 @@ public class VerticalViewPagerAdapter extends PagerAdapter {
             }
             fragment.setArguments(bundle);
         }
+        Log.i("aaa", "instantiateItem: "+position+"");
+        //videoCallBack.getdata(position);
         mCurTransaction.add(container.getId(), fragment,
                 makeFragmentName(container.getId(), position));
         fragment.setUserVisibleHint(false);
@@ -95,6 +97,15 @@ public class VerticalViewPagerAdapter extends PagerAdapter {
             }
             mCurrentPrimaryItem = fragment;
         }
+    }
+    //创建接口回调
+    public interface VideoCallBack{
+        void getdata (int id);
+    }
+    public VideoCallBack videoCallBack;
+
+    public void setVideoCallBack(VideoCallBack videoCallBack) {
+        this.videoCallBack = videoCallBack;
     }
 
     @Override

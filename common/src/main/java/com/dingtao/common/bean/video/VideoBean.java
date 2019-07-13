@@ -1,5 +1,7 @@
 package com.dingtao.common.bean.video;
 
+import java.util.List;
+
 /**
  * 佀常勇
  *
@@ -7,5 +9,15 @@ package com.dingtao.common.bean.video;
  * 描述：
  */
 public class VideoBean {
+    public String abstracts;
+    public int buyNum;
+    public int categoryId;
+    public int duration;
+    public int id;
     public String originalUrl;
+    public int price;
+    public String shearUrl;
+    public String title;
+    public int whetherBuy;
+    public int whetherCollection;
 }

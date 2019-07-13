@@ -2,6 +2,8 @@ package com.wd.health.adapter.videoadapter;
 
 import android.app.Activity;
 import android.graphics.Point;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -37,7 +39,7 @@ public class VideoMovieFragment extends BaseFragment {
     private TXVodPlayer mVodPlayer;
     private String url;
     public static final String URL = "URL";
-
+    public boolean stps=true;
     @Override
     protected int getLayoutId() {
         return R.layout.fm_video;
@@ -49,15 +51,24 @@ public class VideoMovieFragment extends BaseFragment {
         url = getArguments().getString(URL);
         //创建player对象
         mVodPlayer = new TXVodPlayer(context);
-//关键player对象与界面view
+        //关键player对象与界面view
         mVodPlayer.setPlayerView(txvVideo);
-//        url = "http://v.cctv.com/flash/mp4video6/TMS/2011/01/05/cf752b1c12ce452b3040cab2f90bc265_h264818000nero_aac32-1.mp4";
-        mVodPlayer.setLoop(true);
-
+        //mVodPlayer.setLoop(true);
         Glide.with(context)
                 .load(url)
                 .into(ivPlayThun);
-
+        txvVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stps) {
+                    mVodPlayer.pause();
+                    stps=false;
+                }else{
+                    mVodPlayer.resume();
+                    stps=true;
+                }
+            }
+        });
     }
 
     @Override
@@ -68,7 +79,6 @@ public class VideoMovieFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
         if (mVodPlayer == null) {
             return;
         }
@@ -77,12 +87,10 @@ public class VideoMovieFragment extends BaseFragment {
         } else {
             mVodPlayer.pause();
         }
-
     }
 
     @Override
     public void onResume() {
-
         super.onResume();
         if (mVodPlayer != null) {
             mVodPlayer.resume();
