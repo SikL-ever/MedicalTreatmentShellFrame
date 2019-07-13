@@ -49,6 +49,7 @@ public class MainActivity extends WDActivity {
     private VideoFragment videoFragment;
     private FragmentTransaction transaction;
     private int page = 3;
+    private boolean videobo=false;
     //创建hind
     public Handler handler = new Handler() {
         @Override
@@ -110,6 +111,7 @@ public class MainActivity extends WDActivity {
                     transaction.show(homePagerFragement).hide(wardmateFragment).hide(videoFragment);
                     bt2.setVisibility(View.VISIBLE);
                     bt4.setVisibility(View.GONE);
+                    videobo=false;
                 } else if (checkedId == R.id.bt2) {
                     for (int i = 0; i < 2; i++) {
                         if (bt2.isChecked()){
@@ -128,12 +130,14 @@ public class MainActivity extends WDActivity {
                             });
                         }
                     }
+                    videobo=false;
                 } else if (checkedId == R.id.bt3) {
                     transaction.show(videoFragment).hide(homePagerFragement).hide(wardmateFragment);
                     mainradio.setVisibility(View.GONE);//导航消失
                     mainshowhide.setVisibility(View.VISIBLE);//小导航栏出现
                     bt2.setVisibility(View.VISIBLE);
                     bt4.setVisibility(View.GONE);
+                    videobo=true;
                 }
                 transaction.commit();
             }
@@ -156,8 +160,13 @@ public class MainActivity extends WDActivity {
             Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
         }
     }
-    //写一个方法
-
+    //写一个方法视频页面用的
+    public boolean vdeodata(){
+        if (videobo) {
+            return true;
+        }
+        return false;
+    }
     @Override
     protected void initView() {
 

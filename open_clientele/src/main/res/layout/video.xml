@@ -82,4 +82,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/videotoprecycler">
     </androidx.recyclerview.widget.RecyclerView>
+    <ImageView
+        android:id="@+id/videoimage"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_100"
+        android:background="@drawable/drop_down"/>
 </RelativeLayout>

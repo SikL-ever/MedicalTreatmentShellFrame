@@ -1,5 +1,9 @@
 package com.wd.health.fragment;
 
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -14,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.wd.health.R;
 import com.wd.health.R2;
+import com.wd.health.activity.MainActivity;
 import com.wd.health.adapter.videoadapter.TopRecyclerAdapter;
 import com.wd.health.adapter.videoadapter.VerticalViewPagerAdapter;
 import com.wd.health.presenter.videopresenter.TopPresenter;
@@ -55,14 +60,30 @@ public class VideoFragment extends WDFragment {
     TextView videotext;
     @BindView(R2.id.videotoprecycler)
     RecyclerView videotoprecycler;
+    @BindView(R2.id.videoimage)
+    ImageView videoimage;
     private TopPresenter topPresenter;
     private VideoPresenter videoPresenter;
     private List<String> urlList = new ArrayList<>();
     private VerticalViewPagerAdapter pagerAdapter;
-    private List<String> toplist=new ArrayList<>();
     private TopRecyclerAdapter topRecyclerAdapter;
     private String uid;
     private String sid;
+    int page = 3;
+    //创建hind
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            page--;
+            handler.sendEmptyMessageDelayed(1, 1000);
+            if (page == 0) {
+                videotoprecycler.setVisibility(View.GONE);
+                page=3;
+                handler.removeMessages(1);
+            }
+        }
+    };
 
     @Override
     public String getPageName() {
@@ -78,7 +99,6 @@ public class VideoFragment extends WDFragment {
     //数据
     @Override
     protected void initView() {
-
         //创建p层
         topPresenter = new TopPresenter(new gettopdata());//请求顶部栏的数据
         videoPresenter = new VideoPresenter(new getvideodata());
@@ -87,13 +107,22 @@ public class VideoFragment extends WDFragment {
         topRecyclerAdapter = new TopRecyclerAdapter(getContext());
         videotoprecycler.setAdapter(topRecyclerAdapter);
         videotoprecycler.setLayoutManager
-                (new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+                (new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         //顶部栏点击事件
         topRecyclerAdapter.setCallBack(new TopRecyclerAdapter.CallBack() {
             @Override
             public void data(String da) {
-                int id= Integer.parseInt(da);
+                int id = Integer.parseInt(da);
                 videoPresenter.reqeust(uid, sid, id, 1, 10);
+                page=3;
+            }
+        });
+        //点击下拉
+        videoimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                videotoprecycler.setVisibility(View.VISIBLE);
+                handler.sendEmptyMessageDelayed(1, 1000);
             }
         });
     }
@@ -131,14 +160,19 @@ public class VideoFragment extends WDFragment {
     @Override
     public void onResume() {
         super.onResume();
+        //为顶部栏发送handle
+        boolean vdeodata = ((MainActivity) getActivity()).vdeodata();
+        if (vdeodata){
+            handler.sendEmptyMessageDelayed(1, 1000);
+        }
         //进行用户判断//判断用户时候登陆这
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(getContext());
         if (intt == null) {
 
         } else {
-            uid=intt.get(0);
-            sid=intt.get(1);
+            uid = intt.get(0);
+            sid = intt.get(1);
             videoPresenter.reqeust(intt.get(0), intt.get(1), 1, 1, 10);
         }
         topPresenter.reqeust();
