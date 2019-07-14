@@ -7,75 +7,11 @@
     android:layout_height="match_parent"
     android:background="#fff">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/srl_page"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableLoadMore="false"
-        app:srlEnableRefresh="false">
-        <com.wd.health.util.VerticalViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/videomovie">
-        </com.wd.health.util.VerticalViewPager>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    <RadioButton
-        android:layout_centerVertical="true"
-        android:background="@drawable/common_icon_toll_n"
-        android:layout_alignParentRight="true"
-        android:id="@+id/videobtbuy"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:button="@null"
-        />
-    <RadioButton
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/video_bulletscreen"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/videobtbuy"
-        android:id="@+id/videobtcollect"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:button="@null"
-        />
-    <RadioButton
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/video_collect"
-        android:button="@null"
-        android:layout_below="@id/videobtcollect"
-        android:layout_alignParentRight="true"
-        android:id="@+id/videobtbulletscreen"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_25"
-        />
-    <TextView
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="wrap_content"
-        android:text="123456"
-        android:layout_below="@id/videobtbulletscreen"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/dp_10"/>
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_70"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:id="@+id/videotitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="健身"
-        android:textSize="@dimen/dp_18"
-        android:textColor="#fff"/>
-    <TextView
-        android:layout_marginBottom="@dimen/dp_40"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:id="@+id/videotext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="健身"
-        android:textSize="@dimen/dp_13"
-        android:textColor="#fff"/>
+        android:id="@+id/videorecycler">
+    </androidx.recyclerview.widget.RecyclerView>
     <androidx.recyclerview.widget.RecyclerView
         android:background="#fff"
         android:layout_width="match_parent"
@@ -86,8 +22,8 @@
         android:id="@+id/videoimage"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_30"
-        android:layout_width="@dimen/dp_20"
-        android:layout_height="@dimen/dp_70"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_88"
         android:background="@drawable/drop_down"/>
     <RelativeLayout
         android:layout_width="match_parent"
