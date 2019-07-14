@@ -6,6 +6,8 @@ import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
+/*import com.dingtao.common.bean.video.TopBean;
+import com.dingtao.common.bean.video.VideoBean;*/
 
 import java.util.List;
 
@@ -24,9 +26,7 @@ import retrofit2.http.Query;
  * qq:1940870847
  */
 public interface IAppRequest {
-    //测试用的
-    @GET("share/v1/bannersShow")
-    Observable<Result<List<Banner>>> bannershow();
+
     //sichangyong-------------------------------------------------------------------别动我的
     //登录
     @FormUrlEncoded
@@ -52,7 +52,7 @@ public interface IAppRequest {
                                 @Field("pwd1") String pwd1,
                                 @Field("pwd2") String pwd2);
     //1.查询健康讲堂类目
-    @GET("user/video/v1/findVideoCategoryList")
+   @GET("user/video/v1/findVideoCategoryList")
     Observable<Result<List<TopBean>>> topdata();
     //根据视频类目查询视频列表
     @GET("user/video/v1/findVideoVoList")
@@ -65,4 +65,37 @@ public interface IAppRequest {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @GET("share/v1/bannersShow")
+    Observable<Result<List<Banner>>> bannershow();
+    //xieqi-------------------------------------------------------------------别动我的
 }

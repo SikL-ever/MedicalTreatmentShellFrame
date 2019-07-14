@@ -102,7 +102,7 @@ public abstract class WDPresenter<T> {
                     running = false;
                     if (result.getStatus().equals("0000")) {
                         if (result.result==null){
-                            dataCall.success(result);
+                            dataCall.success(result,args);
                         }else{
                             dataCall.success(result.getResult(), args);
                         }
