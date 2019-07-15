@@ -6,6 +6,9 @@ import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
+import com.dingtao.common.bean.wardBean.SeachBean;
+import com.dingtao.common.bean.wardBean.TabBean;
+import com.dingtao.common.bean.wardBean.WardLieBean;
 /*import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;*/
 
@@ -66,6 +69,18 @@ public interface IAppRequest {
 
 
 
+    /*==========================================LIFANGXIAN====================================================*/
+    //科室
+    @GET("share/knowledgeBase/v1/findDepartment")
+    Observable<Result<List<TabBean>>> tab();
+    //列表详情
+    @GET("user/sickCircle/v1/findSickCircleList?departmentId=7&page=1&count=10")
+    Observable<Result<List<WardLieBean>>> wardLie(@Query("departmentId") int departmentId, @Query("page") int page, @Query("count") int count);
+    //搜索病友病症
+    @GET("user/sickCircle/v1/searchSickCircle")
+    Observable<Result<List<SeachBean>>> seach(@Query("keyWord") String keyWord);
+
+    /*==========================================LIFANGXIAN====================================================*/
 
 
 

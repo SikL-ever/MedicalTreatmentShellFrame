@@ -5,6 +5,7 @@
     <application>
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SousuoAcitivity"></activity>
+        <activity android:name=".activity.wardActivity.SeachActivity"></activity>
     </application>
 
 </manifest>

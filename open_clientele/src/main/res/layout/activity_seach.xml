@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.wardActivity.SeachActivity">
+    <RelativeLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_54">
+
+        <ImageView
+            android:id="@+id/names"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_28"
+            android:layout_centerVertical="true"
+            android:background="@drawable/common_icon_back_black_n"
+            android:layout_marginLeft="20dp"
+            android:text="急症科"
+            android:textColor="#3087ea"
+            android:textSize="18sp" />
+        <EditText
+            android:id="@+id/seach_edit"
+            android:layout_width="match_parent"
+            android:hint="请输入病症"
+            android:paddingTop="@dimen/dp_8"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/select"
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/names"
+            android:layout_toLeftOf="@+id/seach_text"
+            android:layout_height="@dimen/dp_30" />
+        <TextView
+            android:id="@+id/seach_text"
+            android:text="搜索"
+            android:textColor="#3087ea"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/goner"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/tu"
+            android:background="@drawable/no_search_message"
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_150" />
+        <TextView
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_below="@+id/tu"
+            android:layout_centerHorizontal="true"
+            android:text="抱歉没有找到相关的病症"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/seachrecyclerview"
+        android:layout_marginTop="4dp"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
