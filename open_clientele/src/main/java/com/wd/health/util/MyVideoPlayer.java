@@ -58,7 +58,16 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
         //循环播放
         //startVideo();
         ll_start.setVisibility(VISIBLE);
+        videoCalBack.getdata(1);
+    }
+    //接口回调
+    public interface VideoCalBack{
+        void getdata (int it);
+    }
+    public VideoCalBack videoCalBack;
 
+    public void setVideoCalBack(VideoCalBack videoCalBack) {
+        this.videoCalBack = videoCalBack;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.wd.health.adapter.videoadapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ public class TopRecyclerAdapter extends RecyclerView.Adapter<TopRecyclerAdapter.
     public TopRecyclerAdapter(Context context) {
         this.context = context;
     }
-
     List<TopBean> list=new ArrayList<>();
     @NonNull
     @Override
@@ -37,14 +37,21 @@ public class TopRecyclerAdapter extends RecyclerView.Adapter<TopRecyclerAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.toprecyclertext.setText(list.get(position).name);
+        holder.toprecyclertext.setTextColor(list.get(position).textColor);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.toprecyclertext.setTextColor(Color.BLUE);
                 if (callBack != null) {
                     callBack.data(list.get(position).id);
                 }
+                for (int i = 0; i <list.size() ; i++) {
+                    list.get(i).textColor=Color.BLACK;
+                }
+                list.get(position).textColor=Color.BLUE;
+                notifyDataSetChanged();
             }
         });
     }

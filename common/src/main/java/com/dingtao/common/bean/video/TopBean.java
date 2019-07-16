@@ -1,5 +1,7 @@
 package com.dingtao.common.bean.video;
 
+import android.graphics.Color;
+
 /**
  * 佀常勇
  *
@@ -9,4 +11,5 @@ package com.dingtao.common.bean.video;
 public class TopBean {
     public String id;
     public String name;
+    public int textColor=Color.BLACK;
 }

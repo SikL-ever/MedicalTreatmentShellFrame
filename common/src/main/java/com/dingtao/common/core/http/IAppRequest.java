@@ -4,6 +4,7 @@ package com.dingtao.common.core.http;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.login.LoginBean;
+import com.dingtao.common.bean.video.DanBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
 import com.dingtao.common.bean.wardBean.SeachBean;
@@ -64,6 +65,9 @@ public interface IAppRequest {
                                                   @Query("categoryId") int categoryId,
                                                   @Query("page") int page,
                                                   @Query("count") int count);
+    // 查询视频评论列表
+    @GET("user/video/v1/findVideoCommentList")
+    Observable<Result<List<DanBean>>> videodan(@Query("videoId") int videoId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 
