@@ -1,5 +1,6 @@
 package com.wd.health.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -166,6 +167,7 @@ public class VideoFragment extends WDFragment {
 
     //视频
 
+    @SuppressLint("WrongConstant")
     private  void inittView() {
 
         snapHelper = new PagerSnapHelper();
@@ -266,13 +268,6 @@ public class VideoFragment extends WDFragment {
         }
 
     }
-
-
-
-
-
-
-
     //获取焦点的时候去请求数据
     @Override
     public void onResume() {

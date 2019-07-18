@@ -6,6 +6,8 @@ import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
+import com.dingtao.common.bean.wardBean.List_xiang_Bean;
+import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.dingtao.common.bean.wardBean.SeachBean;
 import com.dingtao.common.bean.wardBean.TabBean;
 import com.dingtao.common.bean.wardBean.WardLieBean;
@@ -74,12 +76,33 @@ public interface IAppRequest {
     @GET("share/knowledgeBase/v1/findDepartment")
     Observable<Result<List<TabBean>>> tab();
     //列表详情
-    @GET("user/sickCircle/v1/findSickCircleList?departmentId=7&page=1&count=10")
-    Observable<Result<List<WardLieBean>>> wardLie(@Query("departmentId") int departmentId, @Query("page") int page, @Query("count") int count);
+    @GET("user/sickCircle/v1/findSickCircleList")
+    Observable<Result<List<WardLieBean>>> wardLie(@Query("departmentId") int departmentId,
+                                                  @Query("page") int page,
+                                                  @Query("count") int count);
     //搜索病友病症
     @GET("user/sickCircle/v1/searchSickCircle")
     Observable<Result<List<SeachBean>>> seach(@Query("keyWord") String keyWord);
+    //病友圈列表详情
+    @GET("user/sickCircle/v1/findSickCircleInfo")
+    Observable<Result<List_xiang_Bean>> ListXiang(@Header("userId") String userId,
+                                                  @Header("sessionId") String sessionId,
+                                                  @Query("sickCircleId") int sickCircleId);
+    //评论列表
+    @GET("user/sickCircle/v1/findSickCircleCommentList")
+    Observable<Result<List<Ping_lie_Bean>>> ping(@Header("userId") String userId,
+                                           @Header("sessionId") String sessionId,
+                                           @Query("sickCircleId") int sickCircleId,
+                                           @Query("page") int page,
+                                           @Query("count") int count);
 
+    //评论
+    @FormUrlEncoded
+    @POST("user/sickCircle/verify/v1/publishComment")
+    Observable<Result> pinglun(@Header("userId") String userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("sickCircleId") int sickCircleId,
+                               @Field("content") String content);
     /*==========================================LIFANGXIAN====================================================*/
 
 

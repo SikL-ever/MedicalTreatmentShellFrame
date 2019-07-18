@@ -152,7 +152,6 @@ public class MainActivity extends WDActivity {
             }
         });
         //点击发表病友圈
-
         //进行用户判断//判断用户时候登陆这
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(MainActivity.this);

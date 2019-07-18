@@ -79,14 +79,7 @@ public class WardmateFragment extends WDFragment {
         //设置适配器
         recycler.setAdapter(myTabAdapater);
 
-        myTabAdapater.setCall(new MyTabAdapater.Call() {
 
-            @Override
-            public void setCall(int id) {
-                id1 = id;
-                wardPresenter.reqeust(id1,1,10);
-            }
-        });
         //列表详情
         wardPresenter = new WardPresenter(new ward());
         wardPresenter.reqeust(7,1,10);
@@ -95,6 +88,14 @@ public class WardmateFragment extends WDFragment {
         wardAdapater = new WardAdapater(getActivity());
         xrecyclerview.setLayoutManager(linearLayoutManager1);
         xrecyclerview.setAdapter(wardAdapater);
+        myTabAdapater.setCall(new MyTabAdapater.Call() {
+
+            @Override
+            public void setCall(int id) {
+                Log.i("aaa", "setCall: "+id);
+                wardPresenter.reqeust(id,1,10);
+            }
+        });
         //搜索
         seach.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +114,7 @@ public class WardmateFragment extends WDFragment {
             for (int i = 0; i <data.size() ; i++) {
                 data.get(i).textColor=Color.BLACK;
             }
-            data.get(0).textColor=Color.RED;
+            data.get(0).textColor=Color.parseColor("#3087ea");
             myTabAdapater.setList(data);
             myTabAdapater.notifyDataSetChanged();
 
@@ -130,6 +131,7 @@ public class WardmateFragment extends WDFragment {
 
         @Override
         public void success(List<WardLieBean> datas, Object... args) {
+            Log.i("aaa", "success: "+datas);
             wardAdapater.destroy();
             wardAdapater.setLIST(datas);
             wardAdapater.notifyDataSetChanged();

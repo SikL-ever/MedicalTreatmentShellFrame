@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * 佀常勇
+ * lifangxian
  *
  * @Data:2019/7/12 9:37
  * 描述：
@@ -51,8 +51,9 @@ public class MyTabAdapater extends RecyclerView.Adapter<MyTabAdapater.MyViewHodl
                 for (int i = 0; i <list.size() ; i++) {
                        list.get(i).textColor=Color.BLACK;
                 }
-                list.get(position).textColor=Color.RED;
+                list.get(position).textColor=Color.parseColor("#3087ea");
                 notifyDataSetChanged();
+                call.setCall(list.get(position).getId());
             }
         });
 

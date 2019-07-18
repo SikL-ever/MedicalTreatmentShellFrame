@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.dingtao.common.bean.wardBean.WardLieBean;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wd.health.R;
+import com.wd.health.activity.wardActivity.List_detailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +33,27 @@ public class WardAdapater extends XRecyclerView.Adapter<WardAdapater.MyHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WardAdapater.MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WardAdapater.MyHolder holder, final int position) {
         holder.titles.setText(list.get(position).getTitle()+"");
         holder.times.setText(list.get(position).getReleaseTime()+"");
         holder.contents.setText(list.get(position).getDetail());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(context,List_detailsActivity.class);
+                intent.putExtra("jumpID",list.get(position).getSickCircleId());
+                context.startActivity(intent);
             }
         });
+    }
+
+    private Call call;
+
+    public void setCall(Call call) {
+        this.call=call;
+    }
+    public interface Call{
+        void setCall(int id);
     }
 
     @Override
@@ -51,7 +63,7 @@ public class WardAdapater extends XRecyclerView.Adapter<WardAdapater.MyHolder> {
 
     public void setLIST(List<WardLieBean> datas) {
         if(datas!=null){
-            list.addAll(datas);
+            list=datas;
         }
     }
     public void destroy(){
