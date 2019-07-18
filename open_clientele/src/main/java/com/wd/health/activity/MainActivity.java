@@ -12,6 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
@@ -43,6 +46,12 @@ public class MainActivity extends WDActivity {
     RadioButton bt3;
     @BindView(R2.id.bt4)
     RadioButton bt4;
+    @BindView(R2.id.topimage)
+    ImageView topimage;
+    @BindView(R2.id.topimagetwo)
+    ImageView topimagetwo;
+    @BindView(R2.id.toplayout)
+    RelativeLayout toplayout;
     private FragmentManager manager;
     private HomePagerFragement homePagerFragement;
     private WardmateFragment wardmateFragment;
@@ -60,18 +69,21 @@ public class MainActivity extends WDActivity {
             if (bt3.isChecked()==false){
                 mainshowhide.setVisibility(View.GONE);
                 mainradio.setVisibility(View.VISIBLE);
+                toplayout.setVisibility(View.GONE);//顶部栏
                 page=3;
                 handler.removeMessages(0);
             }else{
                 if (page == 0) {
                     mainradio.setVisibility(View.GONE);//导航消失
                     mainshowhide.setVisibility(View.VISIBLE);//小导航栏出现
+                    toplayout.setVisibility(View.GONE);//顶部栏
                     page=3;
                     handler.removeMessages(0);
                 }
             }
         }
     };
+    private List<String> intt;
 
     @Override
     protected int getLayoutId() {
@@ -81,6 +93,25 @@ public class MainActivity extends WDActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        topimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (intt == null) {
+                    //跳转到登录页面
+                    intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
+                }else{
+                    //跳转到我的页面
+                    intentByRouter(Constant.ACTIVITY_LOGIN_MYUSERACTIVITY);
+                }
+            }
+        });
+        //的第二张图片
+        topimagetwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         //创建管理者添加Fragment
         manager = getSupportFragmentManager();
         if (savedInstanceState != null) {  // “内存重启”时调用
@@ -148,24 +179,21 @@ public class MainActivity extends WDActivity {
             public void onClick(View v) {
                 mainradio.setVisibility(View.VISIBLE);//导航消失
                 mainshowhide.setVisibility(View.GONE);//小导航栏出现
+                toplayout.setVisibility(View.VISIBLE);
                 handler.sendEmptyMessageDelayed(0, 1000);
             }
         });
         //点击发表病友圈
-
         //进行用户判断//判断用户时候登陆这
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
-        List<String> intt = loginDaoUtil.intt(MainActivity.this);
+        intt = loginDaoUtil.intt(MainActivity.this);
         if (intt == null) {
-            Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+            Glide.with(MainActivity.this).load(R.drawable.register_icon_invitatiion_code_n).
+                    apply(RequestOptions.bitmapTransform(new CircleCrop())).into(topimage);
+        }else{
+            Glide.with(MainActivity.this).load(intt.get(2)).
+                    apply(RequestOptions.bitmapTransform(new CircleCrop())).into(topimage);
         }
-    }
-    //写一个方法视频页面用的
-    public boolean vdeodata(){
-        if (videobo) {
-            return true;
-        }
-        return false;
     }
     @Override
     protected void initView() {

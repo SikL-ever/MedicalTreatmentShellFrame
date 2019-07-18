@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <declare-styleable name="BubbleLayout">
+        <attr name="lookAt">
+            <enum name="left"   value="1"/>
+            <enum name="top"    value="2"/>
+            <enum name="right"  value="3"/>
+            <enum name="bottom" value="4"/>
+        </attr>
+
+        <attr name="lookPosition" format="dimension"/>
+        <attr name="lookWidth"    format="dimension"/>
+        <attr name="lookLength"   format="dimension"/>
+        <attr name="bubbleColor"  format="color"/>
+        <attr name="bubbleRadius" format="dimension"/>
+        <attr name="bubbleMargin" format="dimension"/>
+        <attr name="shadowRadius" format="dimension"/>
+        <attr name="shadowX"      format="dimension"/>
+        <attr name="shadowY"      format="dimension"/>
+        <attr name="shadowColor"  format="color"/>
+    </declare-styleable>
+    <declare-styleable name="BarrageView">
+        <attr name="size" format="integer"/>
+        <attr name="text_left_padding" format="integer"/>
+        <attr name="text_right_padding" format="integer"/>
+        <attr name="text_top_padding" format="integer"/>
+        <attr name="text_bottom_padding" format="integer"/>
+        <attr name="max_text_size" format="integer"/>
+        <attr name="min_text_size" format="integer"/>
+        <attr name="line_height" format="dimension"/>
+        <attr name="border_color" format="color"/>
+        <attr name="random_color" format="boolean"/>
+        <attr name="allow_repeat" format="boolean"/>
+    </declare-styleable>
+
+
+</resources>

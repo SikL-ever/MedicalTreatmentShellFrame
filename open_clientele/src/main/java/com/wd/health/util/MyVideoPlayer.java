@@ -28,7 +28,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 
 public class MyVideoPlayer extends JZVideoPlayerStandard {
     private RelativeLayout rl_touch_help;
-    private ImageView iv_start;
+    private ImageView iv_start,mystate;
     private LinearLayout ll_start;
 
     private Context context;
@@ -46,7 +46,6 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
 
     @Override
     public void onAutoCompletion() {
-
         thumbImageView.setVisibility(View.GONE);
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             onStateAutoComplete();
@@ -57,13 +56,46 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
         }
         //循环播放
         //startVideo();
-        ll_start.setVisibility(VISIBLE);
+        //播放完暂停
+        mystopp();
+        //播放完成后返回值
+        videoCallBack.getdata(1);
+    }
+    //从头播放
+    public void mystopp(){
+        mystate.setVisibility(VISIBLE);
+        mystate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startVideo();
+                mystate.setVisibility(GONE);
+            }
+        });
+    }
+    //我的点继续播放
+    public void mystop(){
+        mystate.setVisibility(VISIBLE);
+        mystate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //startVideo();
+                JZVideoPlayer.goOnPlayOnResume();
+                mystate.setVisibility(GONE);
+            }
+        });
+    }
+    //设置接口回调
+    public interface VideoCallBack{
+        void getdata (int i);
+    }
+    public VideoCallBack videoCallBack;
 
+    public void setVideoCallBack(VideoCallBack videoCallBack) {
+        this.videoCallBack = videoCallBack;
     }
 
     @Override
     public void setUp(String url, int screen, Object... objects) {
-
         if (url.startsWith("http")) {
             HttpProxyCacheServer proxy = WDApplication.getProxy(context);
             String proxyUrl = proxy.getProxyUrl(url);
@@ -72,27 +104,25 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
             super.setUp(url, screen, objects);
         }
     }
-
     @Override
     public void init(final Context context) {
         super.init(context);
-
         rl_touch_help = findViewById(R.id.rl_touch_help);
         ll_start = findViewById(R.id.ll_start);
         iv_start = findViewById(R.id.iv_start);
+        mystate = findViewById(R.id.mystate);
         resetPlayView();
 
         rl_touch_help.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetPlayView();
+                //fullscreenButton.performClick();扩大屏幕
                 if (isPlay()) {
-                    fullscreenButton.performClick();
+                    JZVideoPlayer.goOnPlayOnPause();
+                    mystop();
                 }
-
             }
         });
-
         ll_start.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +140,6 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
             }
         });
     }
-
     @Override
     public void startVideo() {
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
@@ -119,7 +148,6 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
             AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
             mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
             JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
             JZMediaManager.setDataSource(dataSourceObjects);
             JZMediaManager.setCurrentDataSource(JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex));
             JZMediaManager.instance().positionInList = positionInList;
@@ -131,11 +159,9 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
         }
         resetPlayView();
     }
-
     @Override
     public void startWindowTiny() {
     }
-
     private void resetPlayView() {
         if (isPlay()) {
             iv_start.setBackgroundResource(R.drawable.video_play_parse);
@@ -153,7 +179,6 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
         if (currentState == CURRENT_STATE_PREPARING || currentState == CURRENT_STATE_PLAYING || currentState == -1) {
             return true;
         }
-
         return false;
     }
 

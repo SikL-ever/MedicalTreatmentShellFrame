@@ -17,9 +17,10 @@ public class Constant {
     public final static String ACTIVITY_LOGIN_FIND = "/login/FindPassActivity";//找回密码页面页
     public final static String ACTIVITY_LOGIN_REGISTER = "/login/RegisterActivity";//注册面页
     public final static String ACTIVITY_LOGIN_MODIFICATIONPASS = "/login/ModificationPassActivity";//修改密码面页
-
     public final static String ACTIVITY_LOGIN_MAIN = "/open_clientele/MainActivity";//首页
 
+    //-----------佀常勇--------------------------------用户页面-----
+    public final static String ACTIVITY_LOGIN_MYUSERACTIVITY = "/open_myhome/MyUserActivity";//用户页面
 
     //-----------佀常勇----都不要动我的开放登录变量，谁动谁傻叉-----
 

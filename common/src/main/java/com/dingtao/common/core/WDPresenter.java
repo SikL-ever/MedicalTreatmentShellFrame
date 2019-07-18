@@ -109,6 +109,17 @@ public abstract class WDPresenter<T> {
                     }else{
                         dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }
+                    ///-----------------------视频用到的判断，其他不用管
+                    if (result.getStatus().equals("8001")) {
+                            dataCall.success(result,args);
+                    }else{
+                        dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
+                    }
+                    if (result.getStatus().equals("9001")) {
+                        dataCall.success(result,args);
+                    }else{
+                        dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
+                    }
                 }
             };
         }

@@ -13,8 +13,14 @@ import com.dingtao.common.bean.homepage.ZhuBean;
 import com.dingtao.common.bean.homepage.ZiBean;
 import com.dingtao.common.bean.homepage.ZxbkBean;
 import com.dingtao.common.bean.login.LoginBean;
+import com.dingtao.common.bean.video.DanBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
+import com.dingtao.common.bean.wardBean.List_xiang_Bean;
+import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
+import com.dingtao.common.bean.wardBean.SeachBean;
+import com.dingtao.common.bean.wardBean.TabBean;
+import com.dingtao.common.bean.wardBean.WardLieBean;
 /*import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;*/
 
@@ -70,11 +76,82 @@ public interface IAppRequest {
                                                   @Query("categoryId") int categoryId,
                                                   @Query("page") int page,
                                                   @Query("count") int count);
+    // 查询视频评论列表
+    @GET("user/video/v1/findVideoCommentList")
+    Observable<Result<List<DanBean>>> videodan(@Query("videoId") int videoId);
+    // 查询我的钱包
+    @GET("user/verify/v1/findUserWallet")
+    Observable<Result> videogetprice(@Header("userId") String userId,
+                                     @Header("sessionId") String sessionId);
+    // 查询我的钱包
+    @FormUrlEncoded
+    @POST("user/video/verify/v1/videoBuy")
+    Observable<Result> videobuy(@Header("userId") String userId,
+                                @Header("sessionId") String sessionId,
+                                @Field("videoId") int videoId,
+                                @Field("price") int price);
+    //健康课堂视频收藏
+    @FormUrlEncoded
+    @POST("user/video/verify/v1/addUserVideoCollection")
+    Observable<Result> videocollect(@Header("userId") String userId,
+                                    @Header("sessionId") String sessionId,
+                                    @Field("videoId") int videoId);
+    //发表视频评论（弹幕）
+    @FormUrlEncoded
+    @POST("user/video/verify/v1/addVideoComment")
+    Observable<Result> videosendbulletscreen(@Header("userId") String userId,
+                                                @Header("sessionId") String sessionId,
+                                                @Field("videoId") int videoId,
+                                             @Field("content") String content);
+    //sichangyong-----------------------------------------我的页面
+    //用户签到
+    @FormUrlEncoded
+    @POST("user/verify/v1/addSign")
+    Observable<Result> usersign(@Header("userId") String userId,
+                                @Header("sessionId") String sessionId);
+    //用户查看自己的档案
+    @GET("user/verify/v1/findUserArchives")
+    Observable<Result> myuserrecord(@Header("userId") String userId,
+                                    @Header("sessionId") String sessionId);
+
     //sichangyong-------------------------------------------------------------------别动我的
 
 
 
 
+    /*==========================================LIFANGXIAN====================================================*/
+    //科室
+    @GET("share/knowledgeBase/v1/findDepartment")
+    Observable<Result<List<TabBean>>> tab();
+    //列表详情
+    @GET("user/sickCircle/v1/findSickCircleList")
+    Observable<Result<List<WardLieBean>>> wardLie(@Query("departmentId") int departmentId,
+                                                  @Query("page") int page,
+                                                  @Query("count") int count);
+    //搜索病友病症
+    @GET("user/sickCircle/v1/searchSickCircle")
+    Observable<Result<List<SeachBean>>> seach(@Query("keyWord") String keyWord);
+    //病友圈列表详情
+    @GET("user/sickCircle/v1/findSickCircleInfo")
+    Observable<Result<List_xiang_Bean>> ListXiang(@Header("userId") String userId,
+                                                  @Header("sessionId") String sessionId,
+                                                  @Query("sickCircleId") int sickCircleId);
+    //评论列表
+    @GET("user/sickCircle/v1/findSickCircleCommentList")
+    Observable<Result<List<Ping_lie_Bean>>> ping(@Header("userId") String userId,
+                                           @Header("sessionId") String sessionId,
+                                           @Query("sickCircleId") int sickCircleId,
+                                           @Query("page") int page,
+                                           @Query("count") int count);
+
+    //评论
+    @FormUrlEncoded
+    @POST("user/sickCircle/verify/v1/publishComment")
+    Observable<Result> pinglun(@Header("userId") String userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("sickCircleId") int sickCircleId,
+                               @Field("content") String content);
+    /*==========================================LIFANGXIAN====================================================*/
 
 
 

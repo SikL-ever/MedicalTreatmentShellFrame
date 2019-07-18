@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pinglunrecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+
+        <ImageView
+            android:id="@+id/X"
+            android:layout_centerVertical="true"
+            android:background="@drawable/common_button_close_n"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"/>
+
+        <EditText
+            android:id="@+id/ping_Edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selecto"
+            android:layout_alignParentTop="true"
+            android:lines="7"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="@dimen/dp_20"
+            android:textColor="#fff"
+            android:layout_marginLeft="21dp"
+            android:layout_toRightOf="@+id/X"
+            android:hint="在此留下高见！"
+            android:textColorHint="#fff"/>
+    </RelativeLayout>
+</RelativeLayout>
