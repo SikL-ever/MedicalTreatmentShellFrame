@@ -21,7 +21,7 @@
             android:id="@+id/videopopuoonefinish"
             android:layout_alignParentRight="true"
             android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_20"
+            android:layout_height="@dimen/dp_15"
             android:background="@drawable/common_icon_drop_down_n"/>
     </RelativeLayout>
     <RelativeLayout
@@ -31,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:background="@drawable/recorded_message"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_80"
             android:layout_centerHorizontal="true"

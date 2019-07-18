@@ -25,24 +25,7 @@
         android:layout_width="@dimen/dp_15"
         android:layout_height="@dimen/dp_88"
         android:background="@drawable/drop_down"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:id="@+id/toplayout">
-        <ImageView
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:id="@+id/topimage"/>
-        <ImageView
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/common_nav_message_black_n"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:id="@+id/topimagetwo"/>
-    </RelativeLayout>
+
     <com.wd.health.util.BarrageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_100"

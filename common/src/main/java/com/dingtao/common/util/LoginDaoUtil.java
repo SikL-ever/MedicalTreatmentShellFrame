@@ -28,6 +28,8 @@ public class LoginDaoUtil {
                 List<String> list=new ArrayList<>();
                 list.add(loginBean.id);
                 list.add(loginBean.sessionId);
+                list.add(loginBean.headPic);
+                list.add(loginBean.nickName);
                 return list;
             }
         }

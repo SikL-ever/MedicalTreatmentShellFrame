@@ -68,6 +68,41 @@ public interface IAppRequest {
     // 查询视频评论列表
     @GET("user/video/v1/findVideoCommentList")
     Observable<Result<List<DanBean>>> videodan(@Query("videoId") int videoId);
+    // 查询我的钱包
+    @GET("user/verify/v1/findUserWallet")
+    Observable<Result> videogetprice(@Header("userId") String userId,
+                                     @Header("sessionId") String sessionId);
+    // 查询我的钱包
+    @FormUrlEncoded
+    @POST("user/video/verify/v1/videoBuy")
+    Observable<Result> videobuy(@Header("userId") String userId,
+                                @Header("sessionId") String sessionId,
+                                @Field("videoId") int videoId,
+                                @Field("price") int price);
+    //健康课堂视频收藏
+    @FormUrlEncoded
+    @POST("user/video/verify/v1/addUserVideoCollection")
+    Observable<Result> videocollect(@Header("userId") String userId,
+                                    @Header("sessionId") String sessionId,
+                                    @Field("videoId") int videoId);
+    //发表视频评论（弹幕）
+    @FormUrlEncoded
+    @POST("user/video/verify/v1/addVideoComment")
+    Observable<Result> videosendbulletscreen(@Header("userId") String userId,
+                                                @Header("sessionId") String sessionId,
+                                                @Field("videoId") int videoId,
+                                             @Field("content") String content);
+    //sichangyong-----------------------------------------我的页面
+    //用户签到
+    @FormUrlEncoded
+    @POST("user/verify/v1/addSign")
+    Observable<Result> usersign(@Header("userId") String userId,
+                                @Header("sessionId") String sessionId);
+    //用户查看自己的档案
+    @GET("user/verify/v1/findUserArchives")
+    Observable<Result> myuserrecord(@Header("userId") String userId,
+                                    @Header("sessionId") String sessionId);
+
     //sichangyong-------------------------------------------------------------------别动我的
 
 
