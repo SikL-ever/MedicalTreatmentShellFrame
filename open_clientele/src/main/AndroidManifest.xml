@@ -4,7 +4,8 @@
 
     <application>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.SousuoAcitivity"></activity>
+        <activity android:name=".activity.SousuoAcitivity" />
+        <activity android:name=".activity.ZsbdActivity"></activity>
     </application>
 
 </manifest>
