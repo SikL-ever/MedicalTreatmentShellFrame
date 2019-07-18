@@ -20,4 +20,5 @@ public class VideoBean {
     public String title;
     public int whetherBuy;
     public int whetherCollection;
+
 }

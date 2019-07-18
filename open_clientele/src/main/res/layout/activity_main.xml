@@ -83,4 +83,26 @@
             android:background="@drawable/common_icon_on_slippery_n"
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toplayout">
+        <ImageView
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:id="@+id/topimage"/>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/common_nav_message_black_n"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_25"
+            android:id="@+id/topimagetwo"/>
+    </RelativeLayout>
 </RelativeLayout>

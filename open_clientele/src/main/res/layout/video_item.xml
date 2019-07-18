@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/layout_main">
 
     <com.wd.health.util.MyVideoPlayer
         android:id="@+id/mp_video"
@@ -13,36 +14,26 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="#fff"/>
-    <RadioButton
-        android:layout_centerVertical="true"
-        android:background="@drawable/common_icon_toll_n"
-        android:layout_alignParentRight="true"
+
+    <ImageView
         android:id="@+id/videobtbuy"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
-        android:button="@null"
-        android:layout_marginRight="@dimen/dp_20"
-        />
-    <RadioButton
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/video_bulletscreen"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/videobtbuy"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_20"/>
+
+    <RadioButton
         android:id="@+id/videobtcollect"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
-        android:button="@null"
-        />
-    <RadioButton
+        android:layout_below="@+id/videobtbuy"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@drawable/video_bulletscreen"
+        android:button="@null" />
+    <CheckBox
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/video_collect"
@@ -66,25 +57,86 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dp_10"/>
     <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_70"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:id="@+id/videotitle"
+        android:id="@+id/videoitemifbuy"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="@dimen/dp_142"
+        android:layout_height="@dimen/dp_26"
+        android:textSize="@dimen/dp_12"
+        android:text="sssss"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/videobuytext"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="健身"
-        android:textSize="@dimen/dp_16"
-        android:textColor="#fff"/>
-    <TextView
-        android:layout_marginBottom="@dimen/dp_40"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_50"
         android:layout_marginLeft="@dimen/dp_20"
-        android:id="@+id/videotext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="健身"
-        android:textSize="@dimen/dp_12"
-        android:textColor="#fff"/>
+        android:layout_marginRight="@dimen/dp_20">
+        <TextView
+            android:id="@+id/videotitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="健身"
+            android:textSize="@dimen/dp_16"
+            android:textColor="#fff"/>
+        <TextView
+            android:layout_marginTop="@dimen/dp_14"
+            android:id="@+id/videotext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="健身"
+            android:textSize="@dimen/dp_12"
+            android:textColor="#fff"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:alpha="0.5"
+        android:id="@+id/videoendlayout"
+        android:background="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="@dimen/dp_65"
+            android:layout_height="@dimen/dp_65"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/common_icon_time_out_n"
+            android:id="@+id/videoendimage"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/videoendimage"
+            android:layout_marginTop="@dimen/dp_20">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="观看结束,"
+                android:textColor="#fff"
+                android:textSize="@dimen/dp_12"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="充值购买"
+                android:textColor="#3883D9"
+                android:textSize="@dimen/dp_14"
+                android:id="@+id/videoendlayoutbuy"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=",观看完整视频"
+                android:textColor="#fff"
+                android:textSize="@dimen/dp_12"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

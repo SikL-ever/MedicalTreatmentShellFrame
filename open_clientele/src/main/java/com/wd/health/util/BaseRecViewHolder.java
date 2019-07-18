@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 
 public class BaseRecViewHolder extends RecyclerView.ViewHolder {
+
     public BaseRecViewHolder(View itemView) {
         super(itemView);
     }

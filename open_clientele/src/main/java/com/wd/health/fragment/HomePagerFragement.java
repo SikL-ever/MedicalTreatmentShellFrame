@@ -14,6 +14,7 @@ import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDFragment;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.Constant;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -100,8 +101,6 @@ public class HomePagerFragement extends WDFragment {
         //p
         bannerPresenter = new BannerPresenter(new getbanner());
         bannerPresenter.reqeust();
-
-
         sltv.setOnScrollLintener(new ScrollLevitateTabView.OnScrollLintener() {
             @Override
             public void onScroll(int scrollY) {
@@ -114,7 +113,7 @@ public class HomePagerFragement extends WDFragment {
         images.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //intentByRouter(Constant.ACTIVITY_LOGIN_MYUSERACTIVITY);
             }
         });
         edit.setOnClickListener(new View.OnClickListener() {
@@ -146,8 +145,6 @@ public class HomePagerFragement extends WDFragment {
                     Toast.makeText(getActivity(), "点击了第"+position+"照片", Toast.LENGTH_SHORT).show();
                 }
             });
-
-
         }
         @Override
         public void fail(ApiException data, Object... args) {
