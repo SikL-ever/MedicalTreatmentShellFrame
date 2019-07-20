@@ -69,12 +69,14 @@ public class MainActivity extends WDActivity {
             if (bt3.isChecked()==false){
                 mainshowhide.setVisibility(View.GONE);
                 mainradio.setVisibility(View.VISIBLE);
+                //bt2.setVisibility(View.VISIBLE);
                 toplayout.setVisibility(View.GONE);//顶部栏
                 page=3;
                 handler.removeMessages(0);
             }else{
                 if (page == 0) {
                     mainradio.setVisibility(View.GONE);//导航消失
+                    //bt2.setVisibility(View.GONE);
                     mainshowhide.setVisibility(View.VISIBLE);//小导航栏出现
                     toplayout.setVisibility(View.GONE);//顶部栏
                     page=3;
@@ -165,6 +167,7 @@ public class MainActivity extends WDActivity {
                 } else if (checkedId == R.id.bt3) {
                     transaction.show(videoFragment).hide(homePagerFragement).hide(wardmateFragment);
                     mainradio.setVisibility(View.GONE);//导航消失
+                    //bt2.setVisibility(View.GONE);
                     mainshowhide.setVisibility(View.VISIBLE);//小导航栏出现
                     bt2.setVisibility(View.VISIBLE);
                     bt4.setVisibility(View.GONE);
@@ -173,12 +176,14 @@ public class MainActivity extends WDActivity {
                 transaction.commit();
             }
         });
+
         //点击切换底部栏
         mainbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainradio.setVisibility(View.VISIBLE);//导航消失
                 mainshowhide.setVisibility(View.GONE);//小导航栏出现
+                //bt2.setVisibility(View.VISIBLE);
                 toplayout.setVisibility(View.VISIBLE);
                 handler.sendEmptyMessageDelayed(0, 1000);
             }

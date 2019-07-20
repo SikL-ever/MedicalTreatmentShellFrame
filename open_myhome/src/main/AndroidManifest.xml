@@ -4,7 +4,10 @@
 
     <application>
         <activity android:name=".activity.MyUserActivity" />
-        <activity android:name=".childactivity.MyUserRecordActivity"></activity>
+        <activity android:name=".childactivity.MyUserRecordActivity" />
+        <activity android:name=".childthreeactivity.AddRecordActivity" />
+        <activity android:name=".childthreeactivity.UpdataRecordActivity" />
+        <activity android:name=".childactivity.MyUserCollectActivity"></activity>
     </application>
 
 </manifest>

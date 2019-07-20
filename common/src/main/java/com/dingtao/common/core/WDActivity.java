@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.dingtao.common.util.LogUtils;
@@ -44,6 +45,8 @@ public abstract class WDActivity extends AppCompatActivity {
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);//绑定布局
         initView();
+        //禁止RadioGroup在打字板上面
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
     }
 
     /**

@@ -16,7 +16,7 @@
         android:background="@drawable/the_bottom_bar"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="@dimen/dp_50"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:id="@+id/mainradio">
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <RadioButton
-           android:background="@drawable/common_tab_circle_n"
+            android:background="@drawable/common_tab_circle_n"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:button="@null"
@@ -69,6 +69,37 @@
             android:id="@+id/bt3"
             android:gravity="center"/>
     </RadioGroup>
+    <!--<RadioButton
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/common_tab_circle_n"
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45"
+        android:button="@null"
+        android:id="@+id/bt2"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/dp_30"
+        />
+    <RadioButton
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/common_tab_circle_s"
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45"
+        android:button="@null"
+        android:id="@+id/bt4"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/dp_30"
+        />-->
+
+
+
+
+
+
+
+
     <RelativeLayout
         android:background="#000"
         android:visibility="gone"
