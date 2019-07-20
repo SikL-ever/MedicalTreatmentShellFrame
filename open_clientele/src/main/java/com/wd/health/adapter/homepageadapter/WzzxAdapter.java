@@ -5,12 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.dingtao.common.bean.homepage.LsjlBean;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.dingtao.common.bean.homepage.WzzxBean;
 import com.wd.health.R;
-import com.wd.health.activity.SousuoAcitivity;
+import com.wd.health.fragment.HomePagerFragement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,58 +19,51 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.dingtao.common.core.WDApplication.getContext;
+
 /**
  * @Author：Administrator
  * @E-mail： victory52@163.com
- * @Date：2019/7/13 12:04
+ * @Date：2019/7/16 8:42
  * @Description：描述信息
  */
-public class LsjlAdapter extends RecyclerView.Adapter<LsjlAdapter.ViewHolder>{
+public class WzzxAdapter extends RecyclerView.Adapter<WzzxAdapter.ViewHolder> {
     private Context context;
-    private List<LsjlBean> lsjlBeans = new ArrayList<>();
-    public LsjlAdapter(SousuoAcitivity sousuoAcitivity) {
-        this.context = sousuoAcitivity;
+    private List<WzzxBean> wzzxBeans = new ArrayList<>();
+    public WzzxAdapter(Context homePagerFragement, List<WzzxBean> data) {
+        this.context = homePagerFragement;
+        this.wzzxBeans = data;
     }
-
-
 
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(context,R.layout.sousuo_item1,null);
+        View view = View.inflate(context,R.layout.wzzx_item,null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (lsjlBeans!=null){
-            holder.textView.setText(lsjlBeans.get(position).getName());
-            Glide.with(context).load(R.drawable.message_icon_close_n).into(holder.imageView);
-        }else{
-            Toast.makeText(context, "没有找到相关内容", Toast.LENGTH_SHORT).show();
-        }
-
+        holder.textView.setText(wzzxBeans.get(position).getDepartmentName());
+        Glide.with(getContext()).load(wzzxBeans.get(position).getPic()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return lsjlBeans.size();
+        return wzzxBeans.size();
     }
 
-    public void setlist(List<LsjlBean> lsjlBeans) {
-        this.lsjlBeans = lsjlBeans;
-        notifyDataSetChanged();
-    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.lsjl);
-            imageView = itemView.findViewById(R.id.tp);
+            imageView = itemView.findViewById(R.id.images1);
+            textView = itemView.findViewById(R.id.text_name);
         }
     }
 }

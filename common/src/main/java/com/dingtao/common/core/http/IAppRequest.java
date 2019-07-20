@@ -4,6 +4,15 @@ package com.dingtao.common.core.http;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
+import com.dingtao.common.bean.homepage.CjypBean;
+import com.dingtao.common.bean.homepage.CjypBean1;
+import com.dingtao.common.bean.homepage.DuotiaomuBean;
+import com.dingtao.common.bean.homepage.SousuoBean;
+import com.dingtao.common.bean.homepage.WzzxBean;
+import com.dingtao.common.bean.homepage.YpxqBean;
+import com.dingtao.common.bean.homepage.ZhuBean;
+import com.dingtao.common.bean.homepage.ZiBean;
+import com.dingtao.common.bean.homepage.ZxbkBean;
 import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.DanBean;
 import com.dingtao.common.bean.video.TopBean;
@@ -209,5 +218,25 @@ public interface IAppRequest {
 
     @GET("share/v1/bannersShow")
     Observable<Result<List<Banner>>> bannershow();
+  /*  @GET("health/share/v1/homePageSearch")
+    Observable<> bannershow();*/
+  @GET("share/knowledgeBase/v1/findDepartment")
+    Observable<Result<List<WzzxBean>>> wzzxshow();
+  @GET("share/information/v1/findInformationPlateList")
+    Observable<Result<List<ZxbkBean>>> zxbkshow();
+    @GET("share/information/v1/findInformationList")
+    Observable<Result<List<DuotiaomuBean>>> dtmshow(@Query("plateId") int plateId,@Query("page") int page,@Query("count") int count);
+    @GET("share/knowledgeBase/v1/findDiseaseCategory")
+    Observable<Result<List<ZiBean>>> zishow(@Query("departmentId") int departmentId);
+
+    @GET("share/knowledgeBase/v1/findDiseaseKnowledge")
+    Observable<Result<ZhuBean>> zhushow(@Query("id") int id);
+    @GET("share/knowledgeBase/v1/findDrugsCategoryList")
+    Observable<Result<List<CjypBean>>> cjypshow();
+    @GET("share/knowledgeBase/v1/findDrugsKnowledgeList")
+    Observable<Result<List<CjypBean1>>> cjyp1how(@Query("drugsCategoryId") int drugsCategoryId, @Query("page") int page, @Query("count") int count);
+    @GET("share/knowledgeBase/v1/findDrugsKnowledge")
+    Observable<Result<YpxqBean>> ypshow(@Query("id") int id);
+
     //xieqi-------------------------------------------------------------------别动我的
 }
