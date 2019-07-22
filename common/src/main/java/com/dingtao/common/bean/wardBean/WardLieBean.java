@@ -9,21 +9,27 @@ public class WardLieBean {
 //             "sickCircleId": 15,
 //             "title": "急寻：面神经炎的治疗方法"
     public int amount;
+    public int id;
     public int collectionNum;
     public int commentNum;
     public String detail;
+    public String disease;
     public long releaseTime;
     public int sickCircleId;
     public String title;
+    public long createTime;
 
-    public WardLieBean(int amount, int collectionNum, int commentNum, String detail, long releaseTime, int sickCircleId, String title) {
+    public WardLieBean(int amount, int id, int collectionNum, int commentNum, String detail, String disease, long releaseTime, int sickCircleId, String title, long createTime) {
         this.amount = amount;
+        this.id = id;
         this.collectionNum = collectionNum;
         this.commentNum = commentNum;
         this.detail = detail;
+        this.disease = disease;
         this.releaseTime = releaseTime;
         this.sickCircleId = sickCircleId;
         this.title = title;
+        this.createTime = createTime;
     }
 
     public int getAmount() {
@@ -32,6 +38,14 @@ public class WardLieBean {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCollectionNum() {
@@ -58,6 +72,14 @@ public class WardLieBean {
         this.detail = detail;
     }
 
+    public String getDisease() {
+        return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
+    }
+
     public long getReleaseTime() {
         return releaseTime;
     }
@@ -80,5 +102,13 @@ public class WardLieBean {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }

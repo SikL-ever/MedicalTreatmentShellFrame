@@ -1,6 +1,7 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
@@ -149,6 +150,30 @@ public interface IAppRequest {
                                  @Field("treatmentProcess") String treatmentProcess,
                                  @Field("treatmentStartTime") String treatmentStartTime,
                                  @Field("treatmentEndTime") String treatmentEndTime);
+    //.查询用户资讯收藏列表
+    @GET("user/verify/v1/findUserInfoCollectionList")
+    Observable<Result<List<MyConsultBean>>> mycollectconsult(@Header("userId") String userId,
+                                                             @Header("sessionId") String sessionId,
+                                                             @Query("page") int page,
+                                                             @Query("count") int count);
+    //.用户收藏病友圈列表
+    @GET("user/verify/v1/findUserSickCollectionList")
+    Observable<Result<List<WardLieBean>>> mycollectbing(@Header("userId") String userId,
+                                                         @Header("sessionId") String sessionId,
+                                                         @Query("page") int page,
+                                                         @Query("count") int count);
+    //.用户收藏健康课堂视频列表
+    @GET("user/verify/v1/findVideoCollectionList")
+    Observable<Result<List<VideoBean>>> mycollectvideo(@Header("userId") String userId,
+                                                         @Header("sessionId") String sessionId,
+                                                         @Query("page") int page,
+                                                         @Query("count") int count);
+    //取消收藏将康视频
+
+    @DELETE("user/verify/v1/cancelVideoCollection")
+    Observable<Result> deletemyuservideo(@Header("userId") String userId,
+                                          @Header("sessionId") String sessionId,
+                                          @Query("videoId") int videoId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 

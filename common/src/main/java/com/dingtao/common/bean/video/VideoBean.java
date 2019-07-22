@@ -14,7 +14,9 @@ public class VideoBean {
     public int categoryId;
     public int duration;
     public int id;
+    public int videoId;
     public String originalUrl;
+    public String original;
     public int price;
     public String shearUrl;
     public String title;
