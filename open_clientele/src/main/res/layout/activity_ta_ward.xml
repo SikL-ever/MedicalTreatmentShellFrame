@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.wardActivity.TaWardActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/beijing"
+                android:background="@drawable/user_bg"
+                android:layout_width="@dimen/dp_360"
+                android:layout_height="@dimen/dp_230"/>
+
+            <RelativeLayout
+                android:id="@+id/r"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginTop="215dp"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20">
+
+                <ImageView
+                    android:id="@+id/image_hea"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/doctor" />
+
+                <TextView
+                    android:id="@+id/head_nam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toRightOf="@+id/image_hea"
+                    android:text="小悦悦"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_14" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_below="@+id/r"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_6"
+                    android:background="#eee"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="@dimen/dp_34">
+                    <TextView
+                        android:background="#8657F2"
+                        android:layout_width="4dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20" />
+                    <TextView
+                        android:textSize="@dimen/sp_14"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_6"
+                        android:textColor="#333333"
+                        android:text="他发布的病友圈"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_4"
+                    android:background="#eee"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_ta"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

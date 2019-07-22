@@ -3,67 +3,125 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/dp_54">
-       <ImageView
-           android:id="@+id/head"
-           android:layout_centerVertical="true"
-           android:layout_marginLeft="20dp"
-           android:background="@drawable/bull"
-           android:layout_width="32dp"
-           android:layout_height="32dp" />
-       <ImageView
-           android:id="@+id/bull"
-           android:layout_centerVertical="true"
-           android:layout_alignParentRight="true"
-           android:background="@drawable/bull"
-           android:layout_marginRight="20dp"
-           android:layout_width="@dimen/dp_24"
-           android:layout_height="@dimen/dp_24" />
-   </RelativeLayout>
-    <TextView
-        android:background="#3333"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_6"
-        />
-    <RelativeLayout
-        android:background="#fff"
-        android:layout_marginTop="@dimen/dp_6"
-        android:layout_width="match_parent"
-        android:layout_height="36dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/seach"
-            android:layout_marginRight="6dp"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
-        <ImageView
-            android:id="@+id/seach"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/seach"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-    </RelativeLayout>
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/xrecyclerview"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="4dp"
-           >
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:visibility="invisible"
+                    android:id="@+id/relativelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_54">
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/head_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:text="急症科"
+                        android:textColor="#3871ea"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/edit"
+                        android:hint="请输入药品"
+                        android:padding="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_toLeftOf="@+id/bulls"
+                        android:layout_toRightOf="@+id/head_name"
+                        android:background="@drawable/edit" />
+
+                    <ImageView
+                        android:id="@+id/bulls"
+                        android:layout_width="@dimen/dp_24"
+                        android:layout_height="@dimen/dp_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/bull" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_54">
+                    <ImageView
+                        android:id="@+id/head"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/bull"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+                    <ImageView
+                        android:id="@+id/bull"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/bull"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="@dimen/dp_24"
+                        android:layout_height="@dimen/dp_24" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <TextView
+                android:background="#3333"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_6"
+                />
+            <RelativeLayout
+                android:background="#fff"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_width="match_parent"
+                android:layout_height="36dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/seach"
+                    android:layout_marginRight="6dp"
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+                <ImageView
+                    android:id="@+id/seach"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/seach"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/xrecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="4dp"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </LinearLayout>

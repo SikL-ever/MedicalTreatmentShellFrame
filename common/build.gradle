@@ -76,6 +76,8 @@ dependencies {
     api 'com.recker.flybanner:flybanner:1.3'
     //阴影依赖
     api 'androidx.cardview:cardview:1.0.0'
+    //别动这个依赖
+    api 'com.github.zcweng:switch-button:0.0.3@aar'
 
 
 

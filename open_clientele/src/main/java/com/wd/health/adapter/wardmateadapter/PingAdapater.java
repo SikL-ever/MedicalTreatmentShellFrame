@@ -1,6 +1,7 @@
 package com.wd.health.adapter.wardmateadapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -12,10 +13,13 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.wd.health.R;
+import com.wd.health.activity.wardActivity.TaWardActivity;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -41,17 +45,28 @@ public class PingAdapater extends RecyclerView.Adapter<PingAdapater.MyViewHolder
         holder.commentCaiNum.setText(list.get(position).getOpposeNum()+"");
         holder.commentZan.setText(list.get(position).getSupportNum()+"");
         holder.commentName.setText(list.get(position).getNickName());
-        holder.commentTime.setText(list.get(position).getCommentTime()+"");
-        Glide.with(context).load(list.get(position).getHeadPic()).apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(holder.head_ssss);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd ");
+        String time= simpleDateFormat.format(new Date(list.get(position).commentTime));
+        holder.commentTime.setText(time+"");
+        Glide.with(context).load(list.get(position).getHeadPic()).apply(RequestOptions.bitmapTransform(new RoundedCorners(80))).into(holder.head_ssss);
         holder.commentCoent.setText(list.get(position).getContent());
         boolean checked = holder.zan.isChecked();
         boolean checked1 = holder.cai.isChecked();
+        holder.head_ssss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,TaWardActivity.class);
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     public void setpinglei(List<Ping_lie_Bean> data) {

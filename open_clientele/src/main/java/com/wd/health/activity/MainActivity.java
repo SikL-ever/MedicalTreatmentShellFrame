@@ -1,5 +1,6 @@
 package com.wd.health.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
+import com.wd.health.activity.wardActivity.PublishActivity;
 import com.wd.health.fragment.HomePagerFragement;
 import com.wd.health.fragment.VideoFragment;
 import com.wd.health.fragment.WardmateFragment;
@@ -156,7 +158,8 @@ public class MainActivity extends WDActivity {
                             bt4.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Toast.makeText(MainActivity.this, "正在开发", Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(MainActivity.this,PublishActivity.class);
+                                    startActivity(intent);
                                 }
                             });
                         }

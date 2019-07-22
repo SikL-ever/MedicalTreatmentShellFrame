@@ -91,6 +91,9 @@ public class List_detailsActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private ImageView imageView;
     private PingAdapater pingAdapater;
+    private RecyclerView recyclerView;
+    private ImageView imageView1;
+    private TextView ping_edit;
 
 
     private PingliePresenter pingliePresenter;
@@ -115,8 +118,6 @@ public class List_detailsActivity extends AppCompatActivity {
         jainyi.setOnClickListener(new View.OnClickListener() {
 
 
-            private ImageView imageView1;
-            private TextView ping_edit;
 
             @Override
             public void onClick(View v) {
@@ -143,8 +144,8 @@ public class List_detailsActivity extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
-//                RecyclerView precyclerview = v.findViewById(R.id.pinglunrecycler);
-                RecyclerView recyclerView = view.findViewById(R.id.pinglunrecycler);
+
+                recyclerView = view.findViewById(R.id.pinglunrecycler);
                 pingliePresenter = new PingliePresenter(new ping());
                 final List<String> intt1 = loginDaoUtil.intt(List_detailsActivity.this);
                 //请求数据
@@ -152,9 +153,10 @@ public class List_detailsActivity extends AppCompatActivity {
                 //布局管理器
                 LinearLayoutManager linearLayoutManager= new LinearLayoutManager(List_detailsActivity.this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
                 //创建适配器
                 pingAdapater = new PingAdapater(List_detailsActivity.this);
+
+                recyclerView.setLayoutManager(linearLayoutManager);
                 //设置适配器
                 recyclerView.setAdapter(pingAdapater);
 
@@ -172,6 +174,7 @@ public class List_detailsActivity extends AppCompatActivity {
                         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(List_detailsActivity.this);
                         linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
                         ping_edit.setText("");
+//                        pingliePresenter.reqeust(ping_edit.getText().toString().trim());
                     }
                 });
             }
@@ -187,6 +190,13 @@ public class List_detailsActivity extends AppCompatActivity {
         });
 
 
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     //评论
@@ -195,8 +205,8 @@ public class List_detailsActivity extends AppCompatActivity {
         @Override
         public void success(Result data, Object... args) {
             Toast.makeText(List_detailsActivity.this, data.message, Toast.LENGTH_SHORT).show();
-            String message = data.message;
-
+//            String message = data.message;
+            pingAdapater.notifyDataSetChanged();
         }
 
         @Override
@@ -230,7 +240,7 @@ public class List_detailsActivity extends AppCompatActivity {
             String detail = data.getDetail();
             String treatmentHospital = data.getTreatmentHospital();
             String treatmentProcess = data.getTreatmentProcess();
-            String picture = data.getPicture();
+//            String picture = data.getPicture();
             String disease = data.getDisease();
             int commentNum = data.getCommentNum();
             int collectionNum = data.getCollectionNum();
@@ -246,7 +256,7 @@ public class List_detailsActivity extends AppCompatActivity {
             hospital.setText(treatmentHospital);
             remedy.setText(treatmentProcess);
             String[] split = picture1.split(",");
-            Glide.with(zhilaiotu).load(picture).into(zhilaiotu);
+//            Glide.with(zhilaiotu).load(picture).into(zhilaiotu);
         }
 
         @Override

@@ -10,6 +10,7 @@ import com.dingtao.common.bean.video.VideoBean;
 import com.dingtao.common.bean.wardBean.List_xiang_Bean;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.dingtao.common.bean.wardBean.SeachBean;
+import com.dingtao.common.bean.wardBean.TaFaBean;
 import com.dingtao.common.bean.wardBean.TabBean;
 import com.dingtao.common.bean.wardBean.WardLieBean;
 /*import com.dingtao.common.bean.video.TopBean;
@@ -142,6 +143,18 @@ public interface IAppRequest {
                                @Header("sessionId") String sessionId,
                                @Field("sickCircleId") int sickCircleId,
                                @Field("content") String content);
+
+    @GET("user/sickCircle/v1/findPatientSickCircleList")
+    Observable<Result<List<TaFaBean>>> tafa(@Query("patientUserId") int patientUserId,
+                                            @Query("page") int page,
+                                            @Query("count") int count);
+
+    //发表病友圈
+    @FormUrlEncoded
+    @POST("user/sickCircle/verify/v1/publishSickCircle")
+    Observable<Result> fabiao();
+    //收藏
+
     /*==========================================LIFANGXIAN====================================================*/
 
 
