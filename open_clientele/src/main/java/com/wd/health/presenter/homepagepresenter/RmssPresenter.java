@@ -9,16 +9,17 @@ import io.reactivex.Observable;
 /**
  * @Author：Administrator
  * @E-mail： victory52@163.com
- * @Date：2019/7/15 13:51
+ * @Date：2019/7/22 14:13
  * @Description：描述信息
  */
-public class SousuoPresenter extends WDPresenter<IAppRequest> {
-    public SousuoPresenter(DataCall dataCall) {
+public class RmssPresenter extends WDPresenter<IAppRequest> {
+
+    public RmssPresenter(DataCall dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable getModel(Object... args) {
-        return iRequest.sousuoshow((String) args[0]);
+        return iRequest.rmssshow();
     }
 }

@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
@@ -20,14 +21,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dingtao.common.bean.homepage.LsjlBean;
+import com.dingtao.common.bean.homepage.RmssBean;
+import com.dingtao.common.bean.homepage.SousuoBean;
+import com.dingtao.common.core.DataCall;
+import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LsjlBeanDao;
+import com.wd.health.CustomImageView.FlowLayout;
 import com.wd.health.CustomImageView.MyListView;
 import com.wd.health.Helper.RecordsDao;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.adapter.homepageadapter.LsjlAdapter;
 import com.wd.health.adapter.homepageadapter.SearchRecordsAdapter;
+import com.wd.health.presenter.homepagepresenter.RmssPresenter;
+import com.wd.health.presenter.homepagepresenter.SousuoPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +62,8 @@ public class SousuoAcitivity extends AppCompatActivity {
     LinearLayout weizhaodao;
     @BindView(R2.id.search_content_show_ll)
     LinearLayout searchRecordsLl;
+    @BindView(R2.id.flow)
+    FlowLayout flowLayout;
     private LsjlAdapter lsjlAdapter;
     private SearchRecordsAdapter recordsAdapter;
     private View recordsHistoryView;
@@ -63,6 +73,9 @@ public class SousuoAcitivity extends AppCompatActivity {
     private List<String> searchRecordsList;
     private List<String> tempList;
     private RecordsDao recordsDao;
+    private LinearLayout.LayoutParams layoutParams;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +88,23 @@ public class SousuoAcitivity extends AppCompatActivity {
             }
         });
 
+        RmssPresenter rmssPresenter = new RmssPresenter(new RmssShow());
+//往容器内添加TextView数据
+        layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(10, 5, 10, 5);
+        if (flowLayout != null) {
+            flowLayout.removeAllViews();
+        }
+        /*for (int i = 0; i < list.size(); i++) {
+            TextView tv = new TextView(this);
+            tv.setPadding(28, 10, 28, 10);
+            tv.setText(loveList.get(i));
+            tv.setMaxEms(10);
+            tv.setSingleLine();
+            tv.setBackgroundResource(R.drawable.selector_playsearch);
+            tv.setLayoutParams(layoutParams);
+            flowLayout.addView(tv, layoutParams);
+        }*/
         /*recyclerView.setLayoutManager(new LinearLayoutManager(this));
         lsjlAdapter = new LsjlAdapter(this);
         recyclerView.setAdapter(lsjlAdapter);
@@ -142,7 +172,7 @@ public class SousuoAcitivity extends AppCompatActivity {
                 if (edit_item.getText().toString().length() > 0) {
 
                     String record = edit_item.getText().toString();
-
+                    SousuoPresenter sousuoPresenter = new SousuoPresenter(new sousuo());
                     //判断数据库中是否存在该记录
                     if (!recordsDao.isHasRecord(record)) {
                         tempList.add(record);
@@ -305,4 +335,42 @@ public class SousuoAcitivity extends AppCompatActivity {
     }
 
 
+    private class sousuo implements DataCall<SousuoBean> {
+
+
+        List<SousuoBean.DrugsSearchVoListBean> drugsSearchVoList;
+
+        @Override
+        public void success(SousuoBean data, Object... args) {
+            List<SousuoBean.DiseaseSearchVoListBean> diseaseSearchVoList = data.getDiseaseSearchVoList();
+            List<SousuoBean.DoctorSearchVoListBean> doctorSearchVoList = data.getDoctorSearchVoList();
+            List<SousuoBean.DrugsSearchVoListBean> drugsSearchVoList = data.getDrugsSearchVoList();
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
+
+    private class RmssShow implements DataCall<RmssBean> {
+        @Override
+        public void success(RmssBean data, Object... args) {
+          //  for (int i = 0; i < list.size(); i++) {
+                TextView tv = new TextView(SousuoAcitivity.this);
+                tv.setPadding(28, 10, 28, 10);
+                tv.setText(data.getName());
+                tv.setMaxEms(10);
+                tv.setSingleLine();
+               // tv.setBackgroundResource(R.drawable.selector_playsearch);
+                tv.setLayoutParams(layoutParams);
+                flowLayout.addView(tv, layoutParams);
+          //  }
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
 }

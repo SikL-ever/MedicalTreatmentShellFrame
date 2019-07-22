@@ -1,5 +1,6 @@
 package com.wd.health.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
@@ -20,6 +24,7 @@ import com.dingtao.common.bean.homepage.ZxbkBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDFragment;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.LoginDaoUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -27,6 +32,7 @@ import com.recker.flybanner.FlyBanner;
 import com.wd.health.CustomImageView.ScrollLevitateTabView;
 import com.wd.health.R;
 import com.wd.health.R2;
+import com.wd.health.activity.DuoXiangActivity;
 import com.wd.health.activity.SousuoAcitivity;
 import com.wd.health.activity.ZsbdActivity;
 import com.wd.health.adapter.homepageadapter.DuotiaomuAdapter;
@@ -65,6 +71,8 @@ public class HomePagerFragement extends WDFragment {
     ImageView images;
     @BindView(R2.id.edit)
     TextView edit;
+    @BindView(R2.id.ckgd)
+    TextView ckgd;
     @BindView(R2.id.xiaoxi)
     CheckBox xiaoxi;
     @BindView(R2.id.zsbd)
@@ -102,6 +110,8 @@ public class HomePagerFragement extends WDFragment {
     private ZxbkPresenter zxbkpresenter;
     private DuotiaomuPresenter duotiaomuPresenter;
     private DuotiaomuAdapter duotiaomuAdapter;
+    private String title_name = "健康养生";
+
     /*private TabFragment1 tabFragment1;
     private FrameLayout frage;
     private TabLayout tabLayout, tabLayout2, tabLayout3;
@@ -175,6 +185,14 @@ public class HomePagerFragement extends WDFragment {
                 startActivity(intent);
             }
         });
+        ckgd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),DuoXiangActivity.class);
+                intent.putExtra("asdf",title_name);
+                getActivity().startActivity(intent);
+            }
+        });
         //frage.setLayoutManager(new LinearLayoutManager(this,));
         frage.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         duotiaomuAdapter = new DuotiaomuAdapter(getContext());
@@ -184,7 +202,10 @@ public class HomePagerFragement extends WDFragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 duotiaomuPresenter = new DuotiaomuPresenter(new Dtm());
                 duotiaomuPresenter.reqeust(tab.getPosition()+1,1,10);
-                Log.i("aaaaaaaaa",tab.getText()+"+++++++++"+tab.getPosition()+"++++++++"+tab.getIcon());
+                title_name=tab.getText()+"";
+                //recycler.setFocusableInTouchMode(false);
+                Log.i("aaaaaaaaa",tab.getText()+"+++++++++"+tab.getPosition()+"++++++++"+tab.getIcon()+"++++++++++++++++++"+title_name);
+
             }
 
             @Override
@@ -197,6 +218,7 @@ public class HomePagerFragement extends WDFragment {
 
             }
         });
+
     }
 
     private void Shujvzhanshi(int i) {
@@ -274,8 +296,6 @@ public class HomePagerFragement extends WDFragment {
             tabLayout3.getTabAt(i).setText(stringArrayList.get(i));
         }
     }
-
-
     private class Dtm implements DataCall<List<DuotiaomuBean>> {
         @Override
         public void success(List<DuotiaomuBean> data, Object... args) {

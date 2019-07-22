@@ -1,12 +1,15 @@
 package com.wd.health.adapter.homepageadapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.health.R;
+import com.wd.health.activity.ZxxqActivity;
 
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.annotations.NonNull;
@@ -17,10 +20,12 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.VH> {
     Context context;
     String[] split;
     private View inflate;
+    private int iii;
 
-    public GridAdapter(Context context, String[] split) {
+    public GridAdapter(Context context, String[] strings, int id) {
         this.context = context;
-        this.split = split;
+        this.split = strings;
+        this.iii = id;
     }
 
     @NonNull
@@ -49,6 +54,15 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.VH> {
          /*   vh.imageView1.setImageURI(split[i]);
             vh.imageView2.setImageURI(split[i]);*/
         }
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             //   Toast.makeText(context, ""+iii, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,ZxxqActivity.class);
+                intent.putExtra("idxq",iii);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

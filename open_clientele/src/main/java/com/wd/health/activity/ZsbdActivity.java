@@ -13,6 +13,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.homepage.CjypBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
 import com.dingtao.common.bean.homepage.WzzxBean1;
@@ -21,6 +24,7 @@ import com.dingtao.common.bean.homepage.ZhuBean1;
 import com.dingtao.common.bean.homepage.ZiBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.adapter.homepageadapter.ZsbdAdapter;
@@ -83,8 +87,12 @@ public class ZsbdActivity extends AppCompatActivity {
         setContentView(R.layout.activity_zsbd);
         ButterKnife.bind(this);
         type = getIntent().getIntExtra("type", 101);
-
-
+        LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
+        List<String> intt = loginDaoUtil.intt(this);
+        String userId = intt.get(0);
+        String sessionId = intt.get(1);
+        String yhtx = intt.get(2);
+        Glide.with(this).load(yhtx).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
 /*
         zhuRecycler.setLayoutManager(new LinearLayoutManager(this));
         zsbdAdapter2 = new ZsbdAdapter2(ZsbdActivity.this);

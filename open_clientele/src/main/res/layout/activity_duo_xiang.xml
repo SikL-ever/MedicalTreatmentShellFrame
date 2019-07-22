@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:id="@+id/r1"
+        android:layout_height="@dimen/dp_60">
+        <ImageView
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:src="@drawable/register_icon_invitatiion_code_n"
+            android:id="@+id/gengduo_headimg" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:textColor="#333"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/gengduo_name"/>
+        <CheckBox
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginRight="@dimen/dp_12"
+            android:id="@+id/gengduo_tongzhimg"
+            android:button="@null"
+            android:layout_centerVertical="true"
+            android:background="@drawable/sele2"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:id="@+id/gengduo_recycler"
+        android:layout_below="@id/r1"
+        android:layout_marginTop="@dimen/dp_6">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>

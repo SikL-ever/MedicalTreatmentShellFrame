@@ -9,6 +9,7 @@ import com.dingtao.common.bean.homepage.YpxqBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDFragment;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.presenter.homepagepresenter.YpxqPresenter;
@@ -66,6 +67,7 @@ public class Fragment02_2 extends WDFragment {
         int idi = id1.getInt("idi", 0);
         ypxqPresenter = new YpxqPresenter(new Ypxq());
         ypxqPresenter.reqeust(idi);
+
     }
 
     private class Ypxq implements DataCall<YpxqBean> {

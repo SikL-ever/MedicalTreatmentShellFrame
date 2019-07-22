@@ -76,7 +76,8 @@ dependencies {
     api 'com.recker.flybanner:flybanner:1.3'
     //阴影依赖
     api 'androidx.cardview:cardview:1.0.0'
-
+    //web
+    api 'org.jsoup:jsoup:1.11.3'
 
 
 }

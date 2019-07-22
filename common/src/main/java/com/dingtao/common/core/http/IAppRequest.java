@@ -6,8 +6,10 @@ import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.homepage.CjypBean;
 import com.dingtao.common.bean.homepage.CjypBean1;
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
+import com.dingtao.common.bean.homepage.RmssBean;
 import com.dingtao.common.bean.homepage.SousuoBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
+import com.dingtao.common.bean.homepage.XqBean;
 import com.dingtao.common.bean.homepage.YpxqBean;
 import com.dingtao.common.bean.homepage.ZhuBean;
 import com.dingtao.common.bean.homepage.ZiBean;
@@ -34,6 +36,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * @author dingtao
@@ -183,17 +186,18 @@ public interface IAppRequest {
 
     @GET("share/v1/bannersShow")
     Observable<Result<List<Banner>>> bannershow();
-  /*  @GET("health/share/v1/homePageSearch")
-    Observable<> bannershow();*/
-  @GET("share/knowledgeBase/v1/findDepartment")
+    @GET("health/share/v1/homePageSearch")
+    Observable<Result<SousuoBean>> sousuoshow(@Query("keyWord") String keyWord);
+    @GET("health/share/v1/popularSearch")
+    Observable<Result<List<RmssBean>>> rmssshow();
+    @GET("share/knowledgeBase/v1/findDepartment")
     Observable<Result<List<WzzxBean>>> wzzxshow();
-  @GET("share/information/v1/findInformationPlateList")
+    @GET("share/information/v1/findInformationPlateList")
     Observable<Result<List<ZxbkBean>>> zxbkshow();
     @GET("share/information/v1/findInformationList")
     Observable<Result<List<DuotiaomuBean>>> dtmshow(@Query("plateId") int plateId,@Query("page") int page,@Query("count") int count);
     @GET("share/knowledgeBase/v1/findDiseaseCategory")
     Observable<Result<List<ZiBean>>> zishow(@Query("departmentId") int departmentId);
-
     @GET("share/knowledgeBase/v1/findDiseaseKnowledge")
     Observable<Result<ZhuBean>> zhushow(@Query("id") int id);
     @GET("share/knowledgeBase/v1/findDrugsCategoryList")
@@ -202,6 +206,10 @@ public interface IAppRequest {
     Observable<Result<List<CjypBean1>>> cjyp1how(@Query("drugsCategoryId") int drugsCategoryId, @Query("page") int page, @Query("count") int count);
     @GET("share/knowledgeBase/v1/findDrugsKnowledge")
     Observable<Result<YpxqBean>> ypshow(@Query("id") int id);
+    @GET("share/information/v1/findInformation")
+    Observable<Result<XqBean>> zxxqshow(@Query("infoId") int infoId,@Header("userId") String userId, @Header("sessionId") String sessionId);
+    @POST("user/verify/v1/addInfoCollection")
+    Observable<Result> shoucangshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
 
     //xieqi-------------------------------------------------------------------别动我的
 }

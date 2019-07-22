@@ -1,15 +1,20 @@
 package com.wd.health.adapter.homepageadapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
+import com.dingtao.common.util.DateUtils;
 import com.wd.health.R;
+import com.wd.health.activity.ZxxqActivity;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,43 +70,58 @@ public class DuotiaomuAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-
-      //  Log.i("aaaaaaaaaaa456",length+"");
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (viewHolder instanceof ViewHolder1){
             String image = duotiaomuBeans.get(position).getThumbnail();
             String[] split = image.split(";");
-            GridAdapter gridAdapter = new GridAdapter(context,split);
+            GridAdapter gridAdapter = new GridAdapter(context,split,duotiaomuBeans.get(position).getId());
             ((ViewHolder1) viewHolder).recyclerView.setLayoutManager(((ViewHolder1) viewHolder).linearLayoutManager);
             ((ViewHolder1) viewHolder).name.setText(duotiaomuBeans.get(position).getTitle());
             ((ViewHolder1) viewHolder).yys.setText(duotiaomuBeans.get(position).getSource());
-            ((ViewHolder1) viewHolder).time.setText(duotiaomuBeans.get(position).getReleaseTime()+"");
+            try {
+                ((ViewHolder1) viewHolder).time.setText(DateUtils.dateTransformer(duotiaomuBeans.get(position).getReleaseTime(),DateUtils.DATE_PATTERN));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             ((ViewHolder1) viewHolder).recyclerView.setAdapter(gridAdapter);
         }else if(viewHolder instanceof ViewHolder2){
             String image = duotiaomuBeans.get(position).getThumbnail();
             String[] split = image.split(";");
-            GridAdapter gridAdapter = new GridAdapter(context,split);
+            GridAdapter gridAdapter = new GridAdapter(context,split,duotiaomuBeans.get(position).getId());
             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
             ((ViewHolder2) viewHolder).recyclerView1.setLayoutManager(gridLayoutManager);
             ((ViewHolder2) viewHolder).name.setText(duotiaomuBeans.get(position).getTitle());
             ((ViewHolder2) viewHolder).yys.setText(duotiaomuBeans.get(position).getSource());
-            ((ViewHolder2) viewHolder).time.setText(duotiaomuBeans.get(position).getReleaseTime()+"");
+            try {
+                ((ViewHolder2) viewHolder).time.setText(DateUtils.dateTransformer(duotiaomuBeans.get(position).getReleaseTime(),DateUtils.DATE_PATTERN));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             ((ViewHolder2) viewHolder).recyclerView1.setAdapter(gridAdapter);
         }else if (viewHolder instanceof ViewHolder3){
             String image = duotiaomuBeans.get(position).getThumbnail();
             String[] split = image.split(";");
-            GridAdapter gridAdapter = new GridAdapter(context,split);
+            GridAdapter gridAdapter = new GridAdapter(context,split,duotiaomuBeans.get(position).getId());
             ((ViewHolder3) viewHolder).recyclerView1.setLayoutManager(((ViewHolder3) viewHolder).gridLayoutManager1);
             ((ViewHolder3) viewHolder).name.setText(duotiaomuBeans.get(position).getTitle());
             ((ViewHolder3) viewHolder).yys.setText(duotiaomuBeans.get(position).getSource());
-            ((ViewHolder3) viewHolder).time.setText(duotiaomuBeans.get(position).getReleaseTime()+"");
+            try {
+                ((ViewHolder3) viewHolder).time.setText(DateUtils.dateTransformer(duotiaomuBeans.get(position).getReleaseTime(),DateUtils.DATE_PATTERN));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             ((ViewHolder3) viewHolder).recyclerView1.setAdapter(gridAdapter);
-
         }
-        /*if (split.length > 0 ){
 
-
-        }*/
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  Toast.makeText(context, ""+duotiaomuBeans.get(position).getId(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,ZxxqActivity.class);
+                intent.putExtra("idxq",duotiaomuBeans.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -129,6 +149,7 @@ public class DuotiaomuAdapter extends RecyclerView.Adapter{
             time= itemView.findViewById(R.id.time);
         }
     }
+
     public class ViewHolder2 extends RecyclerView.ViewHolder {
 
         RecyclerView recyclerView1;
