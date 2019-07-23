@@ -23,6 +23,7 @@ import com.dingtao.common.bean.video.VideoBean;
 import com.dingtao.common.bean.wardBean.List_xiang_Bean;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.dingtao.common.bean.wardBean.SeachBean;
+import com.dingtao.common.bean.wardBean.TaFaBean;
 import com.dingtao.common.bean.wardBean.TabBean;
 import com.dingtao.common.bean.wardBean.WardLieBean;
 /*import com.dingtao.common.bean.video.TopBean;
@@ -214,6 +215,30 @@ public interface IAppRequest {
                                @Header("sessionId") String sessionId,
                                @Field("sickCircleId") int sickCircleId,
                                @Field("content") String content);
+
+    @GET("user/sickCircle/v1/findPatientSickCircleList")
+    Observable<Result<List<TaFaBean>>> tafa(@Query("patientUserId") int patientUserId,
+                                            @Query("page") int page,
+                                            @Query("count") int count);
+
+    //发表病友圈
+    @FormUrlEncoded
+    @POST("user/sickCircle/verify/v1/publishSickCircle")
+    Observable<Result> fabiao();
+    @FormUrlEncoded
+    //收藏
+    @PUT("user/sickCircle/verify/v1/adoptionProposal")
+    Observable<Result> collect(@Header("userId") String userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("commentId") int commentId,
+                               @Field("sickCircleId") int sickCircleId);
+    //点赞
+    @FormUrlEncoded
+    @PUT("user/sickCircle/verify/v1/expressOpinion")
+    Observable<Result> zan(@Header("userId") String userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("commentId") int commentId,
+                               @Field("opinion") int opinion);
     /*==========================================LIFANGXIAN====================================================*/
 
 

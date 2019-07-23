@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -30,9 +31,11 @@ import com.wd.health.R2;
 import com.wd.health.activity.MainActivity;
 import com.wd.health.adapter.wardmateadapter.PingAdapater;
 import com.wd.health.adapter.wardmateadapter.XiangAdapater;
+import com.wd.health.presenter.wardmatepresenter.CollectPresenter;
 import com.wd.health.presenter.wardmatepresenter.Lie_XiangPresenter;
 import com.wd.health.presenter.wardmatepresenter.PingliePresenter;
 import com.wd.health.presenter.wardmatepresenter.PinglunPresenter;
+import com.wd.health.presenter.wardmatepresenter.ZanPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,8 +94,11 @@ public class List_detailsActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private ImageView imageView;
     private PingAdapater pingAdapater;
+    private RecyclerView recyclerView;
+    private ImageView imageView1;
+    private TextView ping_edit;
 
-
+    private int type=1;
     private PingliePresenter pingliePresenter;
     private LoginDaoUtil loginDaoUtil;
     private PinglunPresenter pinglunPresenter;
@@ -113,10 +119,6 @@ public class List_detailsActivity extends AppCompatActivity {
         lie_xiangPresenter.reqeust(intt.get(0), intt.get(1), jumpId);
         //弹出对话框
         jainyi.setOnClickListener(new View.OnClickListener() {
-
-
-            private ImageView imageView1;
-            private TextView ping_edit;
 
             @Override
             public void onClick(View v) {
@@ -143,8 +145,8 @@ public class List_detailsActivity extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
-//                RecyclerView precyclerview = v.findViewById(R.id.pinglunrecycler);
-                RecyclerView recyclerView = view.findViewById(R.id.pinglunrecycler);
+
+                recyclerView = view.findViewById(R.id.pinglunrecycler);
                 pingliePresenter = new PingliePresenter(new ping());
                 final List<String> intt1 = loginDaoUtil.intt(List_detailsActivity.this);
                 //请求数据
@@ -152,13 +154,12 @@ public class List_detailsActivity extends AppCompatActivity {
                 //布局管理器
                 LinearLayoutManager linearLayoutManager= new LinearLayoutManager(List_detailsActivity.this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
                 //创建适配器
                 pingAdapater = new PingAdapater(List_detailsActivity.this);
+
+                recyclerView.setLayoutManager(linearLayoutManager);
                 //设置适配器
                 recyclerView.setAdapter(pingAdapater);
-
-
 
                 //评论
                 ping_edit = view.findViewById(R.id.ping_Edit);
@@ -172,8 +173,13 @@ public class List_detailsActivity extends AppCompatActivity {
                         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(List_detailsActivity.this);
                         linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
                         ping_edit.setText("");
+//                        pingliePresenter.reqeust(ping_edit.getText().toString().trim());
                     }
                 });
+
+
+
+
             }
 
             //半透明
@@ -189,14 +195,31 @@ public class List_detailsActivity extends AppCompatActivity {
 
     }
 
+
+    //点赞和踩
+    class zan implements DataCall<Result>{
+
+        @Override
+        public void success(Result data, Object... args) {
+            Object result = data.result;
+
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
+
+
     //评论
     class pinglun implements DataCall<Result>{
 
         @Override
         public void success(Result data, Object... args) {
             Toast.makeText(List_detailsActivity.this, data.message, Toast.LENGTH_SHORT).show();
-            String message = data.message;
-
+//            String message = data.message;
+            pingAdapater.notifyDataSetChanged();
         }
 
         @Override
@@ -230,7 +253,7 @@ public class List_detailsActivity extends AppCompatActivity {
             String detail = data.getDetail();
             String treatmentHospital = data.getTreatmentHospital();
             String treatmentProcess = data.getTreatmentProcess();
-            String picture = data.getPicture();
+//            String picture = data.getPicture();
             String disease = data.getDisease();
             int commentNum = data.getCommentNum();
             int collectionNum = data.getCollectionNum();
@@ -246,7 +269,7 @@ public class List_detailsActivity extends AppCompatActivity {
             hospital.setText(treatmentHospital);
             remedy.setText(treatmentProcess);
             String[] split = picture1.split(",");
-            Glide.with(zhilaiotu).load(picture).into(zhilaiotu);
+//            Glide.with(zhilaiotu).load(picture).into(zhilaiotu);
         }
 
         @Override
