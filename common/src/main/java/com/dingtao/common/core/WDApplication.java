@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
+import android.webkit.JavascriptInterface;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.danikula.videocache.HttpProxyCacheServer;
@@ -65,6 +67,7 @@ public class WDApplication extends Application {
         //定位
         //推送
         //统计
+
     }
 
     @Override

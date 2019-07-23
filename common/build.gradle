@@ -78,7 +78,11 @@ dependencies {
     api 'androidx.cardview:cardview:1.0.0'
     //别动这个依赖
     api 'com.github.zcweng:switch-button:0.0.3@aar'
+    //x
+    api 'com.jcodecraeer:xrecyclerview:1.5.9'
 
+    //web
+    api 'org.jsoup:jsoup:1.11.3'
 
 
 }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F2F2"
+    tools:context=".activity.ZsbdActivity">
+    <RelativeLayout
+        android:id="@+id/aaaa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_10"
+        android:background="#fff">
+        <ImageView
+            android:id="@+id/images"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/register_icon_invitatiion_code_n"/>
+        <TextView
+            android:id="@+id/edit"
+            android:layout_toRightOf="@+id/images"
+            android:layout_toLeftOf="@+id/xiaoxi"
+            android:layout_width="match_parent"
+            android:layout_alignBottom="@+id/images"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#00ff0000"
+            android:gravity="center_vertical"
+            android:textCursorDrawable="@null"
+            android:textSize="12sp"
+            android:textColor="#fff"
+            android:layout_height="32dp" />
+        <CheckBox
+            android:id="@+id/xiaoxi"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="12dp"
+            android:button="@null"
+            android:background="@drawable/sele2"
+            android:layout_alignBottom="@+id/edit"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_below="@+id/aaaa"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_37"
+        android:layout_marginTop="@dimen/dp_6"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/cjbz_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:text="常见病症"
+            android:background="#fff"
+            android:textColor="@color/sele4"/>
+        <RadioButton
+            android:id="@+id/cyyp_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:button="@null"
+            android:gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:text="常见药品"
+            android:background="#fff"
+            android:textColor="@color/sele4"/>
+    </RadioGroup>
+
+ <!--   <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/zhu_recycler"
+        android:layout_below="@+id/aaaa"
+        android:layout_marginTop="@dimen/dp_6"
+        android:background="#fff"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>-->
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_below="@+id/aaaa"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+</RelativeLayout>

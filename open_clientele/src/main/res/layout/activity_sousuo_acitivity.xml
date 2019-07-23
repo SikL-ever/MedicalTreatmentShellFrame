@@ -14,7 +14,7 @@
     <EditText
         android:id="@+id/edit_item"
         android:layout_toRightOf="@+id/fanhui"
-        android:layout_toLeftOf="@+id/sousuo"
+        android:layout_toLeftOf="@+id/sousuo1"
         android:layout_width="match_parent"
         android:layout_alignBottom="@+id/fanhui"
         android:layout_marginLeft="@dimen/dp_10"
@@ -27,33 +27,55 @@
         android:textColor="#fff"
         android:layout_height="@dimen/dp_32" />
     <TextView
-        android:id="@+id/sousuo"
+        android:id="@+id/sousuo1"
         android:layout_width="@dimen/dp_32"
         android:layout_height="@dimen/dp_32"
         android:layout_marginRight="@dimen/dp_12"
         android:button="@null"
         android:text="搜索"
+        android:textSize="15sp"
         android:gravity="center"
         android:textColor="#3087EA"
         android:layout_alignBottom="@+id/edit_item"
         android:layout_alignParentRight="true"/>
     <View
         android:id="@+id/xian"
-        android:layout_below="@+id/sousuo"
+        android:layout_below="@+id/sousuo1"
         android:layout_marginTop="@dimen/dp_20"
         android:background="#F2F2F2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_4"/>
-
     <LinearLayout
+        android:id="@+id/weizhaodao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/xian"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-90dp"
+            android:src="@drawable/no_search_message"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="抱歉！没有找到“  ”的相关信息"
+            android:textColor="#000"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/yizhaodao"
         android:layout_below="@+id/xian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-
-        <ScrollView
+        android:orientation="vertical"
+        >
+        <!--<ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -112,6 +134,64 @@
                     android:background="#EEEEEE"></View>
             </LinearLayout>
 
-        </ScrollView>
+        </ScrollView>-->
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center|left"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/tv_history"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:text="搜索历史"
+                android:textSize="15sp"
+                android:textColor="#3087EA"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/search_content_show_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center|left"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/tv_hot"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:text="热门搜索"
+                android:textSize="15sp"
+                android:textColor="#3087EA"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.wd.health.CustomImageView.FlowLayout
+                android:id="@+id/flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f00"
+                android:padding="@dimen/dp_5">
+
+            </com.wd.health.CustomImageView.FlowLayout>
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
