@@ -153,8 +153,20 @@ public interface IAppRequest {
     @FormUrlEncoded
     @POST("user/sickCircle/verify/v1/publishSickCircle")
     Observable<Result> fabiao();
+    @FormUrlEncoded
     //收藏
-
+    @PUT("user/sickCircle/verify/v1/adoptionProposal")
+    Observable<Result> collect(@Header("userId") String userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("commentId") int commentId,
+                               @Field("sickCircleId") int sickCircleId);
+    //点赞
+    @FormUrlEncoded
+    @PUT("user/sickCircle/verify/v1/expressOpinion")
+    Observable<Result> zan(@Header("userId") String userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("commentId") int commentId,
+                               @Field("opinion") int opinion);
     /*==========================================LIFANGXIAN====================================================*/
 
 

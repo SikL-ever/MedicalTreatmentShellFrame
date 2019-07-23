@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -30,9 +31,11 @@ import com.wd.health.R2;
 import com.wd.health.activity.MainActivity;
 import com.wd.health.adapter.wardmateadapter.PingAdapater;
 import com.wd.health.adapter.wardmateadapter.XiangAdapater;
+import com.wd.health.presenter.wardmatepresenter.CollectPresenter;
 import com.wd.health.presenter.wardmatepresenter.Lie_XiangPresenter;
 import com.wd.health.presenter.wardmatepresenter.PingliePresenter;
 import com.wd.health.presenter.wardmatepresenter.PinglunPresenter;
+import com.wd.health.presenter.wardmatepresenter.ZanPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +98,7 @@ public class List_detailsActivity extends AppCompatActivity {
     private ImageView imageView1;
     private TextView ping_edit;
 
-
+    private int type=1;
     private PingliePresenter pingliePresenter;
     private LoginDaoUtil loginDaoUtil;
     private PinglunPresenter pinglunPresenter;
@@ -116,8 +119,6 @@ public class List_detailsActivity extends AppCompatActivity {
         lie_xiangPresenter.reqeust(intt.get(0), intt.get(1), jumpId);
         //弹出对话框
         jainyi.setOnClickListener(new View.OnClickListener() {
-
-
 
             @Override
             public void onClick(View v) {
@@ -160,8 +161,6 @@ public class List_detailsActivity extends AppCompatActivity {
                 //设置适配器
                 recyclerView.setAdapter(pingAdapater);
 
-
-
                 //评论
                 ping_edit = view.findViewById(R.id.ping_Edit);
                 pinglunPresenter = new PinglunPresenter(new pinglun());
@@ -177,6 +176,10 @@ public class List_detailsActivity extends AppCompatActivity {
 //                        pingliePresenter.reqeust(ping_edit.getText().toString().trim());
                     }
                 });
+
+
+
+
             }
 
             //半透明
@@ -190,14 +193,24 @@ public class List_detailsActivity extends AppCompatActivity {
         });
 
 
-        star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
+
+
+    //点赞和踩
+    class zan implements DataCall<Result>{
+
+        @Override
+        public void success(Result data, Object... args) {
+            Object result = data.result;
+
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
+
 
     //评论
     class pinglun implements DataCall<Result>{
