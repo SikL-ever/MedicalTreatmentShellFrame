@@ -1,6 +1,7 @@
 package com.wd.health.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.dingtao.common.bean.homepage.ZxbkBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDFragment;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -155,9 +157,18 @@ public class HomePagerFragement extends WDFragment {
 
 
         images.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-
+                List<String> intt = new LoginDaoUtil().intt(getActivity());
+                String string = intt.get(0);
+                if (string!=null){
+                  //  Intent intent = new Intent(getActivity(),ACTIVITY_LOGIN_MYUSERACTIVITY);
+                    intentByRouter(Constant.ACTIVITY_LOGIN_MYUSERACTIVITY);
+                }else{
+                    intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
+                }
             }
         });
         edit.setOnClickListener(new View.OnClickListener() {

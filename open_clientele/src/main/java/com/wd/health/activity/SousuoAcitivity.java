@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,8 @@ public class SousuoAcitivity extends AppCompatActivity {
     private List<String> tempList;
     private RecordsDao recordsDao;
     private LinearLayout.LayoutParams layoutParams;
-
+    private List<String> list = new ArrayList<>();
+    private RmssPresenter rmssPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,20 +90,27 @@ public class SousuoAcitivity extends AppCompatActivity {
             }
         });
 
-        RmssPresenter rmssPresenter = new RmssPresenter(new RmssShow());
+        rmssPresenter = new RmssPresenter(new RmssShow());
+        rmssPresenter.reqeust();
 //往容器内添加TextView数据
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(10, 5, 10, 5);
         if (flowLayout != null) {
             flowLayout.removeAllViews();
         }
-        /*for (int i = 0; i < list.size(); i++) {
+        /*for (int i = 0; i <10; i++) {
+            list.add("Android");
+            list.add("Java");
+            list.add("IOS");
+            list.add("python");
+        }
+        for (int i = 0; i < list.size(); i++) {
             TextView tv = new TextView(this);
             tv.setPadding(28, 10, 28, 10);
-            tv.setText(loveList.get(i));
+            tv.setText(list.get(i));
             tv.setMaxEms(10);
             tv.setSingleLine();
-            tv.setBackgroundResource(R.drawable.selector_playsearch);
+          //  tv.setBackgroundResource(R.drawable.selector_playsearch);
             tv.setLayoutParams(layoutParams);
             flowLayout.addView(tv, layoutParams);
         }*/
@@ -353,24 +362,25 @@ public class SousuoAcitivity extends AppCompatActivity {
         }
     }
 
-    private class RmssShow implements DataCall<RmssBean> {
+    private class RmssShow implements DataCall<List<RmssBean>> {
         @Override
-        public void success(RmssBean data, Object... args) {
-          //  for (int i = 0; i < list.size(); i++) {
+        public void success(List<RmssBean> data, Object... args) {
+            Log.e("hhhhhh",data+"" );
+            for (int i = 0; i < data.size(); i++) {
                 TextView tv = new TextView(SousuoAcitivity.this);
                 tv.setPadding(28, 10, 28, 10);
-                tv.setText(data.getName());
+                tv.setText(data.get(i).getName());
                 tv.setMaxEms(10);
                 tv.setSingleLine();
-               // tv.setBackgroundResource(R.drawable.selector_playsearch);
+                tv.setBackgroundResource(R.drawable.yuanjiao);
                 tv.setLayoutParams(layoutParams);
                 flowLayout.addView(tv, layoutParams);
-          //  }
+            }
         }
 
         @Override
         public void fail(ApiException data, Object... args) {
-
+            Log.e("hhhhhh",data+"" );
         }
     }
 }

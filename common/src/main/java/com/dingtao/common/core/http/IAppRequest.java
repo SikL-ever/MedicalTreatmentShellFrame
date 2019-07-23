@@ -246,9 +246,9 @@ public interface IAppRequest {
 
     @GET("share/v1/bannersShow")
     Observable<Result<List<Banner>>> bannershow();
-    @GET("health/share/v1/homePageSearch")
+    @GET("share/v1/homePageSearch")
     Observable<Result<SousuoBean>> sousuoshow(@Query("keyWord") String keyWord);
-    @GET("health/share/v1/popularSearch")
+    @GET("share/v1/popularSearch")
     Observable<Result<List<RmssBean>>> rmssshow();
     @GET("share/knowledgeBase/v1/findDepartment")
     Observable<Result<List<WzzxBean>>> wzzxshow();
