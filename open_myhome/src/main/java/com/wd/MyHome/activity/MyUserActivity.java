@@ -20,6 +20,7 @@ import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.childactivity.MyUserCollectActivity;
 import com.wd.MyHome.childactivity.MyUserRecordActivity;
 import com.wd.MyHome.presenter.UserSignPresenter;
 
@@ -110,6 +111,15 @@ public class MyUserActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyUserActivity.this, MyUserRecordActivity.class);
+                startActivity(intent);
+            }
+        });
+        //我的收藏点击
+        myusercollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转
+                Intent intent = new Intent(MyUserActivity.this, MyUserCollectActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,6 +1,8 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.MyConsultBean;
+import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.homepage.CjypBean;
@@ -29,10 +31,12 @@ import com.dingtao.common.bean.video.VideoBean;*/
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
@@ -108,15 +112,71 @@ public interface IAppRequest {
                                              @Field("content") String content);
     //sichangyong-----------------------------------------我的页面
     //用户签到
-    @FormUrlEncoded
     @POST("user/verify/v1/addSign")
     Observable<Result> usersign(@Header("userId") String userId,
                                 @Header("sessionId") String sessionId);
+
+
     //用户查看自己的档案
     @GET("user/verify/v1/findUserArchives")
-    Observable<Result> myuserrecord(@Header("userId") String userId,
-                                    @Header("sessionId") String sessionId);
+    Observable<Result<UserRecordBean>> myuserrecord(@Header("userId") String userId,
+                                                    @Header("sessionId") String sessionId);
+    //23.删除用户档案
+    @DELETE("user/verify/v1/deleteUserArchives")
+    Observable<Result> deletemyuserrecord(@Header("userId") String userId,
+                                          @Header("sessionId") String sessionId,
+                                          @Field("archivesId") int archivesId);
+    //.添加用户档案
+    @FormUrlEncoded
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("user/verify/v1/addUserArchives")
+    Observable<Result> addrecord(@Header("userId") String userId,
+                                 @Header("sessionId") String sessionId,
+                                 @Field("diseaseMain") String diseaseMain,
+                                 @Field("diseaseNow") String diseaseNow,
+                                 @Field("diseaseBefore") String diseaseBefore,
+                                 @Field("treatmentHospitalRecent") String treatmentHospitalRecent,
+                                 @Field("treatmentProcess") String treatmentProcess,
+                                 @Field("treatmentStartTime") String treatmentStartTime,
+                                 @Field("treatmentEndTime") String treatmentEndTime);
+    //修改我的档案
+    @FormUrlEncoded
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("user/verify/v1/addUserArchives")
+    Observable<Result> uprecord(@Header("userId") String userId,
+                                 @Header("sessionId") String sessionId,
+                                 @Field("archivesId") int archivesId,
+                                 @Field("diseaseMain") String diseaseMain,
+                                 @Field("diseaseNow") String diseaseNow,
+                                 @Field("diseaseBefore") String diseaseBefore,
+                                 @Field("treatmentHospitalRecent") String treatmentHospitalRecent,
+                                 @Field("treatmentProcess") String treatmentProcess,
+                                 @Field("treatmentStartTime") String treatmentStartTime,
+                                 @Field("treatmentEndTime") String treatmentEndTime);
+    //.查询用户资讯收藏列表
+    @GET("user/verify/v1/findUserInfoCollectionList")
+    Observable<Result<List<MyConsultBean>>> mycollectconsult(@Header("userId") String userId,
+                                                             @Header("sessionId") String sessionId,
+                                                             @Query("page") int page,
+                                                             @Query("count") int count);
+    //.用户收藏病友圈列表
+    @GET("user/verify/v1/findUserSickCollectionList")
+    Observable<Result<List<WardLieBean>>> mycollectbing(@Header("userId") String userId,
+                                                         @Header("sessionId") String sessionId,
+                                                         @Query("page") int page,
+                                                         @Query("count") int count);
+    //.用户收藏健康课堂视频列表
+    @GET("user/verify/v1/findVideoCollectionList")
+    Observable<Result<List<VideoBean>>> mycollectvideo(@Header("userId") String userId,
+                                                         @Header("sessionId") String sessionId,
+                                                         @Query("page") int page,
+                                                         @Query("count") int count);
+    //取消收藏将康视频
 
+    @DELETE("user/verify/v1/cancelVideoCollection")
+    Observable<Result> deletemyuservideo(@Header("userId") String userId,
+                                          @Header("sessionId") String sessionId,
+                                          @Query("videoId") int videoId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 

@@ -1,5 +1,7 @@
 package com.dingtao.common.core;
 
+import android.util.Log;
+
 import com.dingtao.common.bean.BDResult;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.core.exception.ApiException;
@@ -111,7 +113,12 @@ public abstract class WDPresenter<T> {
                     }
                     ///-----------------------视频用到的判断，其他不用管
                     if (result.getStatus().equals("8001")) {
-                            dataCall.success(result,args);
+                        if (result.result == null) {
+                            Log.i("ccc", "accept: "+result.message);
+                        }else{
+                            dataCall.success(result, args);
+                        }
+
                     }else{
                         dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/open_clientele" />
             <option value="$PROJECT_DIR$/open_login" />
+            <option value="$PROJECT_DIR$/open_myhome" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
