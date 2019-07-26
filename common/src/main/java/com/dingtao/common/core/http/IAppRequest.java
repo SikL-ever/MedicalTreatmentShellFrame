@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -43,8 +44,10 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -138,6 +141,13 @@ public interface IAppRequest {
     Observable<Result> addrecord(@Header("userId") String userId,
                                  @Header("sessionId") String sessionId,
                                  @Body RequestBody body);
+    //上传图片
+    //上传用户档案相关图片
+    @Multipart
+    @POST("user/verify/v1/uploadArchivesPicture")
+    Observable<Result> addrecordphoto(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Part MultipartBody.Part[] picture);
     //修改我的档案
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @PUT("user/verify/v1/updateUserArchives")

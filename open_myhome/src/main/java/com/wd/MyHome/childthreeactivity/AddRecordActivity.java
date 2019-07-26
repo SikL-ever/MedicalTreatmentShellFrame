@@ -3,6 +3,7 @@ package com.wd.MyHome.childthreeactivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.presenter.AddRecordPhotoPresenter;
 import com.wd.MyHome.presenter.AddRecordPresenter;
 import com.wd.MyHome.util.TopView;
 import com.wd.health.PhotoXuan.GridViewAdapter;
@@ -75,6 +77,8 @@ public class AddRecordActivity extends WDActivity {
     //-------------------------相机数据
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
+    private AddRecordPhotoPresenter addRecordPhotoPresenter;//图片的p层;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_add_record;
@@ -84,6 +88,9 @@ public class AddRecordActivity extends WDActivity {
     protected void initView() {
         //创建p层
         addRecordPresenter = new AddRecordPresenter(new getadddata());
+        //添加图片
+        addRecordPhotoPresenter = new AddRecordPhotoPresenter(new getphoto());
+
         addrecordone.setTitle("添加档案");
         //时间点击
         addrecordBeginBt.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +141,10 @@ public class AddRecordActivity extends WDActivity {
                     Gson gson = new Gson();
                     String s = gson.toJson(map);
                     RequestBody body=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),s);
-                    addRecordPresenter.reqeust(intt.get(0),intt.get(1),body);
+                    //addRecordPresenter.reqeust(intt.get(0),intt.get(1),body);
+                    //添加图片上传
+                    addRecordPhotoPresenter.reqeust(intt.get(0),intt.get(1),mPicList);
+
                 }
             }
         });
@@ -155,10 +165,25 @@ public class AddRecordActivity extends WDActivity {
     protected void destoryData() {
 
     }
+    class getphoto implements DataCall{
+        @Override
+        public void success(Object data, Object... args) {
+
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
     //----------------------------------------------------------------------------选择照片回来的数据
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+    }
 
     //----------------------------------------------------------------------------选择时间
     private void initTime(final TextView view) {
