@@ -62,7 +62,6 @@
                         android:id="@+id/head"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
-                        android:background="@drawable/bull"
                         android:layout_width="32dp"
                         android:layout_height="32dp" />
                     <ImageView

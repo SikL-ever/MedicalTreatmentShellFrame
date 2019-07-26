@@ -6,13 +6,13 @@ import com.dingtao.common.core.http.IAppRequest;
 
 import io.reactivex.Observable;
 
-public class SeachPresenter extends WDPresenter<IAppRequest> {
-    public SeachPresenter(DataCall dataCall) {
+public class ShoucangPresenter extends WDPresenter<IAppRequest> {
+    public ShoucangPresenter(DataCall dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable getModel(Object... args) {
-        return iRequest.seach((String) args[0]);
+        return iRequest.shoucang((String) args[0],(String) args[1],(int) args[2]);
     }
 }
