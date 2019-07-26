@@ -10,9 +10,9 @@
         <activity android:name=".activity.wardActivity.List_detailsActivity" />
         <activity android:name=".activity.wardActivity.TaWardActivity" />
         <activity android:name=".activity.wardActivity.PublishActivity" />
-        <activity android:name=".activity.wardActivity.fabiaoactivity.PlusImageActivity"></activity>
         <activity android:name=".activity.wardActivity.List_detailsActivity" />
         <activity android:name=".activity.DuoXiangActivity" />
+        <activity android:name=".PhotoXuan.PlusImageActivity" />
         <activity android:name=".activity.ZxxqActivity"></activity>
     </application>
 

@@ -139,19 +139,11 @@ public interface IAppRequest {
                                  @Header("sessionId") String sessionId,
                                  @Body RequestBody body);
     //修改我的档案
-    @FormUrlEncoded
     @Headers({"Content-Type: application/json;charset=UTF-8"})
-    @POST("user/verify/v1/addUserArchives")
+    @PUT("user/verify/v1/updateUserArchives")
     Observable<Result> uprecord(@Header("userId") String userId,
                                  @Header("sessionId") String sessionId,
-                                 @Field("archivesId") int archivesId,
-                                 @Field("diseaseMain") String diseaseMain,
-                                 @Field("diseaseNow") String diseaseNow,
-                                 @Field("diseaseBefore") String diseaseBefore,
-                                 @Field("treatmentHospitalRecent") String treatmentHospitalRecent,
-                                 @Field("treatmentProcess") String treatmentProcess,
-                                 @Field("treatmentStartTime") String treatmentStartTime,
-                                 @Field("treatmentEndTime") String treatmentEndTime);
+                                @Body RequestBody body);
     //.查询用户资讯收藏列表
     @GET("user/verify/v1/findUserInfoCollectionList")
     Observable<Result<List<MyConsultBean>>> mycollectconsult(@Header("userId") String userId,

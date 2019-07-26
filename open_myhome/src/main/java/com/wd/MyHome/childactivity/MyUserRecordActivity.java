@@ -21,6 +21,7 @@ import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.adapter.ImageAdapter;
 import com.wd.MyHome.childthreeactivity.AddRecordActivity;
+import com.wd.MyHome.childthreeactivity.UpdataRecordActivity;
 import com.wd.MyHome.presenter.DeleteRecordPresenter;
 import com.wd.MyHome.presenter.UserRecordPresenter;
 import com.wd.MyHome.util.TopView;
@@ -127,7 +128,8 @@ public class MyUserRecordActivity extends WDActivity {
         recordtextupdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(MyUserRecordActivity.this, UpdataRecordActivity.class);
+                startActivity(intent);
             }
         });
     }

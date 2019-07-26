@@ -185,13 +185,17 @@
                     android:textColor="#333333"/>
             </LinearLayout>
             <GridView
-                android:id="@+id/addrecord_recycler"
                 android:layout_marginTop="@dimen/dp_10"
+                android:id="@+id/addrecord_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:columnWidth="60dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="10dp"
                 android:layout_marginRight="@dimen/dp_20"
-                android:layout_marginLeft="@dimen/dp_20">
-            </GridView>
+                android:layout_marginLeft="@dimen/dp_20"/>
             <Button
                 android:layout_marginTop="@dimen/dp_20"
                 android:id="@+id/addrecord_bt"
