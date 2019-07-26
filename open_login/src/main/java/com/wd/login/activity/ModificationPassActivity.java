@@ -119,10 +119,10 @@ public class ModificationPassActivity extends WDActivity {
 
     }
     //修改密码回来的数据
-    class getdata implements DataCall<Result>{
+    class getdata implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
-            Toast.makeText(ModificationPassActivity.this, data.message, Toast.LENGTH_SHORT).show();
+        public void success(Object data, Object... args) {
+            Toast.makeText(ModificationPassActivity.this,"修改密码成功", Toast.LENGTH_SHORT).show();
             //清空栈
             //到登录页面
             //清空栈顶创建登录activity

@@ -5,6 +5,7 @@ import com.dingtao.common.core.WDPresenter;
 import com.dingtao.common.core.http.IAppRequest;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 
 /**
  * 佀常勇
@@ -20,7 +21,6 @@ public class UpRecordPresenter extends WDPresenter<IAppRequest> {
 
     @Override
     protected Observable getModel(Object... args) {
-        return iRequest.uprecord((String)args[0],(String)args[1],(int)args[2],(String)args[3],
-                (String)args[4],(String)args[5],(String)args[6],(String)args[7],(String)args[8],(String)args[9]);
+        return iRequest.uprecord((String)args[0],(String)args[1],(RequestBody) args[2]);
     }
 }

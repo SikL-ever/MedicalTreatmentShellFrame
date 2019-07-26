@@ -20,7 +20,6 @@ import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.DanBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
-import com.dingtao.common.bean.wardBean.BingzhengBean;
 import com.dingtao.common.bean.wardBean.List_xiang_Bean;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.dingtao.common.bean.wardBean.SeachBean;
@@ -31,6 +30,7 @@ import com.dingtao.common.bean.wardBean.WardLieBean;
 import com.dingtao.common.bean.video.VideoBean;*/
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -104,6 +104,7 @@ public interface IAppRequest {
                                      @Header("sessionId") String sessionId);
 
     // 查询我的钱包
+    //购买视频
     @FormUrlEncoded
     @POST("user/video/verify/v1/videoBuy")
     Observable<Result> videobuy(@Header("userId") String userId,
@@ -144,8 +145,8 @@ public interface IAppRequest {
                                           @Header("sessionId") String sessionId,
                                           @Field("archivesId") int archivesId);
 
+                                          @Query("archivesId") int archivesId);
     //.添加用户档案
-    @FormUrlEncoded
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("user/verify/v1/addUserArchives")
     Observable<Result> addrecord(@Header("userId") String userId,
@@ -158,10 +159,10 @@ public interface IAppRequest {
                                  @Field("treatmentStartTime") String treatmentStartTime,
                                  @Field("treatmentEndTime") String treatmentEndTime);
 
+                                 @Body RequestBody body);
     //修改我的档案
-    @FormUrlEncoded
     @Headers({"Content-Type: application/json;charset=UTF-8"})
-    @POST("user/verify/v1/addUserArchives")
+    @PUT("user/verify/v1/updateUserArchives")
     Observable<Result> uprecord(@Header("userId") String userId,
                                 @Header("sessionId") String sessionId,
                                 @Field("archivesId") int archivesId,
@@ -173,6 +174,8 @@ public interface IAppRequest {
                                 @Field("treatmentStartTime") String treatmentStartTime,
                                 @Field("treatmentEndTime") String treatmentEndTime);
 
+                                 @Header("sessionId") String sessionId,
+                                @Body RequestBody body);
     //.查询用户资讯收藏列表
     @GET("user/verify/v1/findUserInfoCollectionList")
     Observable<Result<List<MyConsultBean>>> mycollectconsult(@Header("userId") String userId,
@@ -197,6 +200,26 @@ public interface IAppRequest {
 
     @DELETE("user/verify/v1/cancelVideoCollection")
     Observable<Result> deletemyuservideo(@Header("userId") String userId,
+                                          @Header("sessionId") String sessionId,
+                                          @Query("videoId") int videoId);
+    //取消收藏将康视频
+   @DELETE("user/verify/v1/cancelVideoCollection")
+   Observable<Result> deletemyconsult(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("infoId") int infoId);
+
+   //进行查询用户消费记录
+   @GET("user/verify/v1/findUserConsumptionRecordList")
+   Observable<Result<List<MyUserWalletLookBean>>> myuserwalletlook(@Header("userId") String userId,
+                                                                   @Header("sessionId") String sessionId,
+                                                                   @Query("page") int page,
+                                                                   @Query("count") int count);
+   //查询用户被采纳的建议
+   @GET("user/verify/v1/findMyAdoptedCommentList")
+   Observable<Result<List<MyUserSuggestBean>>> myusersuggest(@Header("userId") String userId,
+                                                             @Header("sessionId") String sessionId,
+                                                             @Query("page") int page,
+                                                             @Query("count") int count);
                                          @Header("sessionId") String sessionId,
                                          @Query("videoId") int videoId);
     //sichangyong-------------------------------------------------------------------别动我的

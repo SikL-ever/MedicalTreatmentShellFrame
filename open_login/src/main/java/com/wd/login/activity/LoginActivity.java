@@ -1,5 +1,6 @@
 package com.wd.login.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -21,6 +22,7 @@ import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LoginBeanDao;
 import com.dingtao.common.util.Constant;
+import com.wd.health.activity.MainActivity;
 import com.wd.login.R;
 import com.wd.login.R2;
 import com.wd.login.presenter.LoginPresenter;
@@ -146,7 +148,9 @@ public class LoginActivity extends WDActivity {
             dao.insertOrReplaceInTx(data);
 
             //跳转跳转
-            intentByRouter(Constant.ACTIVITY_LOGIN_MAIN);
+            Intent in = new Intent(LoginActivity.this,MainActivity.class);
+            in.setFlags(in.FLAG_ACTIVITY_CLEAR_TASK | in.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(in);
             finish();
         }
 

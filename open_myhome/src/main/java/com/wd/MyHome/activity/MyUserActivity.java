@@ -22,6 +22,9 @@ import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.childactivity.MyUserCollectActivity;
 import com.wd.MyHome.childactivity.MyUserRecordActivity;
+import com.wd.MyHome.childactivity.MyUserSetActivity;
+import com.wd.MyHome.childactivity.MyUserSuggestActivity;
+import com.wd.MyHome.childactivity.MyUserWalletActivity;
 import com.wd.MyHome.presenter.UserSignPresenter;
 
 import java.util.List;
@@ -123,16 +126,43 @@ public class MyUserActivity extends WDActivity {
                 startActivity(intent);
             }
         });
+        //我的钱包点击
+        myuserwallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转
+                Intent intent = new Intent(MyUserActivity.this, MyUserWalletActivity.class);
+                startActivity(intent);
+            }
+        });
+        //查询被采纳的建议
+        myusersuggest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转
+                Intent intent = new Intent(MyUserActivity.this, MyUserSuggestActivity.class);
+                startActivity(intent);
+            }
+        });
+        //设置跳转
+        myuserset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转
+                Intent intent = new Intent(MyUserActivity.this, MyUserSetActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     protected void destoryData() {
 
     }
     //回来的数据---------------------------------------------------------------
-    class getsigndata implements DataCall<Result>{
+    class getsigndata implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
-            myuserQiandao.setText(data.message);
+        public void success(Object data, Object... args) {
+            myuserQiandao.setText("签到成功");
         }
         @Override
         public void fail(ApiException data, Object... args) {

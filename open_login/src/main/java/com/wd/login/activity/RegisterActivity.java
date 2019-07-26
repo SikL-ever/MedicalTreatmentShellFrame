@@ -149,21 +149,21 @@ public class RegisterActivity extends WDActivity {
         });
     }
     //返回回来的注册
-    class getregister implements DataCall<Result>{
+    class getregister implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
+        public void success(Object data, Object... args) {
             finish();
-            Toast.makeText(RegisterActivity.this, data.message,Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "注册成功",Toast.LENGTH_SHORT).show();
         }
         @Override
         public void fail(ApiException data, Object... args) {
         }
     }
     //返回回来的验证码
-    class getverificationcodedata implements DataCall<Result>{
+    class getverificationcodedata implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
-            Toast.makeText(RegisterActivity.this, data.message, Toast.LENGTH_SHORT).show();
+        public void success(Object data, Object... args) {
+            Toast.makeText(RegisterActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
         }
         @Override
         public void fail(ApiException data, Object... args) {

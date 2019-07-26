@@ -151,11 +151,11 @@ public class ZxxqActivity extends AppCompatActivity {
     }
 
 
-    private class Zxscshow implements DataCall<Result> {
+    private class Zxscshow implements DataCall {
         @Override
-        public void success(Result data, Object... args) {
+        public void success(Object data, Object... args) {
             Glide.with(ZxxqActivity.this).load(R.drawable.common_button_collection_small_s).into(shoucang);
-            Toast.makeText(ZxxqActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ZxxqActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
         }
 
         @Override

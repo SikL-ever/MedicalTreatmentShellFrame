@@ -90,10 +90,10 @@ public abstract class WDPresenter<T> {
                 @Override
                 public void accept(BDResult result) throws Exception {
                     running = false;
-                    if (result.getCode()==0) {
-                        dataCall.success(result.getData(), args);
+                    if (result.getStatus().equals("0000")) {
+                        dataCall.success(result, args);
                     }else{
-                        dataCall.fail(new ApiException(String.valueOf(result.getCode()),result.getMsg()));
+                        dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }
                 }
             };
@@ -103,11 +103,7 @@ public abstract class WDPresenter<T> {
                 public void accept(Result result) throws Exception {
                     running = false;
                     if (result.getStatus().equals("0000")) {
-                        if (result.result==null){
-                            dataCall.success(result,args);
-                        }else{
-                            dataCall.success(result.getResult(), args);
-                        }
+                        dataCall.success(result.getResult(), args);
                     }else{
                         dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }

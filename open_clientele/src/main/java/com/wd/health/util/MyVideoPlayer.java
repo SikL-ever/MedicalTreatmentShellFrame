@@ -118,7 +118,7 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
             public void onClick(View v) {
                 //fullscreenButton.performClick();扩大屏幕
                 if (isPlay()) {
-                    JZVideoPlayer.goOnPlayOnPause();
+                    //JZVideoPlayer.goOnPlayOnPause();
                     mystop();
                 }
             }

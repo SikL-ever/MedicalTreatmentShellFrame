@@ -7,7 +7,10 @@
         <activity android:name=".childactivity.MyUserRecordActivity" />
         <activity android:name=".childthreeactivity.AddRecordActivity" />
         <activity android:name=".childthreeactivity.UpdataRecordActivity" />
-        <activity android:name=".childactivity.MyUserCollectActivity"></activity>
+        <activity android:name=".childactivity.MyUserCollectActivity" />
+        <activity android:name=".childactivity.MyUserWalletActivity" />
+        <activity android:name=".childactivity.MyUserSuggestActivity" />
+        <activity android:name=".childactivity.MyUserSetActivity"></activity>
     </application>
 
 </manifest>

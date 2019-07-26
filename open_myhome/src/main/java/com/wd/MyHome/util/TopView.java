@@ -23,6 +23,7 @@ public class TopView extends RelativeLayout {
 
     private ImageView topviewfinish;
     private TextView topviewtext;
+    private RelativeLayout rela;
     public TopView(Context context) {
         super(context);
         initView(context);
@@ -40,6 +41,7 @@ public class TopView extends RelativeLayout {
         View view = View.inflate(context,R.layout.topview,this);
         topviewfinish = view.findViewById(R.id.topviewfinish);
         topviewtext = view.findViewById(R.id.topviewtext);
+        rela = view.findViewById(R.id.rela);
         //返回
         topviewfinish.setOnClickListener(new OnClickListener() {
             @Override
@@ -54,5 +56,9 @@ public class TopView extends RelativeLayout {
             return;
         }
         topviewtext.setText(title);
+    }
+    //设置背景
+    public void setback(int title) {
+        rela.setBackgroundColor(title);
     }
 }

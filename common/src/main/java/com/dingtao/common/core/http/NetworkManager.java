@@ -55,7 +55,7 @@ public class NetworkManager {
                 .client(okHttpClient)
 //                .baseUrl("http://169.254.101.220:8080/")//base_url:http+域名
 //                .baseUrl("http://172.17.8.100/small/")//base_url:http+域名
-                .baseUrl("http://mobile.bwstudent.com/small/")//base_url:http+域名
+                .baseUrl("http://172.17.8.100/health/")//base_url:http+域名
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用Rxjava对回调数据进行处理
                 .addConverterFactory(GsonConverterFactory.create())//响应结果的解析器，包含gson，xml，protobuf
                 .build();
