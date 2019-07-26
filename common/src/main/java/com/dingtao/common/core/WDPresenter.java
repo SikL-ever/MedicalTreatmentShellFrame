@@ -55,16 +55,16 @@ public abstract class WDPresenter<T> {
 
         disposable = observable.subscribeOn(Schedulers.io())//将请求调度到子线程上
                 .observeOn(AndroidSchedulers.mainThread())//观察响应结果，把响应结果调度到主线程中处理
-                .onErrorReturn(new Function<Throwable,ApiException>() {//处理所有异常
+                .onErrorReturn(new Function<Throwable,Throwable>() {//处理所有异常
                     @Override
-                    public ApiException apply(Throwable throwable) throws Exception {
-                        return CustomException.handleException(throwable);
+                    public Throwable apply(Throwable throwable) throws Exception {
+                        return throwable;
                     }
-                })
-                .subscribe(getConsumer(args), new Consumer<ApiException>() {
+                })/**/
+                .subscribe(getConsumer(args), new Consumer<Throwable>() {
                     @Override
-                    public void accept(ApiException e) throws Exception {
-                        dataCall.fail(e,args);
+                    public void accept(Throwable e) throws Exception {
+                        dataCall.fail(CustomException.handleException(e),args);
                     }
                 });
     }
@@ -90,10 +90,10 @@ public abstract class WDPresenter<T> {
                 @Override
                 public void accept(BDResult result) throws Exception {
                     running = false;
-                    if (result.getCode()==0) {
-                        dataCall.success(result.getData(), args);
+                    if (result.getStatus().equals("0000")) {
+                        dataCall.success(result, args);
                     }else{
-                        dataCall.fail(new ApiException(String.valueOf(result.getCode()),result.getMsg()));
+                        dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }
                 }
             };
@@ -103,11 +103,7 @@ public abstract class WDPresenter<T> {
                 public void accept(Result result) throws Exception {
                     running = false;
                     if (result.getStatus().equals("0000")) {
-                        if (result.result==null){
-                            dataCall.success(result,args);
-                        }else{
-                            dataCall.success(result.getResult(), args);
-                        }
+                        dataCall.success(result.getResult(), args);
                     }else{
                         dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }

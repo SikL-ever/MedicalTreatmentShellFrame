@@ -1,6 +1,5 @@
 package com.wd.MyHome.childthreeactivity;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -19,21 +18,16 @@ import com.dingtao.common.util.StringUtils;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.adapter.ImageAdapter;
-import com.wd.MyHome.childactivity.MyUserRecordActivity;
 import com.wd.MyHome.presenter.UpRecordPresenter;
 import com.wd.MyHome.presenter.UserRecordPresenter;
-import com.wd.MyHome.util.CustomDatePickerDialogFragment;
 import com.wd.MyHome.util.TopView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class UpdataRecordActivity extends WDActivity {
 
@@ -107,9 +101,9 @@ public class UpdataRecordActivity extends WDActivity {
             }
         });
     }
-    class getupdata implements DataCall<Result>{
+    class getupdata implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
+        public void success(Object data, Object... args) {
 
         }
         @Override
@@ -172,39 +166,5 @@ public class UpdataRecordActivity extends WDActivity {
         List<String> intt = loginDaoUtil.intt(UpdataRecordActivity.this);
         userRecordPresenter.reqeust(intt.get(0), intt.get(1));
         uid=intt.get(0);sid=intt.get(1);
-    }
-    //时间选择器
-    long day = 24 * 60 * 60 * 1000;
-    private void showDatePickDialog(final int a) {
-        CustomDatePickerDialogFragment fragment = new CustomDatePickerDialogFragment();
-        //fragment.setOnSelectedDateListener((CustomDatePickerDialogFragment.OnSelectedDateListener) AddRecordActivity.this);
-        fragment.setOnSelectedDateListener(new CustomDatePickerDialogFragment.OnSelectedDateListener() {
-            @Override
-            public void onSelectedDate(int year, int monthOfYear, int dayOfMonth) {
-                if (a == 1) {
-                    uprecordBegin.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
-                }else if(a==2){
-                    uprecordEnd.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
-                }
-            }
-        });
-        Bundle bundle = new Bundle();
-        Calendar currentDate = Calendar.getInstance();
-        currentDate.setTimeInMillis(System.currentTimeMillis());
-        currentDate.set(Calendar.HOUR_OF_DAY,0);
-        currentDate.set(Calendar.MINUTE,0);
-        currentDate.set(Calendar.SECOND,0);
-        currentDate.set(Calendar.MILLISECOND,0);
-        bundle.putSerializable(CustomDatePickerDialogFragment.CURRENT_DATE,currentDate);
-        long start = currentDate.getTimeInMillis() - day * 2;
-        long end = currentDate.getTimeInMillis() - day;
-        Calendar startDate = Calendar.getInstance();
-        startDate.setTimeInMillis(start);
-        Calendar endDate = Calendar.getInstance();
-        endDate.setTimeInMillis(end);
-        bundle.putSerializable(CustomDatePickerDialogFragment.START_DATE,startDate);
-        bundle.putSerializable(CustomDatePickerDialogFragment.END_DATE,currentDate);
-        fragment.setArguments(bundle);
-        fragment.show(getSupportFragmentManager(),CustomDatePickerDialogFragment.class.getSimpleName());
     }
 }

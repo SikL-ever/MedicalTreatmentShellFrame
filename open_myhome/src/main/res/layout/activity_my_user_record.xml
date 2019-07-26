@@ -47,7 +47,6 @@
 
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/recordyes"
         android:background="#fff"
         android:layout_marginTop="@dimen/dp_10"
@@ -172,6 +171,8 @@
             android:layout_marginRight="@dimen/dp_20"
             android:orientation="horizontal">
             <Button
+                android:background="@drawable/myuserrecord_button_one"
+                android:padding="@dimen/dp_5"
                 android:textSize="@dimen/dp_14"
                 android:id="@+id/recordtextdelete"
                 android:textColor="#fff"

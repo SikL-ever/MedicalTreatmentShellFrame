@@ -2,11 +2,13 @@ package com.wd.MyHome.childactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.Result;
@@ -22,6 +24,7 @@ import com.wd.MyHome.childthreeactivity.AddRecordActivity;
 import com.wd.MyHome.presenter.DeleteRecordPresenter;
 import com.wd.MyHome.presenter.UserRecordPresenter;
 import com.wd.MyHome.util.TopView;
+import com.wd.health.util.MyDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -93,7 +96,31 @@ public class MyUserRecordActivity extends WDActivity {
         recordtextdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteRecordPresenter.reqeust(uid,sid,recordid);
+                View view=View.inflate(MyUserRecordActivity.this, com.wd.health.R.layout.videodialong_item,null);
+                final MyDialog dialog = new MyDialog(MyUserRecordActivity.this, 200, 100, view, com.wd.health.R.style.dialog);
+                dialog.show();
+                final TextView cancel =
+                        (TextView) view.findViewById(com.wd.health.R.id.cancel);
+                final TextView confirm =
+                        (TextView)view.findViewById(com.wd.health.R.id.confirm);
+                final TextView text =
+                        (TextView)view.findViewById(com.wd.health.R.id.textView10);
+                text.setText("是否确认删除");
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //去购买本个视频
+                        //改变状态值
+                        deleteRecordPresenter.reqeust(uid,sid,recordid);
+                        dialog.dismiss();
+                    }
+                });
             }
         });
         //修改档案
@@ -105,18 +132,18 @@ public class MyUserRecordActivity extends WDActivity {
         });
     }
     //查询档案返回的数据
-    class getuserrecord implements DataCall<Result<UserRecordBean>> {
+    class getuserrecord implements DataCall<UserRecordBean> {
         @Override
-        public void success(Result<UserRecordBean> data, Object... args) {
-            if (data.result == null) {
+        public void success(UserRecordBean data, Object... args) {
+            if (data== null) {
                 recordno.setVisibility(View.VISIBLE);
                 recordyes.setVisibility(View.GONE);
             } else {
                 recordyes.setVisibility(View.VISIBLE);
                 recordno.setVisibility(View.GONE);
                 //添加数据
-                recordnew(data.result);
-                recordid=data.result.id;
+                recordnew(data);
+                recordid=data.id;
             }
         }
         @Override
@@ -124,9 +151,9 @@ public class MyUserRecordActivity extends WDActivity {
         }
     }
     //删除档案
-    class deleterecord implements DataCall<Result>{
+    class deleterecord implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
+        public void success(Object data, Object... args) {
             userRecordPresenter.reqeust(uid, sid);
         }
         @Override
@@ -143,7 +170,7 @@ public class MyUserRecordActivity extends WDActivity {
         recordtextnew.setText(list.diseaseNow);//先病史
         recordtextlong.setText(list.diseaseBefore);//以前的病史
         recordtextname.setText(list.treatmentHospitalRecent);//最近治疗医院
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String begString = formatter.format(list.treatmentStartTime);
         String endString = formatter.format(list.treatmentEndTime);
         recordtexttime.setText(begString+"--"+endString);//开始结束时间

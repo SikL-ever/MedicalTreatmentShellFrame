@@ -213,11 +213,11 @@ public class List_detailsActivity extends AppCompatActivity {
 
 
     //评论
-    class pinglun implements DataCall<Result>{
+    class pinglun implements DataCall{
 
         @Override
-        public void success(Result data, Object... args) {
-            Toast.makeText(List_detailsActivity.this, data.message, Toast.LENGTH_SHORT).show();
+        public void success(Object data, Object... args) {
+            Toast.makeText(List_detailsActivity.this,"评论成功", Toast.LENGTH_SHORT).show();
 //            String message = data.message;
             pingAdapater.notifyDataSetChanged();
         }

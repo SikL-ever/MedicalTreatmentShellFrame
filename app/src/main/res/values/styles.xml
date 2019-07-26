@@ -9,6 +9,6 @@
     </style>
     <style name="TabLayoutTextStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">13dp</item>
-       <!-- <item name="android:textStyle">bold</item>-->
+       <!-- <recorditem name="android:textStyle">bold</recorditem>-->
     </style>
 </resources>

@@ -83,6 +83,7 @@ dependencies {
 
     //web
     api 'org.jsoup:jsoup:1.11.3'
-
+    //photoview
+    api 'com.github.chrisbanes.photoview:library:+'
 
 }

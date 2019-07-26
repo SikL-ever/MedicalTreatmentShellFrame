@@ -1,5 +1,7 @@
 package com.wd.MyHome.childactivity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.adapter.MyCollectVideoAdapter;
+import com.wd.MyHome.adapter.MyCollectconsultAdapter;
 import com.wd.MyHome.presenter.MyCollectBingPresenter;
 import com.wd.MyHome.presenter.MyCollectConsultPresenter;
 import com.wd.MyHome.presenter.MyCollectVideoPresenter;
@@ -53,6 +56,7 @@ public class MyUserCollectActivity extends WDActivity {
     private int zhuangid;//状态值
     private int page = 1;
     private MyCollectVideoAdapter myCollectVideoAdapter;//视频的适配器
+    private MyCollectconsultAdapter myCollectconsultAdapter;//咨询适配器
 
     @Override
     protected int getLayoutId() {
@@ -67,67 +71,88 @@ public class MyUserCollectActivity extends WDActivity {
         myCollectConsultPresenter = new MyCollectConsultPresenter(new getconsult());
         myCollectBingPresenter = new MyCollectBingPresenter(new getbing());
         myCollectVideoPresenter = new MyCollectVideoPresenter(new getmyvideo());
-        //创建适配器
+        //创建适配器视频的适配器
         myCollectVideoAdapter = new MyCollectVideoAdapter(this);
-
+        //创建咨询的适配器
+        myCollectconsultAdapter = new MyCollectconsultAdapter(this);
+        //创建病友圈的适配器
+        myt1.setTextColor(0xff0000ff);
         mycollectradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.mybt1) {
                     myCollectConsultPresenter.reqeust(uid, sid, page, 10);
+                    myt1.setTextColor(0xff0000ff);
+                    mybt2.setTextColor(0xff000000);
+                    mybt3.setTextColor(0xff000000);
                 } else if (checkedId == R.id.mybt2) {
                     myCollectVideoPresenter.reqeust(uid, sid, page, 10);
+                    myt1.setTextColor(0xff000000);
+                    mybt2.setTextColor(0xff0000ff);
+                    mybt3.setTextColor(0xff000000);
                 } else if (checkedId == R.id.mybt3) {
                     myCollectBingPresenter.reqeust(uid, sid, page, 10);
+                    myt1.setTextColor(0xff000000);
+                    mybt2.setTextColor(0xff000000);
+                    mybt3.setTextColor(0xff0000ff);
+
                 }
             }
         });
     }
-
     //咨询
     class getconsult implements DataCall<List<MyConsultBean>> {
         @Override
         public void success(List<MyConsultBean> data, Object... args) {
             //创建 适配器//已经请求道接口，但是没有数据
             Log.i("aaa", "咨询: " + data);
-            if (data == null) {
+            if (data.size()==0) {
                 collectgone.setVisibility(View.VISIBLE);
+                textrecycler.setVisibility(View.GONE);
             }else{
                 collectgone.setVisibility(View.GONE);
+                textrecycler.setVisibility(View.VISIBLE);
+                //进行数据展示
+                myCollectconsultAdapter.cleat();
+                myCollectconsultAdapter.setList(data);
+                textrecycler.setAdapter(myCollectconsultAdapter);
+                textrecycler.setLayoutManager
+                        (new LinearLayoutManager
+                                (MyUserCollectActivity.this, LinearLayoutManager.VERTICAL, false));
             }
         }
-
         @Override
         public void fail(ApiException data, Object... args) {
         }
     }
-
     //病友圈
     class getbing implements DataCall<List<WardLieBean>> {
         @Override
         public void success(List<WardLieBean> data, Object... args) {
             //创建适配器
             Log.i("aaa", "病友圈: " + data);
-            if (data == null) {
+            if (data.size()==0) {
                 collectgone.setVisibility(View.VISIBLE);
+                textrecycler.setVisibility(View.GONE);
             }else{
                 collectgone.setVisibility(View.GONE);
+                textrecycler.setVisibility(View.VISIBLE);
             }
         }
-
         @Override
         public void fail(ApiException data, Object... args) {
         }
     }
-
     //我的视频
     class getmyvideo implements DataCall<List<VideoBean>> {
         @Override
         public void success(List<VideoBean> data, Object... args) {
-            if (data == null) {
+            if (data.size()==0) {
                 collectgone.setVisibility(View.VISIBLE);
+                textrecycler.setVisibility(View.GONE);
             }else{
                 collectgone.setVisibility(View.GONE);
+                textrecycler.setVisibility(View.VISIBLE);
                 //创建适配器
                 Log.i("aaa", "视频: " + data);
                 myCollectVideoAdapter.clear();
@@ -141,7 +166,6 @@ public class MyUserCollectActivity extends WDActivity {
                                 (MyUserCollectActivity.this, LinearLayoutManager.VERTICAL, false));
             }
         }
-
         @Override
         public void fail(ApiException data, Object... args) {
         }

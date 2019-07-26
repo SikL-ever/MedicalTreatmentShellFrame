@@ -1,14 +1,21 @@
 package com.wd.MyHome.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
+import com.dingtao.common.util.DateUtils;
 import com.wd.MyHome.R;
+import com.wd.health.activity.ZxxqActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +35,7 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
     private int a2 = 1;
     private int a3 = 2;
     private Context context;
-    private List<DuotiaomuBean> duotiaomuBeans = new ArrayList<>();
+    private List<MyConsultBean> duotiaomuBeans = new ArrayList<>();
     public MyCollectconsultAdapter(Context context) {
         this.context = context;
     }
@@ -64,7 +71,7 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
 
       //  Log.i("aaaaaaaaaaa456",length+"");
         if (viewHolder instanceof ViewHolder1){
@@ -73,8 +80,14 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
             GridAdapter gridAdapter = new GridAdapter(context,split);
             ((ViewHolder1) viewHolder).recyclerView.setLayoutManager(((ViewHolder1) viewHolder).linearLayoutManager);
             ((ViewHolder1) viewHolder).name.setText(duotiaomuBeans.get(position).getTitle());
-            ((ViewHolder1) viewHolder).yys.setText(duotiaomuBeans.get(position).getSource());
-            ((ViewHolder1) viewHolder).time.setText(duotiaomuBeans.get(position).getReleaseTime()+"");
+            //((ViewHolder1) viewHolder).yys.setText(duotiaomuBeans.get(position).getInfold());
+
+            /*((ViewHolder1) viewHolder).time.setText(duotiaomuBeans.get(position).getCreateTime()+"");*/
+            try {
+                ((ViewHolder1) viewHolder).time.setText(DateUtils.dateTransformer(duotiaomuBeans.get(position).getCreateTime(),DateUtils.DATE_PATTERN));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             ((ViewHolder1) viewHolder).recyclerView.setAdapter(gridAdapter);
         }else if(viewHolder instanceof ViewHolder2){
             String image = duotiaomuBeans.get(position).getThumbnail();
@@ -83,8 +96,13 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
             ((ViewHolder2) viewHolder).recyclerView1.setLayoutManager(gridLayoutManager);
             ((ViewHolder2) viewHolder).name.setText(duotiaomuBeans.get(position).getTitle());
-            ((ViewHolder2) viewHolder).yys.setText(duotiaomuBeans.get(position).getSource());
-            ((ViewHolder2) viewHolder).time.setText(duotiaomuBeans.get(position).getReleaseTime()+"");
+            //((ViewHolder2) viewHolder).yys.setText(duotiaomuBeans.get(position).getInfold());
+            /*((ViewHolder2) viewHolder).time.setText(duotiaomuBeans.get(position).getCreateTime()+"");*/
+            try {
+                ((ViewHolder2) viewHolder).time.setText(DateUtils.dateTransformer(duotiaomuBeans.get(position).getCreateTime(),DateUtils.DATE_PATTERN));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             ((ViewHolder2) viewHolder).recyclerView1.setAdapter(gridAdapter);
         }else if (viewHolder instanceof ViewHolder3){
             String image = duotiaomuBeans.get(position).getThumbnail();
@@ -92,15 +110,25 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
             GridAdapter gridAdapter = new GridAdapter(context,split);
             ((ViewHolder3) viewHolder).recyclerView1.setLayoutManager(((ViewHolder3) viewHolder).gridLayoutManager1);
             ((ViewHolder3) viewHolder).name.setText(duotiaomuBeans.get(position).getTitle());
-            ((ViewHolder3) viewHolder).yys.setText(duotiaomuBeans.get(position).getSource());
-            ((ViewHolder3) viewHolder).time.setText(duotiaomuBeans.get(position).getReleaseTime()+"");
+            //((ViewHolder3) viewHolder).yys.setText(duotiaomuBeans.get(position).getInfold());
+            /*((ViewHolder3) viewHolder).time.setText(duotiaomuBeans.get(position).getCreateTime()+"");*/
+            try {
+                ((ViewHolder3) viewHolder).time.setText(DateUtils.dateTransformer(duotiaomuBeans.get(position).getCreateTime(),DateUtils.DATE_PATTERN));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             ((ViewHolder3) viewHolder).recyclerView1.setAdapter(gridAdapter);
-
         }
-        /*if (split.length > 0 ){
-
-
-        }*/
+        //条目点击
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  Toast.makeText(context, ""+duotiaomuBeans.get(position).getId(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,ZxxqActivity.class);
+                intent.putExtra("idxq",duotiaomuBeans.get(position).infold);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -108,9 +136,13 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
         return duotiaomuBeans.size();
     }
 
-    public void setList(List<DuotiaomuBean> data) {
+    public void setList(List<MyConsultBean> data) {
         this.duotiaomuBeans = data;
         notifyDataSetChanged();
+    }
+
+    public void cleat() {
+        duotiaomuBeans.clear();
     }
 
 

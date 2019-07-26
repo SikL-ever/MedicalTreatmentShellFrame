@@ -141,10 +141,10 @@ public class PingAdapater extends RecyclerView.Adapter<PingAdapater.MyViewHolder
     }
 
     //赞
-    class zan implements DataCall<Result> {
+    class zan implements DataCall {
         @Override
-        public void success(Result data, Object... args) {
-            Toast.makeText(context,data.getMessage()+"",Toast.LENGTH_SHORT).show();
+        public void success(Object data, Object... args) {
+            Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
             notifyDataSetChanged();
         }
 
