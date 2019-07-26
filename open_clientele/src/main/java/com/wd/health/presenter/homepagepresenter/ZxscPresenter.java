@@ -5,7 +5,6 @@ import com.dingtao.common.core.WDPresenter;
 import com.dingtao.common.core.http.IAppRequest;
 
 import io.reactivex.Observable;
-import retrofit2.http.Header;
 
 /**
  * @Author：Administrator

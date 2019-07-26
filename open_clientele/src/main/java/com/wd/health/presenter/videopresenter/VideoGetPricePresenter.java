@@ -1,6 +1,5 @@
 package com.wd.health.presenter.videopresenter;
 
-import com.dingtao.common.bean.Result;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDPresenter;
 import com.dingtao.common.core.http.IAppRequest;

@@ -4,16 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.wardBean.TabBean;
 import com.dingtao.common.bean.wardBean.WardLieBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDFragment;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.activity.wardActivity.SeachActivity;
@@ -77,6 +82,11 @@ public class WardmateFragment extends WDFragment {
     @Override
     protected void initView() {
 
+
+        LoginDaoUtil loginDaoUtil=new LoginDaoUtil();
+        List<String> intt = loginDaoUtil.intt(getActivity());
+        String image = intt.get(2);
+        Glide.with(getActivity()).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(80))).into(head);
         //科室
         tabPresenter = new TabPresenter(new tab());
         tabPresenter.reqeust();
@@ -125,8 +135,8 @@ public class WardmateFragment extends WDFragment {
                     scrollview.getHitRect(scrollBounds);
                     if (xrecyclerview.getLocalVisibleRect(scrollBounds)) {
                         //       Log.e("but1", "显示");
-                        layout.setVisibility(View.VISIBLE);
-                        relativelayout.setVisibility(View.INVISIBLE);
+                        relativelayout.setVisibility(View.VISIBLE);
+                        layout.setVisibility(View.INVISIBLE);
                     } else {
                         //       Log.e("but1", "隐藏");
                         layout.setVisibility(View.INVISIBLE);

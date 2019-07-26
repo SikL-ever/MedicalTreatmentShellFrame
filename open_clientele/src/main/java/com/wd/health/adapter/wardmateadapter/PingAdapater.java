@@ -2,6 +2,7 @@ package com.wd.health.adapter.wardmateadapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -54,6 +55,7 @@ public class PingAdapater extends RecyclerView.Adapter<PingAdapater.MyViewHolder
         holder.commentZan.setText(list.get(position).getSupportNum() + "");
         holder.commentName.setText(list.get(position).getNickName());
 
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd ");
         String time = simpleDateFormat.format(new Date(list.get(position).commentTime));
         holder.commentTime.setText(time + "");
@@ -64,10 +66,23 @@ public class PingAdapater extends RecyclerView.Adapter<PingAdapater.MyViewHolder
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, TaWardActivity.class);
+                intent.putExtra("id",list.get(position).commentUserId);
+//                intent.putExtra("image",list.get(position).headPic);
+//                intent.putExtra("name",list.get(position).nickName);
                 context.startActivity(intent);
 
             }
         });
+
+
+        int whetherDoctor = list.get(position).getWhetherDoctor();
+        Log.i("sssss",whetherDoctor+"");
+        if(whetherDoctor==1){
+
+            holder.doctor.setVisibility(View.VISIBLE);
+        }else{
+            holder.doctor.setVisibility(View.INVISIBLE);
+        }
         //赞
         zanPresenter = new ZanPresenter(new zan());
         holder.zan.setTag(list.get(position));
@@ -163,6 +178,7 @@ public class PingAdapater extends RecyclerView.Adapter<PingAdapater.MyViewHolder
         if (data != null) {
             list.addAll(data);
         }
+
     }
 
 
@@ -176,9 +192,11 @@ public class PingAdapater extends RecyclerView.Adapter<PingAdapater.MyViewHolder
         TextView commentZan;
         CheckBox cai;
         TextView commentCaiNum;
+        ImageView doctor;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            doctor = itemView.findViewById(R.id.whentherdoctor);
             head_ssss = itemView.findViewById(R.id.head_sssss);
             commentName = itemView.findViewById(R.id.CommentName);
             commentCoent = itemView.findViewById(R.id.CommentCoent);

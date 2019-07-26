@@ -6,11 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.wardActivity.List_detailsActivity">
-    <!--<androidx.recyclerview.widget.RecyclerView-->
-        <!--android:id="@+id/review"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-    <!--</androidx.recyclerview.widget.RecyclerView>-->
     <RelativeLayout
         android:visibility="gone"
         android:id="@+id/framelayout"
@@ -61,7 +56,6 @@
                     android:id="@+id/image_head"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/bull"
                     android:layout_width="32dp"
                     android:layout_height="32dp" />
                 <TextView
@@ -194,14 +188,18 @@
                     android:layout_marginLeft="@dimen/dp_20"
                     >
 
-                    <ImageView
+                    <CheckBox
                         android:id="@+id/star"
+                        android:button="@null"
                         android:layout_width="@dimen/dp_24"
                         android:layout_height="@dimen/dp_24"
+                        android:layout_alignParentTop="true"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginTop="0dp"
                         android:layout_marginBottom="0dp"
                         android:layout_toLeftOf="@+id/collect"
-                        android:background="@drawable/common_button_collection_large_n" />
+                        android:background="@drawable/colleect"
+                        android:src="@drawable/colleect" />
                     <TextView
                         android:layout_toLeftOf="@+id/jainyi"
                         android:id="@+id/collect"

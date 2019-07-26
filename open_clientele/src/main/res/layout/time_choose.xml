@@ -33,6 +33,8 @@
             android:id="@+id/iv_cancel"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:padding="8dp"
             android:background="@drawable/message_icon_close_n" />

@@ -5,14 +5,15 @@ import com.dingtao.common.core.WDPresenter;
 import com.dingtao.common.core.http.IAppRequest;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 
-public class SeachPresenter extends WDPresenter<IAppRequest> {
-    public SeachPresenter(DataCall dataCall) {
+public class FabuPresenter extends WDPresenter<IAppRequest> {
+    public FabuPresenter(DataCall dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable getModel(Object... args) {
-        return iRequest.seach((String) args[0]);
+        return iRequest.fabiao((String) args[0],(String) args[1],(RequestBody) args[2]);
     }
 }

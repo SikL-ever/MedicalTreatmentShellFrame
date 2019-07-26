@@ -2,6 +2,7 @@ package com.wd.health.activity.wardActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,6 +34,7 @@ public class TaWardActivity extends AppCompatActivity {
     private TextView head_nam;
     private RecyclerView recyclerView;
     private TaFaPresenter taFaPresenter;
+    private int id;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -44,10 +46,13 @@ public class TaWardActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image_hea);
         head_nam = findViewById(R.id.head_nam);
         recyclerView = findViewById(R.id.recyclerview_ta);
-
+        id = getIntent().getIntExtra("id", 0);
+//        String image = getIntent().getStringExtra("image", 1);
+//        String name = getIntent().getStringExtra("name", 2);
+        Log.i("aaaddd", "onCreate: "+ id);
 
         taFaPresenter = new TaFaPresenter(new tafa());
-        taFaPresenter.reqeust(1,1,10);
+        taFaPresenter.reqeust(id,1,10);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         taFaAdapater = new TaFaAdapater(this);
@@ -55,6 +60,13 @@ public class TaWardActivity extends AppCompatActivity {
         recyclerView.setAdapter(taFaAdapater);
 
 
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
