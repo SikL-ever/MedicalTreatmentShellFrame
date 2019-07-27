@@ -22,9 +22,9 @@
         android:background="@drawable/shouye"
         android:hint="病症、药品名称、医生姓名"
         android:textCursorDrawable="@null"
-        android:textColorHint="#F2F2F2"
+        android:textColorHint="#808080"
         android:textSize="12sp"
-        android:textColor="#fff"
+        android:textColor="#717171"
         android:layout_height="@dimen/dp_32" />
     <TextView
         android:id="@+id/sousuo1"
@@ -61,6 +61,7 @@
             android:layout_marginTop="-90dp"
             android:src="@drawable/no_search_message"/>
         <TextView
+            android:id="@+id/texxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -75,70 +76,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <!--<ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp"
-
-                    >
-
-                    <TextView
-                        android:id="@+id/tv_tip"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:gravity="left|center_vertical"
-                        android:text="搜索历史" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EEEEEE"></View>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/listView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#EEEEEE"></View>
-
-                <TextView
-                    android:id="@+id/tv_clear"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="#F6F6F6"
-                    android:gravity="center"
-                    android:text="清除搜索历史" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="#EEEEEE"></View>
-            </LinearLayout>
-
-        </ScrollView>-->
-
-
-
         <LinearLayout
+            android:id="@+id/search_content_show_ll1"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:gravity="center|left"
@@ -152,18 +91,21 @@
                 android:textColor="#3087EA"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-
         <RelativeLayout
+            android:id="@+id/ssshoew"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_content_show_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:scrollbars="none">
 
-            </LinearLayout>
+            </androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>
         <LinearLayout
@@ -192,5 +134,85 @@
             </com.wd.health.CustomImageView.FlowLayout>
         </LinearLayout>
 
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/asdfghjkl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/xian"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/yisheng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="医生"
+                android:textSize="@dimen/sp_14"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:textColor="#3087ea"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_10"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/yisheng_recycler"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/yaopin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="药品"
+                android:textSize="@dimen/sp_14"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:textColor="#3087ea"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_10"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/yaopin_recycler"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/bingzheng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="病症"
+                android:textSize="@dimen/sp_14"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:textColor="#3087ea"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_10"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bingzheng_recycler"
+                android:layout_marginLeft="@dimen/dp_11"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

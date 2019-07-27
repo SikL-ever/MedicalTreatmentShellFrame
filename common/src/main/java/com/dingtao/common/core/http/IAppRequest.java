@@ -10,6 +10,7 @@ import com.dingtao.common.bean.homepage.CjypBean1;
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
 import com.dingtao.common.bean.homepage.RmssBean;
 import com.dingtao.common.bean.homepage.SousuoBean;
+import com.dingtao.common.bean.homepage.WzysBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
 import com.dingtao.common.bean.homepage.XqBean;
 import com.dingtao.common.bean.homepage.YpxqBean;
@@ -295,6 +296,9 @@ public interface IAppRequest {
     Observable<Result<XqBean>> zxxqshow(@Query("infoId") int infoId,@Header("userId") String userId, @Header("sessionId") String sessionId);
     @POST("user/verify/v1/addInfoCollection")
     Observable<Result> shoucangshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
-
+    @DELETE("user/verify/v1/cancelInfoCollection")
+    Observable<Result> qxscshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
+    @GET("user/inquiry/v1/findDoctorList")
+    Observable<Result<List<WzysBean>>> yslbShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("deptId") int deptId, @Query("condition") int condition, @Query("sortBy") int sortBy, @Query("page") int page, @Query("count") int count);
     //xieqi-------------------------------------------------------------------别动我的
 }

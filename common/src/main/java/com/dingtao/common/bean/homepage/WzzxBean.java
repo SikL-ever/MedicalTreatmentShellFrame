@@ -18,6 +18,15 @@ public class WzzxBean {
     public int id;
     public String pic;
     public int rank;
+    public int textcolor = 0xff999999;
+
+    public WzzxBean(String departmentName, int id, String pic, int rank, int textcolor) {
+        this.departmentName = departmentName;
+        this.id = id;
+        this.pic = pic;
+        this.rank = rank;
+        this.textcolor = textcolor;
+    }
 
     public String getDepartmentName() {
         return departmentName;
@@ -50,11 +59,12 @@ public class WzzxBean {
     public void setRank(int rank) {
         this.rank = rank;
     }
-    /*{
-        "departmentName": "内科 ",
-            "id": 7,
-            "pic": "http://mobile.bwstudent.com/images/health/department_pic/nk.jpg",
-            "rank": 1
-    },*/
 
+    public int getTextcolor() {
+        return textcolor;
+    }
+
+    public void setTextcolor(int textcolor) {
+        this.textcolor = textcolor;
+    }
 }

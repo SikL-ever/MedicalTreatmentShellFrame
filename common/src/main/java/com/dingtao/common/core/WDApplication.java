@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Looper;
 import android.webkit.JavascriptInterface;
@@ -11,6 +12,8 @@ import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.danikula.videocache.HttpProxyCacheServer;
+import com.dingtao.common.dao.DaoMaster;
+import com.dingtao.common.dao.DaoSession;
 import com.facebook.common.internal.Supplier;
 import com.facebook.common.util.ByteConstants;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -48,6 +51,17 @@ public class WDApplication extends Application {
     private static Context context;
 
     private static SharedPreferences sharedPreferences;
+    private static WDApplication instance;
+
+    private static DaoSession daoSession;
+
+    public static WDApplication getInstance() {
+        return instance;
+    }
+
+    public static DaoSession getDaoInstant() {
+        return daoSession;
+    }
 
     @Override
     public void onCreate() {
@@ -67,6 +81,8 @@ public class WDApplication extends Application {
         //定位
         //推送
         //统计
+        instance = this;
+        setupDatabase("database.db");
 
     }
 
@@ -75,7 +91,19 @@ public class WDApplication extends Application {
         super.onTerminate();
         ARouter.getInstance().destroy();
     }
-
+    /**
+     * 配置数据库
+     */
+    private void setupDatabase(String name) {
+        //创建数据库
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, name, null);
+        //获取可写数据库
+        SQLiteDatabase db = helper.getWritableDatabase();
+        //获取数据库对象
+        DaoMaster daoMaster = new DaoMaster(db);
+        //获取Dao对象管理者
+        daoSession = daoMaster.newSession();
+    }
     public static SharedPreferences getShare() {
         return sharedPreferences;
     }

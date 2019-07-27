@@ -3,6 +3,7 @@ package com.wd.health.activity;
 import android.icu.util.RangeValueIterator;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -22,11 +23,14 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.XqBean;
 import com.dingtao.common.core.DataCall;
+import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.tencent.ijk.media.player.pragma.DebugLog;
 import com.wd.health.R;
 import com.wd.health.R2;
+import com.wd.health.presenter.homepagepresenter.QxscPresenter;
 import com.wd.health.presenter.homepagepresenter.XqPresenter;
 import com.wd.health.presenter.homepagepresenter.ZxscPresenter;
 
@@ -44,7 +48,7 @@ import androidx.constraintlayout.solver.widgets.Helper;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ZxxqActivity extends AppCompatActivity {
+public class ZxxqActivity extends WDActivity {
 
 
     @BindView(R2.id.images_tx2)
@@ -72,12 +76,16 @@ public class ZxxqActivity extends AppCompatActivity {
     private String userId = null;
     private String sessionId = null;
     private int id;
+    private List<String> intt;
+    private int whetherCollection;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zxxq);
-        ButterKnife.bind(this);
+    protected int getLayoutId() {
+        return R.layout.activity_zxxq;
+    }
+
+    @Override
+    protected void initView() {
         imagesTx2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,15 +93,22 @@ public class ZxxqActivity extends AppCompatActivity {
             }
         });
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
-        List<String> intt = loginDaoUtil.intt(this);
-        userId = intt.get(0);
-        sessionId = intt.get(1);
-        String yhtx = intt.get(2);
+        intt = loginDaoUtil.intt(this);
+
 
         int idxq = getIntent().getIntExtra("idxq", 0);
-       // Toast.makeText(this, "" + idxq, Toast.LENGTH_SHORT).show();
-        XqPresenter xqPresenter = new XqPresenter(new XqShow());
-        xqPresenter.reqeust(idxq,userId,sessionId);
+        // Toast.makeText(this, "" + idxq, Toast.LENGTH_SHORT).show();
+        if (intt !=null){
+            userId = intt.get(0);
+            sessionId = intt.get(1);
+            Log.i("aaaaaaaaaaaaaaaaaa",userId+"                   "+sessionId);
+            XqPresenter xqPresenter = new XqPresenter(new XqShow());
+            xqPresenter.reqeust(idxq,userId,sessionId);
+        }else{
+            XqPresenter xqPresenter = new XqPresenter(new XqShow());
+            xqPresenter.reqeust(idxq,userId,sessionId);
+        }
+
         fenxiang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,11 +118,26 @@ public class ZxxqActivity extends AppCompatActivity {
         shoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ZxscPresenter zxscPresenter = new ZxscPresenter(new Zxscshow());
-                zxscPresenter.reqeust(userId,sessionId,id);
+                if (intt!=null){
+                    if (whetherCollection==1){
+                        QxscPresenter qxscPresenter = new QxscPresenter(new Zxscshow1());
+                        qxscPresenter.reqeust(userId,sessionId,id);
+                        whetherCollection=2;
+                    }else{
+                        ZxscPresenter zxscPresenter = new ZxscPresenter(new Zxscshow());
+                        zxscPresenter.reqeust(userId,sessionId,id);
+                        whetherCollection=1;
+                    }
+                }else{
+                    intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
+                    Toast.makeText(ZxxqActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    @Override
+    protected void destoryData() {
 
     }
 
@@ -141,7 +171,12 @@ public class ZxxqActivity extends AppCompatActivity {
                     "}" +
                     "</script>";
             webView.loadData(data.getContent() + js, "text/html; charset=UTF-8", null);*/
-
+            whetherCollection = data.getWhetherCollection();
+            if (whetherCollection ==1){
+                Glide.with(ZxxqActivity.this).load(R.drawable.common_button_collection_small_s).into(shoucang);
+            }else{
+                Glide.with(ZxxqActivity.this).load(R.drawable.common_button_collection_small_n).into(shoucang);
+            }
         }
 
         @Override
@@ -155,12 +190,26 @@ public class ZxxqActivity extends AppCompatActivity {
         @Override
         public void success(Result data, Object... args) {
             Glide.with(ZxxqActivity.this).load(R.drawable.common_button_collection_small_s).into(shoucang);
-            Toast.makeText(ZxxqActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(ZxxqActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
         public void fail(ApiException data, Object... args) {
-
+          //  Toast.makeText(ZxxqActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    private class Zxscshow1 implements DataCall<Result> {
+        @Override
+        public void success(Result data, Object... args) {
+            Glide.with(ZxxqActivity.this).load(R.drawable.common_button_collection_small_n).into(shoucang);
+          //  Toast.makeText(ZxxqActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+           // Toast.makeText(ZxxqActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

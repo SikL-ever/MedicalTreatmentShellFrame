@@ -61,6 +61,7 @@ public abstract class WDPresenter<T> {
                         return CustomException.handleException(throwable);
                     }
                 })
+
                 .subscribe(getConsumer(args), new Consumer<ApiException>() {
                     @Override
                     public void accept(ApiException e) throws Exception {

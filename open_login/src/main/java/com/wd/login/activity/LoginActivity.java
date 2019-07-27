@@ -146,7 +146,8 @@ public class LoginActivity extends WDActivity {
             dao.insertOrReplaceInTx(data);
 
             //跳转跳转
-            intentByRouter(Constant.ACTIVITY_LOGIN_MAIN);
+            //intentByRouter(Constant.ACTIVITY_LOGIN_MAIN);
+
             finish();
         }
 

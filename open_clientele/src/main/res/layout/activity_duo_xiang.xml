@@ -22,6 +22,7 @@
             android:textSize="18sp"
             android:textColor="#333"
             android:gravity="center"
+            android:text="健康养生"
             android:layout_centerHorizontal="true"
             android:id="@+id/gengduo_name"/>
         <CheckBox
