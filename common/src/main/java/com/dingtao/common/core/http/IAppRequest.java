@@ -2,6 +2,8 @@ package com.dingtao.common.core.http;
 
 
 import com.dingtao.common.bean.MyUser.MyConsultBean;
+import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
+import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
@@ -10,6 +12,7 @@ import com.dingtao.common.bean.homepage.CjypBean1;
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
 import com.dingtao.common.bean.homepage.RmssBean;
 import com.dingtao.common.bean.homepage.SousuoBean;
+import com.dingtao.common.bean.homepage.WzysBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
 import com.dingtao.common.bean.homepage.XqBean;
 import com.dingtao.common.bean.homepage.YpxqBean;
@@ -20,6 +23,7 @@ import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.DanBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
+import com.dingtao.common.bean.wardBean.BingzhengBean;
 import com.dingtao.common.bean.wardBean.List_xiang_Bean;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.dingtao.common.bean.wardBean.SeachBean;
@@ -146,22 +150,12 @@ public interface IAppRequest {
     @DELETE("user/verify/v1/deleteUserArchives")
     Observable<Result> deletemyuserrecord(@Header("userId") String userId,
                                           @Header("sessionId") String sessionId,
-                                          @Field("archivesId") int archivesId);
-
                                           @Query("archivesId") int archivesId);
     //.添加用户档案
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("user/verify/v1/addUserArchives")
     Observable<Result> addrecord(@Header("userId") String userId,
                                  @Header("sessionId") String sessionId,
-                                 @Field("diseaseMain") String diseaseMain,
-                                 @Field("diseaseNow") String diseaseNow,
-                                 @Field("diseaseBefore") String diseaseBefore,
-                                 @Field("treatmentHospitalRecent") String treatmentHospitalRecent,
-                                 @Field("treatmentProcess") String treatmentProcess,
-                                 @Field("treatmentStartTime") String treatmentStartTime,
-                                 @Field("treatmentEndTime") String treatmentEndTime);
-
                                  @Body RequestBody body);
     //上传图片
     //上传用户档案相关图片
@@ -175,16 +169,6 @@ public interface IAppRequest {
     @PUT("user/verify/v1/updateUserArchives")
     Observable<Result> uprecord(@Header("userId") String userId,
                                 @Header("sessionId") String sessionId,
-                                @Field("archivesId") int archivesId,
-                                @Field("diseaseMain") String diseaseMain,
-                                @Field("diseaseNow") String diseaseNow,
-                                @Field("diseaseBefore") String diseaseBefore,
-                                @Field("treatmentHospitalRecent") String treatmentHospitalRecent,
-                                @Field("treatmentProcess") String treatmentProcess,
-                                @Field("treatmentStartTime") String treatmentStartTime,
-                                @Field("treatmentEndTime") String treatmentEndTime);
-
-                                 @Header("sessionId") String sessionId,
                                 @Body RequestBody body);
     //.查询用户资讯收藏列表
     @GET("user/verify/v1/findUserInfoCollectionList")
@@ -230,8 +214,6 @@ public interface IAppRequest {
                                                              @Header("sessionId") String sessionId,
                                                              @Query("page") int page,
                                                              @Query("count") int count);
-                                         @Header("sessionId") String sessionId,
-                                         @Query("videoId") int videoId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 
@@ -322,42 +304,33 @@ public interface IAppRequest {
 
     @GET("share/v1/bannersShow")
     Observable<Result<List<Banner>>> bannershow();
-
     @GET("share/v1/homePageSearch")
     Observable<Result<SousuoBean>> sousuoshow(@Query("keyWord") String keyWord);
-
     @GET("share/v1/popularSearch")
     Observable<Result<List<RmssBean>>> rmssshow();
-
     @GET("share/knowledgeBase/v1/findDepartment")
     Observable<Result<List<WzzxBean>>> wzzxshow();
-
     @GET("share/information/v1/findInformationPlateList")
     Observable<Result<List<ZxbkBean>>> zxbkshow();
-
     @GET("share/information/v1/findInformationList")
-    Observable<Result<List<DuotiaomuBean>>> dtmshow(@Query("plateId") int plateId, @Query("page") int page, @Query("count") int count);
-
+    Observable<Result<List<DuotiaomuBean>>> dtmshow(@Query("plateId") int plateId,@Query("page") int page,@Query("count") int count);
     @GET("share/knowledgeBase/v1/findDiseaseCategory")
     Observable<Result<List<ZiBean>>> zishow(@Query("departmentId") int departmentId);
-
     @GET("share/knowledgeBase/v1/findDiseaseKnowledge")
     Observable<Result<ZhuBean>> zhushow(@Query("id") int id);
-
     @GET("share/knowledgeBase/v1/findDrugsCategoryList")
     Observable<Result<List<CjypBean>>> cjypshow();
-
     @GET("share/knowledgeBase/v1/findDrugsKnowledgeList")
     Observable<Result<List<CjypBean1>>> cjyp1how(@Query("drugsCategoryId") int drugsCategoryId, @Query("page") int page, @Query("count") int count);
-
     @GET("share/knowledgeBase/v1/findDrugsKnowledge")
     Observable<Result<YpxqBean>> ypshow(@Query("id") int id);
-
     @GET("share/information/v1/findInformation")
-    Observable<Result<XqBean>> zxxqshow(@Query("infoId") int infoId, @Header("userId") String userId, @Header("sessionId") String sessionId);
-
+    Observable<Result<XqBean>> zxxqshow(@Query("infoId") int infoId,@Header("userId") String userId, @Header("sessionId") String sessionId);
     @POST("user/verify/v1/addInfoCollection")
-    Observable<Result> shoucangshow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("infoId") int infoId);
-
+    Observable<Result> shoucangshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
+    @DELETE("user/verify/v1/cancelInfoCollection")
+    Observable<Result> qxscshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
+    @GET("user/inquiry/v1/findDoctorList")
+    Observable<Result<List<WzysBean>>> yslbShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("deptId") int deptId, @Query("condition") int condition, @Query("sortBy") int sortBy, @Query("page") int page, @Query("count") int count);
     //xieqi-------------------------------------------------------------------别动我的
 }
