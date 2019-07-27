@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.wardBean.TabBean;
@@ -82,11 +83,14 @@ public class WardmateFragment extends WDFragment {
     @Override
     protected void initView() {
 
-
         LoginDaoUtil loginDaoUtil=new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(getActivity());
-        String image = intt.get(2);
-        Glide.with(getActivity()).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(80))).into(head);
+        if (intt!=null){
+            String imagew = intt.get(2);
+            Glide.with(getActivity()).load(imagew). apply(RequestOptions.bitmapTransform(new CircleCrop())).into(head);
+        }else{
+            Glide.with(getActivity()).load(R.drawable.register_icon_invitatiion_code_n).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(head);
+        }
         //科室
         tabPresenter = new TabPresenter(new tab());
         tabPresenter.reqeust();

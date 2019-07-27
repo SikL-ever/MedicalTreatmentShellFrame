@@ -22,7 +22,7 @@ import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LoginBeanDao;
 import com.dingtao.common.util.Constant;
-import com.wd.health.activity.MainActivity;
+//import com.wd.health.activity.MainActivity;
 import com.wd.login.R;
 import com.wd.login.R2;
 import com.wd.login.presenter.LoginPresenter;

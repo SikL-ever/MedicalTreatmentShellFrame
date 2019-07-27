@@ -2,6 +2,8 @@ package com.dingtao.common.core.http;
 
 
 import com.dingtao.common.bean.MyUser.MyConsultBean;
+import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
+import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
@@ -21,6 +23,7 @@ import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.DanBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
+import com.dingtao.common.bean.wardBean.BingzhengBean;
 import com.dingtao.common.bean.wardBean.List_xiang_Bean;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.dingtao.common.bean.wardBean.SeachBean;

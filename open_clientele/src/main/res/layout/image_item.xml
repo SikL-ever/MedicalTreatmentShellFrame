@@ -8,6 +8,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_width="@dimen/dp_91"
         android:layout_height="@dimen/dp_110"
+        android:adjustViewBounds="true"
         android:scaleType="fitXY"/>
     <TextView
         android:id="@+id/ysname"

@@ -21,8 +21,10 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/shouye"
         android:hint="病症、药品名称、医生姓名"
+        android:singleLine="true"
         android:textCursorDrawable="@null"
         android:textColorHint="#808080"
+        android:imeOptions="actionSearch"
         android:textSize="12sp"
         android:textColor="#717171"
         android:layout_height="@dimen/dp_32" />

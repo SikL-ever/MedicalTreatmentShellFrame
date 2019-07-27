@@ -1,25 +1,15 @@
 package com.wd.health.activity;
 
-import android.icu.util.RangeValueIterator;
-import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.XqBean;
 import com.dingtao.common.core.DataCall;
@@ -27,7 +17,6 @@ import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
-import com.tencent.ijk.media.player.pragma.DebugLog;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.presenter.homepagepresenter.QxscPresenter;
@@ -43,12 +32,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.solver.widgets.Helper;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class ZxxqActivity extends AppCompatActivity {
+public class ZxxqActivity extends WDActivity {
 
 
     @BindView(R2.id.images_tx2)

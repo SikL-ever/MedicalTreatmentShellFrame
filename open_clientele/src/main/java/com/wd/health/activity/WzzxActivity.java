@@ -226,7 +226,7 @@ public class WzzxActivity extends AppCompatActivity {
                 }/*else if(){
 
                 }*/else{
-                    checkButton(data);
+                    /*checkButton(data);*/
                     q.setVisibility(View.VISIBLE);
                     w.setVisibility(View.VISIBLE);
                     weizhaodao1.setVisibility(View.GONE);
@@ -246,13 +246,13 @@ public class WzzxActivity extends AppCompatActivity {
                             shuzi.setText(index+1+"/"+(int) Math.ceil((double)data.size()/pagerCount));
                             imageAdapter .notifyDataSetChanged();
                             //隐藏上一个或下一个按钮
-                            if (index<=0){
+                           /* if (index<=0){
                                 zuo.setVisibility(View.GONE);
                                 you.setVisibility(View.VISIBLE);
                             }else if (data.size()-index*pagerCount<=pagerCount){    //数据总数减每页数当小于每页可显示的数字时既是最后一页
                                 you.setVisibility(View.GONE);
                                 zuo.setVisibility(View.VISIBLE);
-                            }
+                            }*/
                         }
                     });
 
@@ -265,13 +265,13 @@ public class WzzxActivity extends AppCompatActivity {
                             imageAdapter.notifyDataSetChanged();
                             shuzi.setText(index+1+"/"+(int) Math.ceil((double)data.size()/pagerCount));
                             //隐藏上一个或下一个按钮
-                            if (index<=0){
+                            /*if (index<=0){
                                 zuo.setVisibility(View.GONE);
                                 you.setVisibility(View.VISIBLE);
                             }else if (data.size()-index*pagerCount<=pagerCount){    //数据总数减每页数当小于每页可显示的数字时既是最后一页
                                 you.setVisibility(View.GONE);
                                 zuo.setVisibility(View.VISIBLE);
-                            }
+                            }*/
                         }
                     });
                     //设置方向为横向，不设置默认为纵向
@@ -419,7 +419,7 @@ public class WzzxActivity extends AppCompatActivity {
 
     }
 
-    private void checkButton(List<WzysBean> data) {
+   /* private void checkButton(List<WzysBean> data) {
         if (index<=0){
             zuo.setVisibility(View.GONE);
             you.setVisibility(View.VISIBLE);
@@ -427,7 +427,7 @@ public class WzzxActivity extends AppCompatActivity {
             you.setVisibility(View.GONE);
             zuo.setVisibility(View.VISIBLE);
         }
-    }
+    }*/
 
     private void checkButton() {
 

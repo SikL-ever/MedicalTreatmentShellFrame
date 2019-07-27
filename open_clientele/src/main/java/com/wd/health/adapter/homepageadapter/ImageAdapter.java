@@ -47,7 +47,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RoundedCorners roundedCorners= new RoundedCorners(10);
+        RoundedCorners roundedCorners= new RoundedCorners(4);
         RequestOptions options=RequestOptions.bitmapTransform(roundedCorners).override(240, 240);
         if(dataCall.get(position).getImagePic()==null){
             Glide.with(context).load(R.drawable.system_image7).apply(options).into(holder.imageView);

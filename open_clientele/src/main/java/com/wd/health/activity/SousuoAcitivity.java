@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -111,6 +112,43 @@ public class SousuoAcitivity extends AppCompatActivity {
             searchRecordsLl1.setVisibility(View.VISIBLE);
             ssshoew.setVisibility(View.VISIBLE);
         }*/
+        //回车不换行
+        edit_item.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return (event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+            }
+        });
+        edit_item.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode==KeyEvent.KEYCODE_ENTER) {//修改回车键功能
+// 先隐藏键盘
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(SousuoAcitivity.this.getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (edit_item.getText().toString().length() > 0) {
+
+                        String record = edit_item.getText().toString();
+                        SousuoPresenter sousuoPresenter = new SousuoPresenter(new sousuo());
+                        sousuoPresenter.reqeust(record);
+                        insertHistory();
+                        //   recordsAdapter.notifyDataSetChanged();
+                        Toast.makeText(SousuoAcitivity.this, "" + record, Toast.LENGTH_SHORT).show();
+                        weizhaodao.setVisibility(View.GONE);
+                        yizhaodao.setVisibility(View.GONE);
+                        asdfghjkl.setVisibility(View.VISIBLE);
+                        //根据关键词去搜索
+                        //    searchRecordsLl1.setVisibility(View.VISIBLE);
+                        //  ssshoew.setVisibility(View.VISIBLE);
+                    } else {
+                        Toast.makeText(SousuoAcitivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+                    }
+                    hideSoftKeyboard(SousuoAcitivity.this);
+                }
+                return false;
+            }
+        });
         lsjlBeanDao = DaoMaster.newDevSession(this, LsjlBeanDao.TABLENAME).getLsjlBeanDao();
         rmssPresenter = new RmssPresenter(new RmssShow());
         rmssPresenter.reqeust();
@@ -130,7 +168,6 @@ public class SousuoAcitivity extends AppCompatActivity {
         });
         // btnClearall.setOnClickListener(view -> showDeleteDialog());
         queryHistory();
-
         edit_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,7 +176,6 @@ public class SousuoAcitivity extends AppCompatActivity {
                 asdfghjkl.setVisibility(View.GONE);
             }
         });
-
         sousuo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
