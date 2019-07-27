@@ -30,9 +30,13 @@ import com.dingtao.common.bean.wardBean.WardLieBean;
 /*import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;*/
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -57,6 +61,7 @@ public interface IAppRequest {
     @POST("user/v1/login")
     Observable<Result<LoginBean>> getlogin(@Field("email") String email,
                                            @Field("pwd") String pwd);
+
     //注册
     @FormUrlEncoded
     @POST("user/v1/register")
@@ -65,19 +70,23 @@ public interface IAppRequest {
                                    @Field("pwd1") String pwd1,
                                    @Field("pwd2") String pwd2,
                                    @Field("invitationCode") String invitationCode);
+
     //邮箱
     @FormUrlEncoded
     @POST("user/v1/sendOutEmailCode")
     Observable<Result> getemail(@Field("email") String email);
+
     //重设密码(忘记密码使用)
     @FormUrlEncoded
     @PUT("user/v1/resetUserPwd")
     Observable<Result> anewpass(@Field("email") String email,
                                 @Field("pwd1") String pwd1,
                                 @Field("pwd2") String pwd2);
+
     //1.查询健康讲堂类目
-   @GET("user/video/v1/findVideoCategoryList")
+    @GET("user/video/v1/findVideoCategoryList")
     Observable<Result<List<TopBean>>> topdata();
+
     //根据视频类目查询视频列表
     @GET("user/video/v1/findVideoVoList")
     Observable<Result<List<VideoBean>>> videodata(@Header("userId") String userId,
@@ -85,33 +94,40 @@ public interface IAppRequest {
                                                   @Query("categoryId") int categoryId,
                                                   @Query("page") int page,
                                                   @Query("count") int count);
+
     // 查询视频评论列表
     @GET("user/video/v1/findVideoCommentList")
     Observable<Result<List<DanBean>>> videodan(@Query("videoId") int videoId);
+
     // 查询我的钱包
     @GET("user/verify/v1/findUserWallet")
     Observable<Result> videogetprice(@Header("userId") String userId,
                                      @Header("sessionId") String sessionId);
+
     // 查询我的钱包
+    //购买视频
     @FormUrlEncoded
     @POST("user/video/verify/v1/videoBuy")
     Observable<Result> videobuy(@Header("userId") String userId,
                                 @Header("sessionId") String sessionId,
                                 @Field("videoId") int videoId,
                                 @Field("price") int price);
+
     //健康课堂视频收藏
     @FormUrlEncoded
     @POST("user/video/verify/v1/addUserVideoCollection")
     Observable<Result> videocollect(@Header("userId") String userId,
                                     @Header("sessionId") String sessionId,
                                     @Field("videoId") int videoId);
+
     //发表视频评论（弹幕）
     @FormUrlEncoded
     @POST("user/video/verify/v1/addVideoComment")
     Observable<Result> videosendbulletscreen(@Header("userId") String userId,
-                                                @Header("sessionId") String sessionId,
-                                                @Field("videoId") int videoId,
+                                             @Header("sessionId") String sessionId,
+                                             @Field("videoId") int videoId,
                                              @Field("content") String content);
+
     //sichangyong-----------------------------------------我的页面
     //用户签到
     @POST("user/verify/v1/addSign")
@@ -123,91 +139,99 @@ public interface IAppRequest {
     @GET("user/verify/v1/findUserArchives")
     Observable<Result<UserRecordBean>> myuserrecord(@Header("userId") String userId,
                                                     @Header("sessionId") String sessionId);
+
     //23.删除用户档案
     @DELETE("user/verify/v1/deleteUserArchives")
     Observable<Result> deletemyuserrecord(@Header("userId") String userId,
                                           @Header("sessionId") String sessionId,
-                                          @Field("archivesId") int archivesId);
+                                          @Query("archivesId") int archivesId);
     //.添加用户档案
-    @FormUrlEncoded
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("user/verify/v1/addUserArchives")
     Observable<Result> addrecord(@Header("userId") String userId,
                                  @Header("sessionId") String sessionId,
-                                 @Field("diseaseMain") String diseaseMain,
-                                 @Field("diseaseNow") String diseaseNow,
-                                 @Field("diseaseBefore") String diseaseBefore,
-                                 @Field("treatmentHospitalRecent") String treatmentHospitalRecent,
-                                 @Field("treatmentProcess") String treatmentProcess,
-                                 @Field("treatmentStartTime") String treatmentStartTime,
-                                 @Field("treatmentEndTime") String treatmentEndTime);
+                                 @Body RequestBody body);
     //修改我的档案
-    @FormUrlEncoded
     @Headers({"Content-Type: application/json;charset=UTF-8"})
-    @POST("user/verify/v1/addUserArchives")
+    @PUT("user/verify/v1/updateUserArchives")
     Observable<Result> uprecord(@Header("userId") String userId,
-                                 @Header("sessionId") String sessionId,
-                                 @Field("archivesId") int archivesId,
-                                 @Field("diseaseMain") String diseaseMain,
-                                 @Field("diseaseNow") String diseaseNow,
-                                 @Field("diseaseBefore") String diseaseBefore,
-                                 @Field("treatmentHospitalRecent") String treatmentHospitalRecent,
-                                 @Field("treatmentProcess") String treatmentProcess,
-                                 @Field("treatmentStartTime") String treatmentStartTime,
-                                 @Field("treatmentEndTime") String treatmentEndTime);
+                                @Header("sessionId") String sessionId,
+                                @Body RequestBody body);
     //.查询用户资讯收藏列表
     @GET("user/verify/v1/findUserInfoCollectionList")
     Observable<Result<List<MyConsultBean>>> mycollectconsult(@Header("userId") String userId,
                                                              @Header("sessionId") String sessionId,
                                                              @Query("page") int page,
                                                              @Query("count") int count);
+
     //.用户收藏病友圈列表
     @GET("user/verify/v1/findUserSickCollectionList")
     Observable<Result<List<WardLieBean>>> mycollectbing(@Header("userId") String userId,
-                                                         @Header("sessionId") String sessionId,
-                                                         @Query("page") int page,
-                                                         @Query("count") int count);
+                                                        @Header("sessionId") String sessionId,
+                                                        @Query("page") int page,
+                                                        @Query("count") int count);
+
     //.用户收藏健康课堂视频列表
     @GET("user/verify/v1/findVideoCollectionList")
     Observable<Result<List<VideoBean>>> mycollectvideo(@Header("userId") String userId,
-                                                         @Header("sessionId") String sessionId,
-                                                         @Query("page") int page,
-                                                         @Query("count") int count);
+                                                       @Header("sessionId") String sessionId,
+                                                       @Query("page") int page,
+                                                       @Query("count") int count);
     //取消收藏将康视频
 
     @DELETE("user/verify/v1/cancelVideoCollection")
     Observable<Result> deletemyuservideo(@Header("userId") String userId,
                                           @Header("sessionId") String sessionId,
                                           @Query("videoId") int videoId);
+    //取消收藏将康视频
+   @DELETE("user/verify/v1/cancelVideoCollection")
+   Observable<Result> deletemyconsult(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("infoId") int infoId);
+
+   //进行查询用户消费记录
+   @GET("user/verify/v1/findUserConsumptionRecordList")
+   Observable<Result<List<MyUserWalletLookBean>>> myuserwalletlook(@Header("userId") String userId,
+                                                                   @Header("sessionId") String sessionId,
+                                                                   @Query("page") int page,
+                                                                   @Query("count") int count);
+   //查询用户被采纳的建议
+   @GET("user/verify/v1/findMyAdoptedCommentList")
+   Observable<Result<List<MyUserSuggestBean>>> myusersuggest(@Header("userId") String userId,
+                                                             @Header("sessionId") String sessionId,
+                                                             @Query("page") int page,
+                                                             @Query("count") int count);
     //sichangyong-------------------------------------------------------------------别动我的
-
-
 
 
     /*==========================================LIFANGXIAN====================================================*/
     //科室
     @GET("share/knowledgeBase/v1/findDepartment")
     Observable<Result<List<TabBean>>> tab();
+
     //列表详情
     @GET("user/sickCircle/v1/findSickCircleList")
     Observable<Result<List<WardLieBean>>> wardLie(@Query("departmentId") int departmentId,
                                                   @Query("page") int page,
                                                   @Query("count") int count);
+
     //搜索病友病症
     @GET("user/sickCircle/v1/searchSickCircle")
     Observable<Result<List<SeachBean>>> seach(@Query("keyWord") String keyWord);
+
     //病友圈列表详情
     @GET("user/sickCircle/v1/findSickCircleInfo")
     Observable<Result<List_xiang_Bean>> ListXiang(@Header("userId") String userId,
                                                   @Header("sessionId") String sessionId,
                                                   @Query("sickCircleId") int sickCircleId);
+
     //评论列表
     @GET("user/sickCircle/v1/findSickCircleCommentList")
     Observable<Result<List<Ping_lie_Bean>>> ping(@Header("userId") String userId,
-                                           @Header("sessionId") String sessionId,
-                                           @Query("sickCircleId") int sickCircleId,
-                                           @Query("page") int page,
-                                           @Query("count") int count);
+                                                 @Header("sessionId") String sessionId,
+                                                 @Query("sickCircleId") int sickCircleId,
+                                                 @Query("page") int page,
+                                                 @Query("count") int count);
 
     //评论
     @FormUrlEncoded
@@ -223,51 +247,46 @@ public interface IAppRequest {
                                             @Query("count") int count);
 
     //发表病友圈
-    @FormUrlEncoded
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("user/sickCircle/verify/v1/publishSickCircle")
-    Observable<Result> fabiao();
+    Observable<Result> fabiao(@Header("userId") String userId,
+                              @Header("sessionId") String sessionId,
+                              @Body RequestBody body);
+
     @FormUrlEncoded
-    //收藏
+    //采纳
     @PUT("user/sickCircle/verify/v1/adoptionProposal")
     Observable<Result> collect(@Header("userId") String userId,
                                @Header("sessionId") String sessionId,
                                @Field("commentId") int commentId,
                                @Field("sickCircleId") int sickCircleId);
+
     //点赞
     @FormUrlEncoded
     @PUT("user/sickCircle/verify/v1/expressOpinion")
     Observable<Result> zan(@Header("userId") String userId,
-                               @Header("sessionId") String sessionId,
-                               @Field("commentId") int commentId,
-                               @Field("opinion") int opinion);
+                           @Header("sessionId") String sessionId,
+                           @Field("commentId") int commentId,
+                           @Field("opinion") int opinion);
+
+    //病症
+    @GET("share/knowledgeBase/v1/findDiseaseCategory")
+    Observable<Result<List<BingzhengBean>>> binzheng(@Query("departmentId") int departmentId);
+
+    //收藏
+    @FormUrlEncoded
+    @POST("user/verify/v1/addUserSickCollection")
+    Observable<Result> shoucang(@Header("userId") String userId,
+                                @Header("sessionId") String sessionId,
+                                @Field("sickCircleId") int sickCircleId);
+    //发表图片
+    @FormUrlEncoded
+    @POST("user/sickCircle/verify/v1/uploadSickCirclePicture")
+    Observable<Result> image(@Header("userId") String userId,
+                             @Header("sessionId") String sessionId,
+                             @Field("sickCircleId") int sickCircleId,
+                             @Field("picture") File picture);
     /*==========================================LIFANGXIAN====================================================*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @GET("share/v1/bannersShow")

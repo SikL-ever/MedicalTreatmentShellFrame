@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.wardBean.List_xiang_Bean;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
@@ -29,12 +32,14 @@ import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.activity.MainActivity;
+import com.wd.health.activity.ZxxqActivity;
 import com.wd.health.adapter.wardmateadapter.PingAdapater;
 import com.wd.health.adapter.wardmateadapter.XiangAdapater;
 import com.wd.health.presenter.wardmatepresenter.CollectPresenter;
 import com.wd.health.presenter.wardmatepresenter.Lie_XiangPresenter;
 import com.wd.health.presenter.wardmatepresenter.PingliePresenter;
 import com.wd.health.presenter.wardmatepresenter.PinglunPresenter;
+import com.wd.health.presenter.wardmatepresenter.ShoucangPresenter;
 import com.wd.health.presenter.wardmatepresenter.ZanPresenter;
 
 import java.util.ArrayList;
@@ -67,8 +72,6 @@ public class List_detailsActivity extends AppCompatActivity {
     TextView hospital;
     @BindView(R2.id.remedy)
     TextView remedy;
-    @BindView(R2.id.star)
-    ImageView star;
     @BindView(R2.id.collect)
     TextView collect;
     @BindView(R2.id.jainyi)
@@ -97,11 +100,13 @@ public class List_detailsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ImageView imageView1;
     private TextView ping_edit;
-
+    private int id;
     private int type=1;
     private PingliePresenter pingliePresenter;
     private LoginDaoUtil loginDaoUtil;
     private PinglunPresenter pinglunPresenter;
+    private CheckBox iamgev;
+    private List<String> intt;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -111,13 +116,16 @@ public class List_detailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         know = findViewById(R.id.know);
         zhilaiotu = findViewById(R.id.zhiliaotu);
+        iamgev = findViewById(R.id.star);
         Intent intent = getIntent();
         int jumpId = intent.getIntExtra("jumpID", 0);
         lie_xiangPresenter = new Lie_XiangPresenter(new lie_xiang());
         loginDaoUtil = new LoginDaoUtil();
-        List<String> intt = loginDaoUtil.intt(List_detailsActivity.this);
+        intt = loginDaoUtil.intt(List_detailsActivity.this);
         lie_xiangPresenter.reqeust(intt.get(0), intt.get(1), jumpId);
-        //弹出对话框
+        String image = intt.get(2);
+        Glide.with(List_detailsActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(80))).into(imageHead);
+//        //弹出对话框
         jainyi.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -145,12 +153,11 @@ public class List_detailsActivity extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
-
                 recyclerView = view.findViewById(R.id.pinglunrecycler);
                 pingliePresenter = new PingliePresenter(new ping());
                 final List<String> intt1 = loginDaoUtil.intt(List_detailsActivity.this);
                 //请求数据
-                pingliePresenter.reqeust(intt1.get(0),intt1.get(1),16,1,10);
+                pingliePresenter.reqeust(intt1.get(0),intt1.get(1),id,1,10);
                 //布局管理器
                 LinearLayoutManager linearLayoutManager= new LinearLayoutManager(List_detailsActivity.this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -169,18 +176,17 @@ public class List_detailsActivity extends AppCompatActivity {
                 ping_edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        pinglunPresenter.reqeust(intt1.get(0),intt1.get(1),16,ping_edit.getText().toString().trim());
+                        pinglunPresenter.reqeust(intt1.get(0),intt1.get(1),id,ping_edit.getText().toString().trim());
                         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(List_detailsActivity.this);
                         linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
                         ping_edit.setText("");
-//                        pingliePresenter.reqeust(ping_edit.getText().toString().trim());
+                        pingAdapater.notifyDataSetChanged();
+
                     }
                 });
 
-
-
-
             }
+
 
             //半透明
             public void setBackgroundAlpha(float bgAlpha) {
@@ -194,32 +200,15 @@ public class List_detailsActivity extends AppCompatActivity {
 
 
     }
-
-
-    //点赞和踩
-    class zan implements DataCall<Result>{
-
-        @Override
-        public void success(Result data, Object... args) {
-            Object result = data.result;
-
-        }
-
-        @Override
-        public void fail(ApiException data, Object... args) {
-
-        }
-    }
-
-
     //评论
-    class pinglun implements DataCall<Result>{
+    class pinglun implements DataCall{
 
         @Override
-        public void success(Result data, Object... args) {
-            Toast.makeText(List_detailsActivity.this, data.message, Toast.LENGTH_SHORT).show();
+        public void success(Object data, Object... args) {
+            Toast.makeText(List_detailsActivity.this,"评论成功", Toast.LENGTH_SHORT).show();
 //            String message = data.message;
             pingAdapater.notifyDataSetChanged();
+
         }
 
         @Override
@@ -234,8 +223,10 @@ public class List_detailsActivity extends AppCompatActivity {
 
         @Override
         public void success(List<Ping_lie_Bean> data, Object... args) {
+
             pingAdapater.setpinglei(data);
             pingAdapater.notifyDataSetChanged();
+
         }
 
         @Override
@@ -246,8 +237,10 @@ public class List_detailsActivity extends AppCompatActivity {
 
     class lie_xiang implements DataCall<List_xiang_Bean> {
 
+        private int collectionFlag;
+
         @Override
-        public void success(List_xiang_Bean data, Object... args) {
+        public void success(final List_xiang_Bean data, Object... args) {
             List<List_xiang_Bean> list_xiang_beans = new ArrayList<>();
             String title = data.getTitle();
             String detail = data.getDetail();
@@ -258,8 +251,41 @@ public class List_detailsActivity extends AppCompatActivity {
             int commentNum = data.getCommentNum();
             int collectionNum = data.getCollectionNum();
 
+            //采纳者
+            String adoptHeadPic = data.getAdoptHeadPic();
+            String adoptNickName = data.getAdoptNickName();
 
+            //作者id
+            int authorUserId = data.getAuthorUserId();
+            //收藏id
+            id = data.getSickCircleId();
+            //收藏
+            collectionFlag = data.getCollectionFlag();
 
+            if(collectionFlag==1){
+                iamgev.setChecked(true);
+                iamgev.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        data.setCollectionFlag(2);
+                        ShoucangPresenter shoucangPresenter=new ShoucangPresenter(new shoucang());
+                        shoucangPresenter.reqeust(intt.get(0),intt.get(1),id);
+                    }
+                });
+            }else{
+                iamgev.setChecked(false);
+                iamgev.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        data.setCollectionFlag(1);
+                        ShoucangPresenter shoucangPresenter=new ShoucangPresenter(new shoucangs());
+                        shoucangPresenter.reqeust(intt.get(0),intt.get(1),id);
+                    }
+                });
+            }
+            //用户头像
+//            touxiang.setImageURI(Glide.with(List_detailsActivity.this).load(data.getAdoptHeadPic()).into(adoptHeadPic.split(","))
+//            nameSsss.setText(adoptNickName+"");
             collect.setText(collectionNum+"");
             advise.setText(commentNum+"");
             String picture1 = data.picture;
@@ -270,6 +296,32 @@ public class List_detailsActivity extends AppCompatActivity {
             remedy.setText(treatmentProcess);
             String[] split = picture1.split(",");
 //            Glide.with(zhilaiotu).load(picture).into(zhilaiotu);
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
+    //fail
+    class shoucang implements DataCall<Result>{
+        @Override
+        public void success(Result data, Object... args) {
+            Toast.makeText(List_detailsActivity.this, "取消收藏！", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
+    //successful
+    class shoucangs implements DataCall<Result>{
+
+        @Override
+        public void success(Result data, Object... args) {
+            String message = data.getMessage();
+            Toast.makeText(List_detailsActivity.this,message,Toast.LENGTH_SHORT).show();
         }
 
         @Override

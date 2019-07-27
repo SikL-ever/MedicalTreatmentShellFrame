@@ -48,7 +48,7 @@ import androidx.constraintlayout.solver.widgets.Helper;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ZxxqActivity extends WDActivity {
+public class ZxxqActivity extends AppCompatActivity {
 
 
     @BindView(R2.id.images_tx2)

@@ -14,7 +14,23 @@ public class UserRecordBean {
         public String diseaseBefore;
         public String treatmentHospitalRecent;
         public String treatmentProcess;
-        public int treatmentStartTime;
-        public int treatmentEndTime;
+        public long treatmentStartTime;
+        public long treatmentEndTime;
         public String picture;
+
+        @Override
+        public String toString() {
+                return "UserRecordBean{" +
+                        "userId=" + userId +
+                        ", id=" + id +
+                        ", diseaseMain='" + diseaseMain + '\'' +
+                        ", diseaseNow='" + diseaseNow + '\'' +
+                        ", diseaseBefore='" + diseaseBefore + '\'' +
+                        ", treatmentHospitalRecent='" + treatmentHospitalRecent + '\'' +
+                        ", treatmentProcess='" + treatmentProcess + '\'' +
+                        ", treatmentStartTime=" + treatmentStartTime +
+                        ", treatmentEndTime=" + treatmentEndTime +
+                        ", picture='" + picture + '\'' +
+                        '}';
+        }
 }

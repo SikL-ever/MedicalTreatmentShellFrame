@@ -6,31 +6,35 @@ package com.dingtao.common.bean;
  * qq:1940870847
  */
 public class BDResult<T> {
-    int code;
-    String msg;
-    T data;
-
-    public int getCode() {
-        return code;
+    public String status;
+    public String message;
+    public T result;
+    public BDResult(String status, String message) {
+        this.status = status;
+        this.message = message;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public String getStatus() {
+        return status;
     }
 
-    public String getMsg() {
-        return msg;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public String getMessage() {
+        return message;
     }
 
-    public T getData() {
-        return data;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public T getResult() {
+        return result;
+    }
+
+    public void setResult(T result) {
+        this.result = result;
     }
 }

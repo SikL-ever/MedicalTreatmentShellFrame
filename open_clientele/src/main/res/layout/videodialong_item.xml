@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/videodaido_item">
+    <!--加上padding是为了撑开dialog的宽度-->
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:id="@+id/textView10"
+        android:textColor="#7b7b7b"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确认取消该订单"/>
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:background="#ebebeb"
+
+
+        />
+
+    <LinearLayout
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="300dp"
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/cancel"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:textColor="#fff"
+            android:background="@drawable/videodialong_bt_one"
+            android:text="取消"
+            />
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="1dp"
+            android:background="#ebebeb"
+            android:layout_height="30dp"/>
+
+        <TextView
+            android:background="@drawable/videodialong_bt_two"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center"
+            android:text="确定"
+            />
+
+    </LinearLayout>
+</LinearLayout>

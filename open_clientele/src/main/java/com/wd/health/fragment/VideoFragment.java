@@ -50,6 +50,7 @@ import com.wd.health.util.Barrage;
 import com.wd.health.util.BarrageView;
 import com.wd.health.util.BaseRecAdapter;
 import com.wd.health.util.BaseRecViewHolder;
+import com.wd.health.util.MyDialog;
 import com.wd.health.util.MyVideoPlayer;
 
 import java.util.ArrayList;
@@ -217,19 +218,19 @@ public class VideoFragment extends WDFragment {
         }
     }
     //收藏回来的数据
-    class videocollectdata implements DataCall<Result>{
+    class videocollectdata implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
-            Toast.makeText(getActivity(), data.message, Toast.LENGTH_SHORT).show();
+        public void success(Object data, Object... args) {
+            Toast.makeText(getActivity(),"收藏成功", Toast.LENGTH_SHORT).show();
         }
         @Override
         public void fail(ApiException data, Object... args) {
         }
     }
     //发送弹幕成功的数据
-    class videosendbulletscreen implements DataCall<Result>{
+    class videosendbulletscreen implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
+        public void success(Object data, Object... args) {
             commentpopuyvideo.dismiss();
             //进行重新查询弹幕列表进行添加。
             bulletscreenPresenter.reqeust(args[2]);//进行请求弹幕
@@ -253,13 +254,13 @@ public class VideoFragment extends WDFragment {
         }
     }
     //购买返回回来的数据
-    class getbuyvideo implements DataCall<Result>{
+    class getbuyvideo implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
+        public void success(Object data, Object... args) {
             int mid=(int) args[4];
             videoPresenter.reqeust(uid, sid, mid, 1, 10);
             videoGetPricePresenter.reqeust(uid,sid);
-            Toast.makeText(getActivity(), data.message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"购买成功", Toast.LENGTH_SHORT).show();
         }
         @Override
         public void fail(ApiException data, Object... args) {
@@ -355,10 +356,12 @@ public class VideoFragment extends WDFragment {
             holder.videobtcollect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.i("kkk", "onClick: "+uid);
                     if (uid == null) {
                         holder.videobtcollect.setChecked(false);
-                       //跳转登录
-                        JZVideoPlayer.goOnPlayOnPause();//视频暂停
+                       //跳转登录.
+                        holder.mp_video.mystopp();
+//                        JZVideoPlayer.goOnPlayOnPause();//视频暂停
                         intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                     }else{
                         //进行收藏视频2是没有收藏
@@ -399,7 +402,8 @@ public class VideoFragment extends WDFragment {
                 public void onClick(View v) {
                     //进行判断是否登录状态
                     if (uid == null) {
-                        JZVideoPlayer.goOnPlayOnPause();//视频暂停
+                       //JZVideoPlayer.goOnPlayOnPause();//视频暂停
+                        holder.mp_video.mystopp();
                         intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                     }else{
                         //进行一个判断如果是购买的进行评论，如果不是购买的进行购买处理
@@ -457,33 +461,32 @@ public class VideoFragment extends WDFragment {
             holder.videopopupbuybt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //进入购买页面
-                    //创建弹框
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    //    设置Title的内容
-                    builder.setTitle("提示");
-                    //    设置Content来显示一个信息
-                    builder.setMessage("购买本视频将扣除"+bean.price+"H币");
-                    //    设置一个PositiveButton
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
-                    {
+                    View view=View.inflate(getActivity(),R.layout.videodialong_item,null);
+                    final MyDialog dialog = new MyDialog(getActivity(), 200, 100, view, R.style.dialog);
+                    dialog.show();
+                    final TextView cancel =
+                            (TextView) view.findViewById(R.id.cancel);
+                    final TextView confirm =
+                            (TextView)view.findViewById(R.id.confirm);
+                    final TextView text =
+                            (TextView)view.findViewById(R.id.textView10);
+                    text.setText("购买本视频将扣除"+bean.price+"H币");
+                    cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(View v) {
+                            Toast.makeText(context, "购买取消", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    });
+                    confirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
                             //去购买本个视频
                             //请求接口
                             buyVideoPresenter.reqeust(uid,sid,bean.id,bean.price,bean.categoryId);
-                            buypopuyvideo.dismiss();
+                            dialog.dismiss();
                         }
                     });
-                    //    设置一个NegativeButton
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context, "购买取消", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    //显示出该对话框
-                    builder.show();
                 }
             });
             //设置popup的点击事件----消失popup
@@ -656,7 +659,7 @@ public class VideoFragment extends WDFragment {
         super.onHiddenChanged(hidden);
         if (hidden) {
             //不可见的状态弹幕停止，视频停止
-            JZVideoPlayer.goOnPlayOnPause();//视频暂停
+            //JZVideoPlayer.goOnPlayOnPause();//视频暂停
             //vidoebarr.destroy();//清除弹幕
         }else{
             videoPresenter.reqeust(uid, sid, 1, 1, 10);
@@ -677,6 +680,15 @@ public class VideoFragment extends WDFragment {
     @Override
     public void onPause() {
         super.onPause();
-        JZVideoPlayer.goOnPlayOnPause();//视频暂停
+         //JZVideoPlayer.goOnPlayOnPause();//视频暂停
+    }
+    /**
+     * 弹出对话框
+     */
+    private void showdialog() {
+
+
+
+
     }
 }

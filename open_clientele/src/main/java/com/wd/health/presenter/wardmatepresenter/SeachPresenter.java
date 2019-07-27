@@ -1,8 +1,5 @@
 package com.wd.health.presenter.wardmatepresenter;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDPresenter;
 import com.dingtao.common.core.http.IAppRequest;

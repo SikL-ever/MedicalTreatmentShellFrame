@@ -93,10 +93,10 @@ public class FindPassActivity extends WDActivity {
         });
     }
     //验证码返回的数据
-    class emaildata implements DataCall<Result>{
+    class emaildata implements DataCall{
         @Override
-        public void success(Result data, Object... args) {
-            Toast.makeText(FindPassActivity.this, data.message, Toast.LENGTH_SHORT).show();
+        public void success(Object data, Object... args) {
+            Toast.makeText(FindPassActivity.this,"发送成功", Toast.LENGTH_SHORT).show();
         }
         @Override
         public void fail(ApiException data, Object... args) {
