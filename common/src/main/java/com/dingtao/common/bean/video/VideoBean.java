@@ -14,14 +14,27 @@ public class VideoBean {
     public int categoryId;
     public int duration;
     public int id;
-    public int videoId;
     public String originalUrl;
-    public String original;
     public int price;
     public String shearUrl;
     public String title;
     public int whetherBuy;
     public int whetherCollection;
-    public long createTime;
 
+    @Override
+    public String toString() {
+        return "VideoBean{" +
+                "abstracts='" + abstracts + '\'' +
+                ", buyNum=" + buyNum +
+                ", categoryId=" + categoryId +
+                ", duration=" + duration +
+                ", id=" + id +
+                ", originalUrl='" + originalUrl + '\'' +
+                ", price=" + price +
+                ", shearUrl='" + shearUrl + '\'' +
+                ", title='" + title + '\'' +
+                ", whetherBuy=" + whetherBuy +
+                ", whetherCollection=" + whetherCollection +
+                '}';
+    }
 }

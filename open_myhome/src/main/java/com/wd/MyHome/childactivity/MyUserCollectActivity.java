@@ -1,5 +1,6 @@
 package com.wd.MyHome.childactivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,7 +9,9 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.video.VideoBean;
 import com.dingtao.common.bean.wardBean.WardLieBean;
@@ -18,19 +21,23 @@ import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.adapter.MyCollectBIngAdapter;
 import com.wd.MyHome.adapter.MyCollectVideoAdapter;
 import com.wd.MyHome.adapter.MyCollectconsultAdapter;
 import com.wd.MyHome.presenter.MyCollectBingPresenter;
 import com.wd.MyHome.presenter.MyCollectConsultPresenter;
 import com.wd.MyHome.presenter.MyCollectVideoPresenter;
 import com.wd.MyHome.util.TopView;
+import com.wd.health.fragment.VideoFragment;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jzvd.JZVideoPlayer;
 
 public class MyUserCollectActivity extends WDActivity {
 
@@ -57,12 +64,14 @@ public class MyUserCollectActivity extends WDActivity {
     private int page = 1;
     private MyCollectVideoAdapter myCollectVideoAdapter;//视频的适配器
     private MyCollectconsultAdapter myCollectconsultAdapter;//咨询适配器
+    private MyCollectBIngAdapter myCollectBIngAdapter;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_user_collect;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void initView() {
         //
@@ -76,26 +85,41 @@ public class MyUserCollectActivity extends WDActivity {
         //创建咨询的适配器
         myCollectconsultAdapter = new MyCollectconsultAdapter(this);
         //创建病友圈的适配器
-        myt1.setTextColor(0xff0000ff);
+        myCollectBIngAdapter = new MyCollectBIngAdapter(this);
+
+
+        myt1.setTextColor(R.color.top);
         mycollectradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.mybt1) {
                     myCollectConsultPresenter.reqeust(uid, sid, page, 10);
-                    myt1.setTextColor(0xff0000ff);
+                    myt1.setTextColor(R.color.top);
                     mybt2.setTextColor(0xff000000);
                     mybt3.setTextColor(0xff000000);
                 } else if (checkedId == R.id.mybt2) {
                     myCollectVideoPresenter.reqeust(uid, sid, page, 10);
                     myt1.setTextColor(0xff000000);
-                    mybt2.setTextColor(0xff0000ff);
+                    mybt2.setTextColor(R.color.top);
                     mybt3.setTextColor(0xff000000);
                 } else if (checkedId == R.id.mybt3) {
                     myCollectBingPresenter.reqeust(uid, sid, page, 10);
                     myt1.setTextColor(0xff000000);
                     mybt2.setTextColor(0xff000000);
-                    mybt3.setTextColor(0xff0000ff);
+                    mybt3.setTextColor(R.color.top);
 
+                }
+            }
+        });
+
+        textrecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dx<0){
+                    Log.i("ccc", "onScrolled: "+dx);
+                }
+                if (dx>0){
+                    Log.i("ccc", "onScrolled: "+dx);
                 }
             }
         });
@@ -130,13 +154,20 @@ public class MyUserCollectActivity extends WDActivity {
         @Override
         public void success(List<WardLieBean> data, Object... args) {
             //创建适配器
-            Log.i("aaa", "病友圈: " + data);
             if (data.size()==0) {
                 collectgone.setVisibility(View.VISIBLE);
                 textrecycler.setVisibility(View.GONE);
             }else{
                 collectgone.setVisibility(View.GONE);
                 textrecycler.setVisibility(View.VISIBLE);
+                //
+                myCollectBIngAdapter.clear();
+                myCollectBIngAdapter.add(data);
+                //设置适配器
+                textrecycler.setAdapter(myCollectBIngAdapter);
+                textrecycler.setLayoutManager
+                        (new LinearLayoutManager
+                                (MyUserCollectActivity.this, LinearLayoutManager.VERTICAL, false));
             }
         }
         @Override
@@ -144,9 +175,9 @@ public class MyUserCollectActivity extends WDActivity {
         }
     }
     //我的视频
-    class getmyvideo implements DataCall<List<VideoBean>> {
+    class getmyvideo implements DataCall<List<MyCollectVideoBean>> {
         @Override
-        public void success(List<VideoBean> data, Object... args) {
+        public void success(List<MyCollectVideoBean> data, Object... args) {
             if (data.size()==0) {
                 collectgone.setVisibility(View.VISIBLE);
                 textrecycler.setVisibility(View.GONE);
@@ -154,7 +185,6 @@ public class MyUserCollectActivity extends WDActivity {
                 collectgone.setVisibility(View.GONE);
                 textrecycler.setVisibility(View.VISIBLE);
                 //创建适配器
-                Log.i("aaa", "视频: " + data);
                 myCollectVideoAdapter.clear();
                 myCollectVideoAdapter.add(data);
                 //把UID，su穿进去

@@ -31,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:layout_marginRight="@dimen/dp_15"
-                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginRight="@dimen/dp_25"
                     android:checked="true"
                     android:background="@drawable/mycollect"
                     android:id="@+id/mybt1"
@@ -45,8 +45,8 @@
                     android:text="健康咨询"
                     />
                 <RadioButton
-                    android:layout_marginRight="@dimen/dp_15"
-                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginRight="@dimen/dp_25"
                     android:background="@drawable/mycollect"
                     android:id="@+id/mybt2"
                     android:gravity="center"
@@ -58,8 +58,8 @@
                     android:text="健康视频"
                     />
                 <RadioButton
-                    android:layout_marginRight="@dimen/dp_15"
-                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginLeft="@dimen/dp_25"
+                    android:layout_marginRight="@dimen/dp_25"
                     android:background="@drawable/mycollect"
                     android:id="@+id/mybt3"
                     android:gravity="center"

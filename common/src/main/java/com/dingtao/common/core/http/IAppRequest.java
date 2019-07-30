@@ -1,6 +1,7 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
@@ -186,21 +187,26 @@ public interface IAppRequest {
 
     //.用户收藏健康课堂视频列表
     @GET("user/verify/v1/findVideoCollectionList")
-    Observable<Result<List<VideoBean>>> mycollectvideo(@Header("userId") String userId,
-                                                       @Header("sessionId") String sessionId,
-                                                       @Query("page") int page,
-                                                       @Query("count") int count);
+    Observable<Result<List<MyCollectVideoBean>>> mycollectvideo(@Header("userId") String userId,
+                                                                          @Header("sessionId") String sessionId,
+                                                                          @Query("page") int page,
+                                                                          @Query("count") int count);
     //取消收藏将康视频
-
     @DELETE("user/verify/v1/cancelVideoCollection")
     Observable<Result> deletemyuservideo(@Header("userId") String userId,
                                           @Header("sessionId") String sessionId,
                                           @Query("videoId") int videoId);
-    //取消收藏将康视频
-   @DELETE("user/verify/v1/cancelVideoCollection")
-   Observable<Result> deletemyconsult(@Header("userId") String userId,
-                                      @Header("sessionId") String sessionId,
-                                      @Query("infoId") int infoId);
+    //取消收藏病友圈
+   @DELETE("user/verify/v1/cancelSickCollection")
+   Observable<Result> deletemybing(@Header("userId") String userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("sickCircleId") int sickCircleId);
+
+    //取消收藏咨询
+    @DELETE("user/verify/v1/cancelInfoCollection")
+    Observable<Result> deletemyconsult(@Header("userId") String userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("infoId") int infoId);
 
    //进行查询用户消费记录
    @GET("user/verify/v1/findUserConsumptionRecordList")

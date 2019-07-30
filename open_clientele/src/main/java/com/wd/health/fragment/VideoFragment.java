@@ -1,15 +1,20 @@
 package com.wd.health.fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,7 +126,10 @@ public class VideoFragment extends WDFragment {
     private VideoSendBulletscreen videoSendBulletscreen;//发送弹幕;
     private PopupWindow commentpopuyvideo;
     private BulletscreenPresenter bulletscreenPresenter;//弹幕查询
-
+    //滑动监听
+    private int ad;
+    //屏幕高度
+    private int mRealSizeHeight;
     @Override
     public String getPageName() {
         return null;
@@ -134,6 +142,22 @@ public class VideoFragment extends WDFragment {
     //数据
     @Override
     protected void initView() {
+        //获取屏幕高度
+        WindowManager windowManager =
+                (WindowManager) getActivity().getSystemService(Context.
+                        WINDOW_SERVICE);
+        final Display display = windowManager.getDefaultDisplay();
+        Point outPoint = new Point();
+        if (Build.VERSION.SDK_INT >= 19) {
+            // 可能有虚拟按键的情况
+            display.getRealSize(outPoint);
+        } else {
+            // 不可能有虚拟按键
+            display.getSize(outPoint);
+        }
+        mRealSizeHeight = outPoint.y;
+
+
         //创建p层
         videoGetPricePresenter = new VideoGetPricePresenter(new videogetprice());
         topPresenter = new TopPresenter(new gettopdata());//请求顶部栏的数据
@@ -293,18 +317,33 @@ public class VideoFragment extends WDFragment {
         videorecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy> 0) {
+                    ad=ad+dy;
+                }
+                if (dy < 0) {
+                    int ab=Math.abs(dy);
+                    ad=ad+ab;
+                }
             }
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                Log.i("bbb", "onScrollStateChanged: " + newState + "");
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE://停止滚动
                         View view = snapHelper.findSnapView(layoutManager);
-                        JZVideoPlayer.releaseAllVideos();
                         RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+                        int a=mRealSizeHeight-100;
+                        Log.i("aaa", "onScrollStateChanged: "+ad+"---"+a);
                         if (viewHolder != null && viewHolder instanceof VideoViewHolder) {
-                            ((VideoViewHolder) viewHolder).mp_video.startVideo();
+                            //进行一个判断
+                            if (ad>=mRealSizeHeight-100){
+                                JZVideoPlayer.releaseAllVideos();
+                                ((VideoViewHolder) viewHolder).mp_video.startVideo();
+                                ((VideoViewHolder) viewHolder).videoendlayout.setVisibility(View.GONE);
+                                ad=0;
+                            }else{
+                                ad=0;
+                            }
+
                         }
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING://拖动
@@ -360,8 +399,8 @@ public class VideoFragment extends WDFragment {
                     if (uid == null) {
                         holder.videobtcollect.setChecked(false);
                        //跳转登录.
-                        holder.mp_video.mystopp();
-//                        JZVideoPlayer.goOnPlayOnPause();//视频暂停
+                        holder.mp_video.mystop();
+                        JZVideoPlayer.goOnPlayOnPause();//视频暂停
                         intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                     }else{
                         //进行收藏视频2是没有收藏
@@ -402,8 +441,8 @@ public class VideoFragment extends WDFragment {
                 public void onClick(View v) {
                     //进行判断是否登录状态
                     if (uid == null) {
-                       //JZVideoPlayer.goOnPlayOnPause();//视频暂停
-                        holder.mp_video.mystopp();
+                       JZVideoPlayer.goOnPlayOnPause();//视频暂停
+                        holder.mp_video.mystop();
                         intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                     }else{
                         //进行一个判断如果是购买的进行评论，如果不是购买的进行购买处理
@@ -518,35 +557,40 @@ public class VideoFragment extends WDFragment {
             holder.videoendlayoutbuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //进入购买页面
-                    //创建弹框
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    //    设置Title的内容
-                    builder.setTitle("提示");
-                    //    设置Content来显示一个信息
-                    builder.setMessage("购买本视频将扣除"+bean.price+"H币");
-                    //    设置一个PositiveButton
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //去购买本个视频
-                            //请求接口
-                            buyVideoPresenter.reqeust(uid,sid,bean.id,bean.price,bean.categoryId);
-                            holder.videoendlayout.setVisibility(View.GONE);
-                            //进行重新数据
-                        }
-                    });
-                    //    设置一个NegativeButton
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context, "购买取消", Toast.LENGTH_SHORT).show();
-                            holder.videoendlayout.setVisibility(View.GONE);
-                        }
-                    });
-                    //显示出该对话框
-                    builder.show();
+                    if (uid == null) {
+                        JZVideoPlayer.goOnPlayOnPause();//视频暂停
+                        holder.mp_video.mystop();
+                        intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
+                    }else {
+                        View view=View.inflate(getActivity(),R.layout.videodialong_item,null);
+                        final MyDialog dialog = new MyDialog(getActivity(), 200, 100, view, R.style.dialog);
+                        dialog.show();
+                        final TextView cancel =
+                                (TextView) view.findViewById(R.id.cancel);
+                        final TextView confirm =
+                                (TextView)view.findViewById(R.id.confirm);
+                        final TextView text =
+                                (TextView)view.findViewById(R.id.textView10);
+                        text.setText("购买本视频将扣除"+bean.price+"H币");
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                holder.videoendlayout.setVisibility(View.GONE);
+                                Toast.makeText(context, "购买取消", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+                        confirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //去购买本个视频
+                                //请求接口
+                                holder.videoendlayout.setVisibility(View.GONE);
+                                buyVideoPresenter.reqeust(uid,sid,bean.id,bean.price,bean.categoryId);
+                                dialog.dismiss();
+                            }
+                        });
+                    }
                 }
             });
             //重新播放
@@ -554,6 +598,8 @@ public class VideoFragment extends WDFragment {
                 @Override
                 public void onClick(View v) {
                     holder.videoendlayout.setVisibility(View.GONE);
+                    //播放视频
+                    holder.mp_video.lostbeg();
                 }
             });
             ///弹幕popup
@@ -585,7 +631,7 @@ public class VideoFragment extends WDFragment {
         private CheckBox videobtbulletscreen;
         private ImageView videobtbuy,videoendimage;
         private View popupone,popuptwo;//popupwind
-        private RelativeLayout videoendlayout;//结束的布局
+        private RelativeLayout videoendlayout,layout_main;//结束的布局
         //------------购买popu控件
         ImageView videopopupimage, videopopuoonefinish;
         TextView videopopupmyprice, videopopuptextone, videopopuptexttwo;
@@ -607,6 +653,7 @@ public class VideoFragment extends WDFragment {
             this.videoendlayoutbuy = rootView.findViewById(R.id.videoendlayoutbuy);
             this.videoendlayout = rootView.findViewById(R.id.videoendlayout);
             this.videoendimage = rootView.findViewById(R.id.videoendimage);
+            this.layout_main = rootView.findViewById(R.id.layout_main);
             //-------------------------------------------购买的popup
             popupone = View.inflate(getContext(), R.layout.videopopupone, null);//popup
             videopopupimage = popupone.findViewById(R.id.videopopupimage);
@@ -636,6 +683,7 @@ public class VideoFragment extends WDFragment {
             uid = intt.get(0);
             sid = intt.get(1);
         }
+        videoPresenter.reqeust(uid, sid, 1, 1, 10);
     }
     //------------------------------------------------------------------------------销毁
     //销毁
@@ -659,12 +707,12 @@ public class VideoFragment extends WDFragment {
         super.onHiddenChanged(hidden);
         if (hidden) {
             //不可见的状态弹幕停止，视频停止
-            //JZVideoPlayer.goOnPlayOnPause();//视频暂停
-            //vidoebarr.destroy();//清除弹幕
+            JZVideoPlayer.goOnPlayOnPause();//视频暂停
+            vidoebarr.destroy();//清除弹幕
         }else{
             videoPresenter.reqeust(uid, sid, 1, 1, 10);
             //可见的状态
-            JZVideoPlayer.goOnPlayOnResume();
+            //JZVideoPlayer.goOnPlayOnResume();
             //判断是否为空
             if (uid == null) {
 
@@ -680,15 +728,9 @@ public class VideoFragment extends WDFragment {
     @Override
     public void onPause() {
         super.onPause();
-         //JZVideoPlayer.goOnPlayOnPause();//视频暂停
+         JZVideoPlayer.goOnPlayOnPause();//视频暂停
     }
     /**
      * 弹出对话框
      */
-    private void showdialog() {
-
-
-
-
-    }
 }

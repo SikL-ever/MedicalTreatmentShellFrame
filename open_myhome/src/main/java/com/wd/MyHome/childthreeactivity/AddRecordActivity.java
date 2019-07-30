@@ -141,9 +141,9 @@ public class AddRecordActivity extends WDActivity {
                     Gson gson = new Gson();
                     String s = gson.toJson(map);
                     RequestBody body=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),s);
-                    //addRecordPresenter.reqeust(intt.get(0),intt.get(1),body);
+                    addRecordPresenter.reqeust(intt.get(0),intt.get(1),body);
                     //添加图片上传
-                    addRecordPhotoPresenter.reqeust(intt.get(0),intt.get(1),mPicList);
+                    //addRecordPhotoPresenter.reqeust(intt.get(0),intt.get(1),mPicList);
 
                 }
             }
