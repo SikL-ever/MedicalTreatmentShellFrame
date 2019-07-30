@@ -15,6 +15,7 @@
         <activity android:name=".childactivity.MyDiseaseActivity" />
         <activity android:name=".childactivity.MyInterestActivity" />
         <activity android:name=".childactivity.MyHMoneyActivity"></activity>
+        <activity android:name=".childactivity.MyUserSetActivity" />
     </application>
 
 </manifest>

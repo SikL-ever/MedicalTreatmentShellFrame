@@ -24,6 +24,7 @@ import com.dingtao.common.bean.homepage.ZhuBean1;
 import com.dingtao.common.bean.homepage.ZiBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
@@ -89,10 +90,23 @@ public class ZsbdActivity extends AppCompatActivity {
         type = getIntent().getIntExtra("type", 101);
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(this);
-        String userId = intt.get(0);
-        String sessionId = intt.get(1);
-        String yhtx = intt.get(2);
-        Glide.with(this).load(yhtx).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
+        if (intt!=null){
+            Glide.with(this).load(intt.get(2)).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
+        }else{
+            Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
+        }
+        /*images.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> intt = new LoginDaoUtil().intt(ZsbdActivity.this);
+                if (intt!=null){
+                    //intentByRouter(Constant.ACTIVITY_LOGIN_MYUSERACTIVITY);
+                    Glide.with(ZsbdActivity.this).load(intt.get(2)).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
+                }else{
+                    intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
+                }
+            }
+        });*/
 /*
         zhuRecycler.setLayoutManager(new LinearLayoutManager(this));
         zsbdAdapter2 = new ZsbdAdapter2(ZsbdActivity.this);

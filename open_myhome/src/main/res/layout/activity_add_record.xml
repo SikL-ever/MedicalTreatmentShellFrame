@@ -179,7 +179,7 @@
                     android:layout_marginLeft="@dimen/dp_20"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_30"
-                    android:text="最多可添加6张图片，长按可对图片排序"
+                    android:text="最多可添加5张图片，长按可对图片排序"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/sp_10"
                     android:textColor="#333333"/>
@@ -198,6 +198,7 @@
                 android:numColumns="auto_fit"
                 android:verticalSpacing="10dp" />
             <Button
+                android:layout_marginBottom="@dimen/dp_30"
                 android:layout_marginTop="@dimen/dp_20"
                 android:id="@+id/addrecord_bt"
                 android:layout_width="@dimen/dp_300"

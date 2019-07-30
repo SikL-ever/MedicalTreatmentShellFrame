@@ -1,6 +1,7 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
@@ -12,6 +13,7 @@ import com.dingtao.common.bean.homepage.CjypBean1;
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
 import com.dingtao.common.bean.homepage.RmssBean;
 import com.dingtao.common.bean.homepage.SousuoBean;
+import com.dingtao.common.bean.homepage.WzysBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
 import com.dingtao.common.bean.homepage.XqBean;
 import com.dingtao.common.bean.homepage.YpxqBean;
@@ -157,6 +159,13 @@ public interface IAppRequest {
     Observable<Result> addrecord(@Header("userId") String userId,
                                  @Header("sessionId") String sessionId,
                                  @Body RequestBody body);
+    //上传图片
+    //上传用户档案相关图片
+    @Multipart
+    @POST("user/verify/v1/uploadArchivesPicture")
+    Observable<Result> addrecordphoto(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Part MultipartBody.Part[] picture);
     //修改我的档案
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @PUT("user/verify/v1/updateUserArchives")
@@ -179,21 +188,26 @@ public interface IAppRequest {
 
     //.用户收藏健康课堂视频列表
     @GET("user/verify/v1/findVideoCollectionList")
-    Observable<Result<List<VideoBean>>> mycollectvideo(@Header("userId") String userId,
-                                                       @Header("sessionId") String sessionId,
-                                                       @Query("page") int page,
-                                                       @Query("count") int count);
+    Observable<Result<List<MyCollectVideoBean>>> mycollectvideo(@Header("userId") String userId,
+                                                                          @Header("sessionId") String sessionId,
+                                                                          @Query("page") int page,
+                                                                          @Query("count") int count);
     //取消收藏将康视频
-
     @DELETE("user/verify/v1/cancelVideoCollection")
     Observable<Result> deletemyuservideo(@Header("userId") String userId,
                                           @Header("sessionId") String sessionId,
                                           @Query("videoId") int videoId);
-    //取消收藏将康视频
-   @DELETE("user/verify/v1/cancelVideoCollection")
-   Observable<Result> deletemyconsult(@Header("userId") String userId,
-                                      @Header("sessionId") String sessionId,
-                                      @Query("infoId") int infoId);
+    //取消收藏病友圈
+   @DELETE("user/verify/v1/cancelSickCollection")
+   Observable<Result> deletemybing(@Header("userId") String userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("sickCircleId") int sickCircleId);
+
+    //取消收藏咨询
+    @DELETE("user/verify/v1/cancelInfoCollection")
+    Observable<Result> deletemyconsult(@Header("userId") String userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("infoId") int infoId);
 
    //进行查询用户消费记录
    @GET("user/verify/v1/findUserConsumptionRecordList")
@@ -311,42 +325,33 @@ public interface IAppRequest {
 
     @GET("share/v1/bannersShow")
     Observable<Result<List<Banner>>> bannershow();
-
     @GET("share/v1/homePageSearch")
     Observable<Result<SousuoBean>> sousuoshow(@Query("keyWord") String keyWord);
-
     @GET("share/v1/popularSearch")
     Observable<Result<List<RmssBean>>> rmssshow();
-
     @GET("share/knowledgeBase/v1/findDepartment")
     Observable<Result<List<WzzxBean>>> wzzxshow();
-
     @GET("share/information/v1/findInformationPlateList")
     Observable<Result<List<ZxbkBean>>> zxbkshow();
-
     @GET("share/information/v1/findInformationList")
-    Observable<Result<List<DuotiaomuBean>>> dtmshow(@Query("plateId") int plateId, @Query("page") int page, @Query("count") int count);
-
+    Observable<Result<List<DuotiaomuBean>>> dtmshow(@Query("plateId") int plateId,@Query("page") int page,@Query("count") int count);
     @GET("share/knowledgeBase/v1/findDiseaseCategory")
     Observable<Result<List<ZiBean>>> zishow(@Query("departmentId") int departmentId);
-
     @GET("share/knowledgeBase/v1/findDiseaseKnowledge")
     Observable<Result<ZhuBean>> zhushow(@Query("id") int id);
-
     @GET("share/knowledgeBase/v1/findDrugsCategoryList")
     Observable<Result<List<CjypBean>>> cjypshow();
-
     @GET("share/knowledgeBase/v1/findDrugsKnowledgeList")
     Observable<Result<List<CjypBean1>>> cjyp1how(@Query("drugsCategoryId") int drugsCategoryId, @Query("page") int page, @Query("count") int count);
-
     @GET("share/knowledgeBase/v1/findDrugsKnowledge")
     Observable<Result<YpxqBean>> ypshow(@Query("id") int id);
-
     @GET("share/information/v1/findInformation")
-    Observable<Result<XqBean>> zxxqshow(@Query("infoId") int infoId, @Header("userId") String userId, @Header("sessionId") String sessionId);
-
+    Observable<Result<XqBean>> zxxqshow(@Query("infoId") int infoId,@Header("userId") String userId, @Header("sessionId") String sessionId);
     @POST("user/verify/v1/addInfoCollection")
-    Observable<Result> shoucangshow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("infoId") int infoId);
-
+    Observable<Result> shoucangshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
+    @DELETE("user/verify/v1/cancelInfoCollection")
+    Observable<Result> qxscshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
+    @GET("user/inquiry/v1/findDoctorList")
+    Observable<Result<List<WzysBean>>> yslbShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("deptId") int deptId, @Query("condition") int condition, @Query("sortBy") int sortBy, @Query("page") int page, @Query("count") int count);
     //xieqi-------------------------------------------------------------------别动我的
 }

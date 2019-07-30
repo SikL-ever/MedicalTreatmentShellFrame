@@ -2,7 +2,6 @@ package com.wd.MyHome.adapter;
 
 import android.content.Context;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.Result;
-import com.dingtao.common.bean.video.VideoBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.DateUtils;
@@ -30,8 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
-import static android.content.Context.SENSOR_SERVICE;
-
 /**
  * 佀常勇
  *
@@ -46,24 +43,24 @@ public class MyCollectVideoAdapter extends RecyclerView.Adapter<MyCollectVideoAd
     public MyCollectVideoAdapter(Context context) {
         this.context = context;
     }
-    List<VideoBean> list=new ArrayList<>();
+    List<MyCollectVideoBean> list=new ArrayList<>();
     private String uid=null;
     private String sid=null;
     @NonNull
     @Override
     public HolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = View.inflate(context, R.layout.mycolervideo_item, null);
+        View inflate = View.inflate(context, R.layout.mycollervideo_item, null);
         return new HolderView(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final HolderView holder, final int position) {
-        final VideoBean videoBean = list.get(position);
+        final MyCollectVideoBean videoBean = list.get(position);
         //去除黑边
-        holder.mycollectvideo.setVideoImageDisplayType(holder.mycollectvideo.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
-        holder.mycollectvideo.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);//设置图片为全屏
+        //holder.mycollectvideo.setVideoImageDisplayType(holder.mycollectvideo.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
+        //holder.mycollectvideo.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);//设置图片为全屏
         //横竖屏切换
-        sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
+        //sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
         jzAutoFullscreenListener = new JZVideoPlayer.JZAutoFullscreenListener();
         if (videoBean.whetherBuy == 2) {//没有购买的
             holder.mycollectvideo.setUp(videoBean.shearUrl,JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL,
@@ -142,7 +139,7 @@ public class MyCollectVideoAdapter extends RecyclerView.Adapter<MyCollectVideoAd
     public int getItemCount() {
         return list.size();
     }
-    public void add(List<VideoBean> data) {
+    public void add(List<MyCollectVideoBean> data) {
         list.addAll(data);
     }
 

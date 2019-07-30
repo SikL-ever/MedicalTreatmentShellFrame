@@ -198,6 +198,11 @@ public class MainActivity extends WDActivity {
             }
         });
         //点击发表病友圈
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         //进行用户判断//判断用户时候登陆这
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         intt = loginDaoUtil.intt(MainActivity.this);
@@ -209,6 +214,7 @@ public class MainActivity extends WDActivity {
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(topimage);
         }
     }
+
     @Override
     protected void initView() {
 

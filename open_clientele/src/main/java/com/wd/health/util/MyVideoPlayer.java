@@ -61,6 +61,7 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
         //播放完成后返回值
         videoCallBack.getdata(1);
     }
+    //-------------------------------------------------------------------------------------------------------
     //从头播放
     public void mystopp(){
         mystate.setVisibility(VISIBLE);
@@ -78,11 +79,19 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
         mystate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startVideo();
-                JZVideoPlayer.goOnPlayOnResume();
+                goOnPlayOnResume();
                 mystate.setVisibility(GONE);
             }
         });
+    }
+    //播放最后弹出的狂
+    public void lostbeg(){
+        mystate.setVisibility(GONE);
+        startVideo();
+    }
+    //滑动监听
+    public void continuevideo(){
+        goOnPlayOnResume();
     }
     //设置接口回调
     public interface VideoCallBack{
@@ -93,7 +102,7 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
     public void setVideoCallBack(VideoCallBack videoCallBack) {
         this.videoCallBack = videoCallBack;
     }
-
+    //-------------------------------------------------------------------------------------------------------
     @Override
     public void setUp(String url, int screen, Object... objects) {
         if (url.startsWith("http")) {
@@ -118,7 +127,7 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
             public void onClick(View v) {
                 //fullscreenButton.performClick();扩大屏幕
                 if (isPlay()) {
-                    //JZVideoPlayer.goOnPlayOnPause();
+                    goOnPlayOnPause();
                     mystop();
                 }
             }
@@ -159,6 +168,7 @@ public class MyVideoPlayer extends JZVideoPlayerStandard {
         }
         resetPlayView();
     }
+    //播放暂听循环
     @Override
     public void startWindowTiny() {
     }

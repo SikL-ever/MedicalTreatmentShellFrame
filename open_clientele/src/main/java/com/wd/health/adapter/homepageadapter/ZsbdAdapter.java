@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.dingtao.common.bean.homepage.WzzxBean;
 import com.dingtao.common.bean.homepage.WzzxBean1;
 import com.wd.health.R;

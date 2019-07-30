@@ -1,23 +1,18 @@
 package com.wd.health.activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.CursorAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,18 +24,21 @@ import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LsjlBeanDao;
 import com.wd.health.CustomImageView.FlowLayout;
-import com.wd.health.CustomImageView.MyListView;
-import com.wd.health.Helper.RecordsDao;
+import com.wd.health.Helper.SearchHistoryDao;
 import com.wd.health.R;
 import com.wd.health.R2;
-import com.wd.health.adapter.homepageadapter.LsjlAdapter;
+import com.wd.health.adapter.homepageadapter.BzAdapter;
 import com.wd.health.adapter.homepageadapter.SearchRecordsAdapter;
+import com.wd.health.adapter.homepageadapter.YpAdapter;
+import com.wd.health.adapter.homepageadapter.YsAdapter;
 import com.wd.health.presenter.homepagepresenter.RmssPresenter;
 import com.wd.health.presenter.homepagepresenter.SousuoPresenter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,22 +59,38 @@ public class SousuoAcitivity extends AppCompatActivity {
     LinearLayout yizhaodao;
     @BindView(R2.id.weizhaodao)
     LinearLayout weizhaodao;
+    @BindView(R2.id.ssshoew)
+    RelativeLayout ssshoew;
     @BindView(R2.id.search_content_show_ll)
-    LinearLayout searchRecordsLl;
+    RecyclerView searchRecordsLl;
+    @BindView(R2.id.search_content_show_ll1)
+    LinearLayout searchRecordsLl1;
     @BindView(R2.id.flow)
     FlowLayout flowLayout;
-    private LsjlAdapter lsjlAdapter;
-    private SearchRecordsAdapter recordsAdapter;
-    private View recordsHistoryView;
-    private ListView recordsListLv;
-  //  private TextView clearAllRecordsTv;
+    @BindView(R2.id.yisheng_recycler)
+    RecyclerView yishengRecycler;
+    @BindView(R2.id.yisheng)
+    LinearLayout yisheng;
+    @BindView(R2.id.yaopin_recycler)
+    RecyclerView yaopinRecycler;
+    @BindView(R2.id.yaopin)
+    LinearLayout yaopin;
+    @BindView(R2.id.bingzheng_recycler)
+    RecyclerView bingzhengRecycler;
+    @BindView(R2.id.bingzheng)
+    LinearLayout bingzheng;
+    @BindView(R2.id.asdfghjkl)
+    LinearLayout asdfghjkl;
+    @BindView(R2.id.texxt)
+    TextView texxt;
 
-    private List<String> searchRecordsList;
-    private List<String> tempList;
-    private RecordsDao recordsDao;
+    private SearchRecordsAdapter recordsAdapter;
     private LinearLayout.LayoutParams layoutParams;
-    private List<String> list = new ArrayList<>();
     private RmssPresenter rmssPresenter;
+    private LsjlBeanDao lsjlBeanDao;
+    private final int DELETEONE = 0X001;
+    private final int DELETEALL = 0X002;
+    private List<LsjlBean> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +103,53 @@ public class SousuoAcitivity extends AppCompatActivity {
                 finish();
             }
         });
+        showKeyboard();
+        Log.e("ttttttttttttttttt", list + "");
+     /*   if (list.size()<1){
+            searchRecordsLl1.setVisibility(View.GONE);
+            ssshoew.setVisibility(View.GONE);
+        }else{
+            searchRecordsLl1.setVisibility(View.VISIBLE);
+            ssshoew.setVisibility(View.VISIBLE);
+        }*/
+        //回车不换行
+        edit_item.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return (event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+            }
+        });
+        edit_item.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode==KeyEvent.KEYCODE_ENTER) {//修改回车键功能
+// 先隐藏键盘
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(SousuoAcitivity.this.getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (edit_item.getText().toString().length() > 0) {
 
+                        String record = edit_item.getText().toString();
+                        SousuoPresenter sousuoPresenter = new SousuoPresenter(new sousuo());
+                        sousuoPresenter.reqeust(record);
+                        insertHistory();
+                        //   recordsAdapter.notifyDataSetChanged();
+                        Toast.makeText(SousuoAcitivity.this, "" + record, Toast.LENGTH_SHORT).show();
+                        weizhaodao.setVisibility(View.GONE);
+                        yizhaodao.setVisibility(View.GONE);
+                        asdfghjkl.setVisibility(View.VISIBLE);
+                        //根据关键词去搜索
+                        //    searchRecordsLl1.setVisibility(View.VISIBLE);
+                        //  ssshoew.setVisibility(View.VISIBLE);
+                    } else {
+                        Toast.makeText(SousuoAcitivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+                    }
+                    hideSoftKeyboard(SousuoAcitivity.this);
+                }
+                return false;
+            }
+        });
+        lsjlBeanDao = DaoMaster.newDevSession(this, LsjlBeanDao.TABLENAME).getLsjlBeanDao();
         rmssPresenter = new RmssPresenter(new RmssShow());
         rmssPresenter.reqeust();
 //往容器内添加TextView数据
@@ -98,83 +158,24 @@ public class SousuoAcitivity extends AppCompatActivity {
         if (flowLayout != null) {
             flowLayout.removeAllViews();
         }
-        /*for (int i = 0; i <10; i++) {
-            list.add("Android");
-            list.add("Java");
-            list.add("IOS");
-            list.add("python");
-        }
-        for (int i = 0; i < list.size(); i++) {
-            TextView tv = new TextView(this);
-            tv.setPadding(28, 10, 28, 10);
-            tv.setText(list.get(i));
-            tv.setMaxEms(10);
-            tv.setSingleLine();
-          //  tv.setBackgroundResource(R.drawable.selector_playsearch);
-            tv.setLayoutParams(layoutParams);
-            flowLayout.addView(tv, layoutParams);
-        }*/
-        /*recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        lsjlAdapter = new LsjlAdapter(this);
-        recyclerView.setAdapter(lsjlAdapter);
-        sousuo1.setOnClickListener(new View.OnClickListener() {
+        searchRecordsLl.setLayoutManager(new LinearLayoutManager(this));
+        recordsAdapter = new SearchRecordsAdapter(this, list);
+        searchRecordsLl.setAdapter(recordsAdapter);
+        recordsAdapter.setOnDeleteListener(position -> deleteHistory(DELETEONE, position));
+        recordsAdapter.setOnItemClickListener(position -> {
+            edit_item.setText(list.get(position).getName());
+            insertHistory();
+        });
+        // btnClearall.setOnClickListener(view -> showDeleteDialog());
+        queryHistory();
+        edit_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String trim = edit_item.getText().toString().trim();
-                if (trim==null){
-                    Toast.makeText(SousuoAcitivity.this, "请输入搜索内容", Toast.LENGTH_SHORT).show();
-                }else{
-                    LsjlBeanDao bean = DaoMaster.newDevSession(SousuoAcitivity.this,LsjlBeanDao.TABLENAME).getLsjlBeanDao();
-                    List<LsjlBean> lsjlBeans = bean.loadAll();
-                    lsjlAdapter.setlist(lsjlBeans);
-
-                    *//*if (!lsjlBeans) {
-                        insertData(editItem.getText().toString().trim());
-                        //insertData(R.drawable.message_icon_close_n);
-                        queryData("");
-                    }*//*
-                    *//*boolean hasData = hasData(editItem.getText().toString().trim());
-                    if (!hasData) {
-                        insertData(editItem.getText().toString().trim());
-                        //insertData(R.drawable.message_icon_close_n);
-                        queryData("");
-                    }*//*
-                }
+                weizhaodao.setVisibility(View.GONE);
+                yizhaodao.setVisibility(View.VISIBLE);
+                asdfghjkl.setVisibility(View.GONE);
             }
-        });*/
-        // 搜索框的文本变化实时监听
-        /*edit_item.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().trim().length() == 0) {
-                    tv_tip.setText("搜索历史");
-                } else {
-                    tv_tip.setText("搜索结果");
-                }
-                String tempName = edit_item.getText().toString();
-                // 根据tempName去模糊查询数据库中有没有数据
-               // queryData(tempName);
-
-            }
-        });*/
-
-        initRecordsView();
-        //添加搜索view
-        searchRecordsLl.addView(recordsHistoryView);
-
-        initData();
-        bindAdapter();
-        initListener();
+        });
         sousuo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,178 +183,134 @@ public class SousuoAcitivity extends AppCompatActivity {
 
                     String record = edit_item.getText().toString();
                     SousuoPresenter sousuoPresenter = new SousuoPresenter(new sousuo());
-                    //判断数据库中是否存在该记录
-                    if (!recordsDao.isHasRecord(record)) {
-                        tempList.add(record);
-                    }
-                    //将搜索记录保存至数据库中
-                    recordsDao.addRecords(record);
-                    reversedList();
-                    checkRecordsSize();
-                    recordsAdapter.notifyDataSetChanged();
-                    Toast.makeText(SousuoAcitivity.this, "11",Toast.LENGTH_SHORT).show();
+                    sousuoPresenter.reqeust(record);
+                    insertHistory();
+                    //   recordsAdapter.notifyDataSetChanged();
+                    Toast.makeText(SousuoAcitivity.this, "" + record, Toast.LENGTH_SHORT).show();
+                    weizhaodao.setVisibility(View.GONE);
+                    yizhaodao.setVisibility(View.GONE);
+                    asdfghjkl.setVisibility(View.VISIBLE);
                     //根据关键词去搜索
-
+                    //    searchRecordsLl1.setVisibility(View.VISIBLE);
+                    //  ssshoew.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(SousuoAcitivity.this, "搜索内容不能为空",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SousuoAcitivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
                 }
+                hideSoftKeyboard(SousuoAcitivity.this);
             }
         });
-        recordsAdapter.getback(new SearchRecordsAdapter.CallBackOnClick() {
-            @Override
-            public void onclicket(int aid) {
-                recordsDao.delete(aid);
-                tempList.remove(aid);
-              //  Toast.makeText(SousuoAcitivity.this, "删除"+aid,Toast.LENGTH_SHORT).show();
-                recordsAdapter.notifyDataSetChanged();
-                /*tempList.clear();
-                reversedList();
-                recordsDao.deleteAllRecords();
-                recordsAdapter.notifyDataSetChanged();
-                searchRecordsLl.setVisibility(View.GONE);
-                edit_item.setHint("请输入你要搜索的内容");*/
-            }
-        });
-    }
 
-    //初始化搜索历史记录View
-    private void initRecordsView() {
-        recordsHistoryView = LayoutInflater.from(this).inflate(R.layout.search_lishi, null);
-        //显示历史记录lv
-        recordsListLv = (ListView) recordsHistoryView.findViewById(R.id.search_records_lv);
-        //清除搜索历史记录
-     //   clearAllRecordsTv = (TextView) recordsHistoryView.findViewById(R.id.clear_all_records_tv);
     }
-    private void initData() {
-        recordsDao = new RecordsDao(this);
-        searchRecordsList = new ArrayList<>();
-        tempList = new ArrayList<>();
-        tempList.addAll(recordsDao.getRecordsList());
-
-        reversedList();
-        //第一次进入判断数据库中是否有历史记录，没有则不显示
-        checkRecordsSize();
+    /**
+     * 隐藏软键盘(只适用于Activity，不适用于Fragment)
+     */
+    public void hideSoftKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
+    private void showKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(edit_item, 0);
+    }
+   /* /
     private void bindAdapter() {
         recordsAdapter = new SearchRecordsAdapter(this, tempList);
         recordsListLv.setAdapter(recordsAdapter);
-    }
-
-    private void initListener() {
-       // clearAllRecordsTv.setOnClickListener(this);
-
-        edit_item.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (edit_item.getText().toString().length() > 0) {
-
-                        String record = edit_item.getText().toString();
-
-                        //判断数据库中是否存在该记录
-                        if (!recordsDao.isHasRecord(record)) {
-                            tempList.add(record);
-                        }
-                        //将搜索记录保存至数据库中
-                        recordsDao.addRecords(record);
-                        reversedList();
-                        checkRecordsSize();
-                        recordsAdapter.notifyDataSetChanged();
-                        Toast.makeText(SousuoAcitivity.this, "11",Toast.LENGTH_SHORT).show();
-                        //根据关键词去搜索
-
-                    } else {
-                        Toast.makeText(SousuoAcitivity.this, "搜索内容不能为空",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                return false;
-            }
-        });
-
-        //根据输入的信息去模糊搜索
-        edit_item.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().trim().length() == 0) {
-                    tv_history.setText("搜索相关");
-                } else {
-                    tv_history.setText("搜索结果");
-                }
-                String tempName = edit_item.getText().toString();
-                tempList.clear();
-                tempList.addAll(recordsDao.querySimlarRecord(tempName));
-                reversedList();
-                checkRecordsSize();
-                recordsAdapter.notifyDataSetChanged();
-            }
-        });
-        //历史记录点击事件
-        /*recordsListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //将获取到的字符串传到搜索结果界面
-                //点击后搜索对应条目内容
-//                searchContentEt.setText(searchRecordsList.get(position));
-                Toast.makeText(SousuoAcitivity.this,searchRecordsList.get(position)+"",Toast.LENGTH_SHORT).show();
-                edit_item.setSelection(edit_item.length());
-            }
-        });*/
-    }
-
-    //当没有匹配的搜索数据的时候不显示历史记录栏
-    private void checkRecordsSize(){
-        if(searchRecordsList.size() == 0){
-            searchRecordsLl.setVisibility(View.GONE);
-        }else{
-            searchRecordsLl.setVisibility(View.VISIBLE);
-        }
-    }
-
-  /*  @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            //清空所有历史数据
-            case R.id.clear_all_records_tv:
-                tempList.clear();
-                reversedList();
-                recordsDao.deleteAllRecords();
-                recordsAdapter.notifyDataSetChanged();
-                searchRecordsLl.setVisibility(View.GONE);
-                edit_item.setHint("请输入你要搜索的内容");
-                break;
-        }
     }*/
 
-    //颠倒list顺序，用户输入的信息会从上依次往下显示
-    private void reversedList(){
-        searchRecordsList.clear();
-        for(int i = tempList.size() - 1 ; i >= 0 ; i --) {
-            searchRecordsList.add(tempList.get(i));
-        }
+    private void showDeleteDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage("确认清除所有搜索记录吗?")
+                .setPositiveButton("确定", (dialogInterface, i) -> deleteHistory(DELETEALL, 1))
+                .setNegativeButton("取消", null)
+                .setCancelable(true)
+                .create().show();
     }
 
+    private void insertHistory() {
+        LsjlBean searchHistory = new LsjlBean();
+        searchHistory.setName(edit_item.getText().toString().trim());
+        SearchHistoryDao.insertHistory(searchHistory);
+        queryHistory();
+    }
+
+    private void deleteHistory(int TAG, int position) {
+        if (TAG == DELETEONE)
+            SearchHistoryDao.deleteHistory(list.get(position));
+        else if (TAG == DELETEALL)
+            SearchHistoryDao.clearAll();
+        queryHistory();
+    }
+
+    private void queryHistory() {
+        list.clear();
+        list.addAll(SearchHistoryDao.queryAll());
+        if (list.size()<1){
+            searchRecordsLl1.setVisibility(View.GONE);
+            ssshoew.setVisibility(View.GONE);
+        }else{
+            searchRecordsLl1.setVisibility(View.VISIBLE);
+            ssshoew.setVisibility(View.VISIBLE);
+        }
+        Collections.reverse(list);
+        recordsAdapter.notifyDataSetChanged();
+    }
 
     private class sousuo implements DataCall<SousuoBean> {
 
 
-        List<SousuoBean.DrugsSearchVoListBean> drugsSearchVoList;
-
         @Override
         public void success(SousuoBean data, Object... args) {
             List<SousuoBean.DiseaseSearchVoListBean> diseaseSearchVoList = data.getDiseaseSearchVoList();
+            bingzhengRecycler.setLayoutManager(new LinearLayoutManager(SousuoAcitivity.this));
             List<SousuoBean.DoctorSearchVoListBean> doctorSearchVoList = data.getDoctorSearchVoList();
+            yishengRecycler.setLayoutManager(new LinearLayoutManager(SousuoAcitivity.this));
             List<SousuoBean.DrugsSearchVoListBean> drugsSearchVoList = data.getDrugsSearchVoList();
+            yaopinRecycler.setLayoutManager(new LinearLayoutManager(SousuoAcitivity.this));
+            if (diseaseSearchVoList.size() > 0 || doctorSearchVoList.size() > 0 || drugsSearchVoList.size() > 0) {
+                weizhaodao.setVisibility(View.GONE);
+                yizhaodao.setVisibility(View.GONE);
+                asdfghjkl.setVisibility(View.VISIBLE);
+                if (diseaseSearchVoList.size() > 0) {
+                    //有数据
+                    bingzheng.setVisibility(View.VISIBLE);
+                    BzAdapter bzAdapter = new BzAdapter(SousuoAcitivity.this,diseaseSearchVoList);
+                    bingzhengRecycler.setAdapter(bzAdapter);
+                    bzAdapter.notifyDataSetChanged();
+                }
+                if (diseaseSearchVoList.size()<1){//无数据
+                    bingzheng.setVisibility(View.GONE);
+                }
+                if (doctorSearchVoList.size() > 0) {
+                    //有数据
+                    yisheng.setVisibility(View.VISIBLE);
+                    YsAdapter ysAdapter = new YsAdapter(SousuoAcitivity.this,doctorSearchVoList);
+                    yishengRecycler.setAdapter(ysAdapter);
+                    ysAdapter.notifyDataSetChanged();
+                }
+                if (doctorSearchVoList.size()<1){//无数据
+                    yisheng.setVisibility(View.GONE);
+                }
+                if (drugsSearchVoList.size() > 0) {
+                    //有数据
+                    yaopin.setVisibility(View.VISIBLE);
+                    YpAdapter ysAdapter = new YpAdapter(SousuoAcitivity.this,drugsSearchVoList);
+                    yaopinRecycler.setAdapter(ysAdapter);
+                    ysAdapter.notifyDataSetChanged();
+                }
+                if (drugsSearchVoList.size()<1){//无数据
+                    yaopin.setVisibility(View.GONE);
+                }
+            } else {
+                //展示未找到图片
+                weizhaodao.setVisibility(View.VISIBLE);
+                yizhaodao.setVisibility(View.GONE);
+                asdfghjkl.setVisibility(View.GONE);
+                texxt.setText("抱歉！没有找到“"+edit_item.getText().toString().trim()+"”的相关信息");
+            }
         }
 
         @Override
@@ -364,23 +321,30 @@ public class SousuoAcitivity extends AppCompatActivity {
 
     private class RmssShow implements DataCall<List<RmssBean>> {
         @Override
-        public void success(List<RmssBean> data, Object... args) {
-            Log.e("hhhhhh",data+"" );
+        public void success(final List<RmssBean> data, Object... args) {
+            Log.e("hhhhhh", data + "");
             for (int i = 0; i < data.size(); i++) {
                 TextView tv = new TextView(SousuoAcitivity.this);
                 tv.setPadding(28, 10, 28, 10);
                 tv.setText(data.get(i).getName());
                 tv.setMaxEms(10);
                 tv.setSingleLine();
-                tv.setBackgroundResource(R.drawable.yuanjiao);
+                tv.setBackgroundResource(R.drawable.bian);
                 tv.setLayoutParams(layoutParams);
+                final int finalI = i;
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(SousuoAcitivity.this, "" + data.get(finalI).getName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 flowLayout.addView(tv, layoutParams);
             }
         }
 
         @Override
         public void fail(ApiException data, Object... args) {
-            Log.e("hhhhhh",data+"" );
+            Log.e("hhhhhh", data + "");
         }
     }
 }

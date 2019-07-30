@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.homepage.DuotiaomuBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
@@ -39,26 +42,22 @@ public class DuoXiangActivity extends AppCompatActivity {
     RecyclerView gengduoRecycler;
     private DuotiaomuPresenter duotiaomuPresenter;
     private DuotiaomuAdapter duotiaomuAdapter;
-    private String asdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duo_xiang);
         ButterKnife.bind(this);
-        /*LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
+        LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(this);
-        String userId = intt.get(0);
-        String sessionId = intt.get(1);
-        String yhtx = intt.get(2);*/
-        // Glide.with(this).load(yhtx).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
-        asdf = getIntent().getStringExtra("asdf");
-        Log.e("ssssssssssss123123123",asdf );
-        if (asdf==null){
-            gengduoName.setText("健康养生");
+        if (intt!=null){
+            String yhtx = intt.get(2);
+            Glide.with(this).load(yhtx).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(gengduoHeadimg);
         }else{
-            gengduoName.setText(asdf);
+            Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(gengduoHeadimg);
         }
+        String asdf = getIntent().getStringExtra("asdf");
+        gengduoName.setText(asdf);
         gengduoRecycler.setLayoutManager(new LinearLayoutManager(DuoXiangActivity.this,RecyclerView.VERTICAL,false));
         duotiaomuAdapter = new DuotiaomuAdapter(DuoXiangActivity.this);
         gengduoRecycler.setAdapter(duotiaomuAdapter);

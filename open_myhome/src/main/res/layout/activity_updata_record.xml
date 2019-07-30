@@ -184,15 +184,20 @@
                     android:textSize="@dimen/sp_10"
                     android:textColor="#333333"/>
             </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
+            <GridView
+                android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/uprecord_recycler"
-                android:layout_marginTop="@dimen/dp_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:columnWidth="60dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="10dp"
                 android:layout_marginRight="@dimen/dp_20"
-                android:layout_marginLeft="@dimen/dp_20">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginLeft="@dimen/dp_20"/>
             <Button
+                android:layout_marginBottom="@dimen/dp_30"
                 android:id="@+id/uprecord_bt"
                 android:layout_width="@dimen/dp_300"
                 android:layout_height="@dimen/dp_36"
@@ -200,7 +205,6 @@
                 android:text="修改"
                 android:textColor="#fff"
                 android:background="@drawable/addrecord_button"/>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

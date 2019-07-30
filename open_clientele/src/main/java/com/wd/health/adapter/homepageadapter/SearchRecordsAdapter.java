@@ -8,10 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dingtao.common.bean.homepage.LsjlBean;
 import com.wd.health.R;
 import com.wd.health.activity.SousuoAcitivity;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @Author：Administrator
@@ -19,70 +24,65 @@ import java.util.List;
  * @Date：2019/7/15 10:33
  * @Description：描述信息
  */
-public class SearchRecordsAdapter extends BaseAdapter {
-
+public class SearchRecordsAdapter extends RecyclerView.Adapter<SearchRecordsAdapter.ViewHolder> {
     private Context context;
-    private List<String> searchRecordsList;
-    private LayoutInflater inflater;
+    private List<LsjlBean> list;
 
-    public SearchRecordsAdapter(Context context, List<String> searchRecordsList) {
+    public SearchRecordsAdapter(Context context, List<LsjlBean> list) {
         this.context = context;
-        this.searchRecordsList = searchRecordsList;
-        inflater = LayoutInflater.from(context);
+        this.list = list;
     }
 
     @Override
-    public int getCount() {
-        //设置listView的显示条目数量为5
-        return searchRecordsList.size() > 10 ? 10 : searchRecordsList.size();
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.sousuo_item1, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return searchRecordsList.size() == 0 ? null : searchRecordsList.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.tvRecommandsearch.setText(list.get(position).getName());
+        holder.imageView.setOnClickListener(view -> deleteListener.OnDelete(position));
+        holder.itemView.setOnClickListener(view -> itemClickListener.OnItemClick(position));
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public int getItemCount() {
+        return list.size();
     }
 
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        if(null == convertView){
-            viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.sousuo_item1,null);
-            viewHolder.recordTv = (TextView) convertView.findViewById(R.id.lsjl);
-            convertView.findViewById(R.id.tp).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    callBackOnClick.onclicket(position);
-                }
-            });
+    class ViewHolder extends RecyclerView.ViewHolder {
+      //  @BindView(R.id.tv_recommandsearch)
+        TextView tvRecommandsearch;
+        ImageView imageView;
+/*
+        @BindView(R.id.btn_delete)
+        ImageView btnDelete;
+*/
 
-            convertView.setTag(viewHolder);
-        }else{
-            viewHolder = (ViewHolder) convertView.getTag();
+        ViewHolder(View itemView) {
+            super(itemView);
+           tvRecommandsearch = itemView.findViewById(R.id.lsjl);
+           imageView = itemView.findViewById(R.id.tp);
+         //   ButterKnife.bind(this, itemView);
         }
-
-        String content = searchRecordsList.get(position);
-        viewHolder.recordTv.setText(content);
-
-        return convertView;
     }
 
-    private class ViewHolder {
-        TextView recordTv;
+    private OnDeleteListener deleteListener;
+    private OnItemClickListener itemClickListener;
+
+    public interface OnDeleteListener {
+        void OnDelete(int position);
     }
 
-    private CallBackOnClick callBackOnClick;
-
-    public void getback(CallBackOnClick callBackOnClick) {
-        this.callBackOnClick = callBackOnClick;
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
     }
 
-    public interface CallBackOnClick{
-        void onclicket(int aid);
+    public void setOnDeleteListener(OnDeleteListener deleteListener) {
+        this.deleteListener = deleteListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 }

@@ -15,9 +15,11 @@ import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.adapter.MyUserWalletLookAdapter;
 import com.wd.MyHome.presenter.MyUserWalletLookPresenter;
+import com.wd.MyHome.util.MyPriceUtil;
 import com.wd.MyHome.util.TopView;
 import com.wd.health.presenter.videopresenter.VideoGetPricePresenter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -80,7 +82,13 @@ public class MyUserWalletActivity extends WDActivity {
     class videogetprice implements DataCall<Double> {
         @Override
         public void success(Double data, Object... args) {
-            myuserwalletprice.setText(data+"");
+            /*DecimalFormat myformat = new DecimalFormat();
+            myformat.applyPattern(",##0.00");
+            String format = myformat.format(data);*/
+            double a=data;
+            float f = (float)a;
+            MyPriceUtil.startAnim(myuserwalletprice,f,1500);
+            //myuserwalletprice.setText();
         }
         @Override
         public void fail(ApiException data, Object... args) {

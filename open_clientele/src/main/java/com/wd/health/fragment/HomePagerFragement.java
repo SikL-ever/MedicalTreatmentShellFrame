@@ -112,7 +112,7 @@ public class HomePagerFragement extends WDFragment {
     private ZxbkPresenter zxbkpresenter;
     private DuotiaomuPresenter duotiaomuPresenter;
     private DuotiaomuAdapter duotiaomuAdapter;
-    private String title_name = "健康养生";
+    private String title_name;
 
     /*private TabFragment1 tabFragment1;
     private FrameLayout frage;
@@ -135,7 +135,12 @@ public class HomePagerFragement extends WDFragment {
         //ScrollView和recyclerview的滑动冲突解决
         recycler.setNestedScrollingEnabled(false);
         frage.setNestedScrollingEnabled(false);
-
+        List<String> intt = new LoginDaoUtil().intt(getActivity());
+        if (intt!=null){
+            Glide.with(getContext()).load(intt.get(2)).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
+        }else{
+            Glide.with(getContext()).load(R.drawable.register_icon_invitatiion_code_n).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
+        }
         //p
         bannerPresenter = new BannerPresenter(new getbanner());
         bannerPresenter.reqeust();
@@ -162,10 +167,9 @@ public class HomePagerFragement extends WDFragment {
             @Override
             public void onClick(View v) {
                 List<String> intt = new LoginDaoUtil().intt(getActivity());
-                String string = intt.get(0);
-                if (string!=null){
-                  //  Intent intent = new Intent(getActivity(),ACTIVITY_LOGIN_MYUSERACTIVITY);
+                if (intt!=null){
                     intentByRouter(Constant.ACTIVITY_LOGIN_MYUSERACTIVITY);
+                    Glide.with(getContext()).load(intt.get(2)).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(images);
                 }else{
                     intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                 }
@@ -213,9 +217,11 @@ public class HomePagerFragement extends WDFragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 duotiaomuPresenter = new DuotiaomuPresenter(new Dtm());
                 duotiaomuPresenter.reqeust(tab.getPosition()+1,1,10);
-                title_name=tab.getText()+"";
-                //recycler.setFocusableInTouchMode(false);
-                Log.i("aaaaaaaaa",tab.getText()+"+++++++++"+tab.getPosition()+"++++++++"+tab.getIcon()+"++++++++++++++++++"+title_name);
+                if (tab.getText()==null){
+                    title_name="健康养生";
+                }else {
+                    title_name=tab.getText()+"";
+                }
 
             }
 
@@ -318,5 +324,10 @@ public class HomePagerFragement extends WDFragment {
         public void fail(ApiException data, Object... args) {
 
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        onCreate(null);
     }
 }
