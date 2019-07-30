@@ -232,9 +232,6 @@ public class MyUserActivity extends WDActivity {
                 startActivity(intent);
             }
         });
-    }
-
-
         //头像点击
         myuserheadportrait.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,9 +245,13 @@ public class MyUserActivity extends WDActivity {
                 }
             }
         });
-
-
     }
+
+
+
+
+
+
     @Override
     protected void destoryData() {
 
