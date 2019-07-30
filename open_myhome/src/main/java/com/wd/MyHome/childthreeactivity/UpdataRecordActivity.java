@@ -151,9 +151,10 @@ public class UpdataRecordActivity extends WDActivity {
                     Gson gson = new Gson();
                     String s = gson.toJson(map);
                     RequestBody body=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),s);
-                    //upRecordPresenter.reqeust(uid,sid,body);
+                    upRecordPresenter.reqeust(uid,sid,body);
 
-                    MultipartBody.Builder builder = new MultipartBody.Builder()
+
+                    /*MultipartBody.Builder builder = new MultipartBody.Builder()
                             .setType(MultipartBody.FORM);
                     builder.addFormDataPart("picture", String.valueOf(mlist));
                     List<String> list = (List<String>) mlist;
@@ -164,8 +165,7 @@ public class UpdataRecordActivity extends WDActivity {
                                     RequestBody.create(MediaType.parse("multipart/form-data"),
                                             file));
                         }
-                    }
-
+                    }*/
                     addRecordPhotoPresenter.reqeust(uid,sid,mlist);
                 }
             }

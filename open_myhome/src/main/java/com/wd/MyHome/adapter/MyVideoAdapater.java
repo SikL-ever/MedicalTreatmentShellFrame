@@ -2,7 +2,6 @@ package com.wd.MyHome.adapter;
 
 import android.content.Context;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -26,7 +25,6 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
 import static android.content.Context.SENSOR_SERVICE;
-import static com.wd.MyHome.R2.id.delete;
 
 public class MyVideoAdapater extends RecyclerView.Adapter<MyVideoAdapater.MYVIEWhOLDER> {
     private Context context;

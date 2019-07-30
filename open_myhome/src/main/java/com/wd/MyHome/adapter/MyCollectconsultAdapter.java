@@ -48,7 +48,6 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemViewType(int position) {
         int a = duotiaomuBeans.get(position).getThumbnail().split(";").length;
-        Log.i("ssssss",a+"");
         if (a==1){
             return a1;
         }else if (a % 2 == 0){
@@ -96,8 +95,9 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     List<String> intt = new LoginDaoUtil().intt(context);
-                    myCollectConsultDeletePresenter.reqeust(intt.get(0),intt.get(1),duotiaomuBeans.get(position).infold);
+                    myCollectConsultDeletePresenter.reqeust(intt.get(0),intt.get(1),duotiaomuBeans.get(position).id);
                     duotiaomuBeans.remove(position);
+                    ((ViewHolder1) viewHolder).twoimagedelete.setVisibility(View.GONE);
                 }
             });
             ((ViewHolder1) viewHolder).itemView.setOnTouchListener(new View.OnTouchListener() {
@@ -141,8 +141,9 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     List<String> intt = new LoginDaoUtil().intt(context);
-                    myCollectConsultDeletePresenter.reqeust(intt.get(0),intt.get(1),duotiaomuBeans.get(position).infold);
+                    myCollectConsultDeletePresenter.reqeust(intt.get(0),intt.get(1),duotiaomuBeans.get(position).id);
                     duotiaomuBeans.remove(position);
+                    ((ViewHolder2) viewHolder).oneimagedelete.setVisibility(View.GONE);
                 }
             });
 
@@ -187,8 +188,9 @@ public class MyCollectconsultAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     List<String> intt = new LoginDaoUtil().intt(context);
-                    myCollectConsultDeletePresenter.reqeust(intt.get(0),intt.get(1),duotiaomuBeans.get(position).infold);
+                    myCollectConsultDeletePresenter.reqeust(intt.get(0),intt.get(1),duotiaomuBeans.get(position).id);
                     duotiaomuBeans.remove(position);
+                    ((ViewHolder3) viewHolder).oneimagedelete.setVisibility(View.GONE);
                 }
             });
 

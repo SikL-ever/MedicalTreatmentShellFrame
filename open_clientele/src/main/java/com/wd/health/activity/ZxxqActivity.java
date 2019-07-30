@@ -83,11 +83,9 @@ public class ZxxqActivity extends WDActivity {
 
 
         int idxq = getIntent().getIntExtra("idxq", 0);
-        // Toast.makeText(this, "" + idxq, Toast.LENGTH_SHORT).show();
         if (intt !=null){
             userId = intt.get(0);
             sessionId = intt.get(1);
-            Log.i("aaaaaaaaaaaaaaaaaa",userId+"                   "+sessionId);
             XqPresenter xqPresenter = new XqPresenter(new XqShow());
             xqPresenter.reqeust(idxq,userId,sessionId);
         }else{

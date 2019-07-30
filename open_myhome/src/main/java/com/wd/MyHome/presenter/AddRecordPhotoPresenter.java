@@ -1,5 +1,7 @@
 package com.wd.MyHome.presenter;
 
+import android.util.Log;
+
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDApplication;
 import com.dingtao.common.core.WDPresenter;
@@ -32,22 +34,23 @@ public class AddRecordPhotoPresenter extends WDPresenter<IAppRequest> {
     @Override
     protected Observable getModel(Object... args) {
 
-        /*MultipartBody.Builder builder = new MultipartBody.Builder()
+        MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
         builder.addFormDataPart("picture", (String)args[2]);
         List<Object> list = (List<Object>) args[2];
         if (list.size()>1) {
             for (int i = 1; i < list.size(); i++) {
+                Log.i("aaa", "getModel: "+list.get(i).toString());
                 File file = new File((String) list.get(i));
                 builder.addFormDataPart("picture", file.getName(),
                         RequestBody.create(MediaType.parse("multipart/form-data"),
                                 file));
             }
-        }*/
-        if (path != null){
+        }
+       /* if (path != null){
             path.clear();
         }
-        path = (List<String>) args[3];
+        path = (List<String>) args[2];
         fileList = new ArrayList<>();
         for (int i = 0; i < path.size(); i++) {
             file1 = new File(path.get(i));
@@ -64,7 +67,7 @@ public class AddRecordPhotoPresenter extends WDPresenter<IAppRequest> {
         }
         if (parts.length<1){
             return null;
-        }
-        return iRequest.addrecordphoto((String)args[0],(String)args[1], parts);
+        }*/
+        return iRequest.addrecordphoto((String)args[0],(String)args[1],builder.build());
     }
 }
