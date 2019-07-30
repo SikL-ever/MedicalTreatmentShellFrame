@@ -112,21 +112,23 @@ public class SousuoAcitivity extends AppCompatActivity {
             searchRecordsLl1.setVisibility(View.VISIBLE);
             ssshoew.setVisibility(View.VISIBLE);
         }*/
-        //回车不换行
+        /*//回车不换行
         edit_item.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 return (event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
             }
-        });
+        });*/
         edit_item.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(keyCode==KeyEvent.KEYCODE_ENTER) {//修改回车键功能
 // 先隐藏键盘
+/*
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(SousuoAcitivity.this.getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
+*/
                     if (edit_item.getText().toString().length() > 0) {
 
                         String record = edit_item.getText().toString();
@@ -145,6 +147,7 @@ public class SousuoAcitivity extends AppCompatActivity {
                         Toast.makeText(SousuoAcitivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
                     }
                     hideSoftKeyboard(SousuoAcitivity.this);
+                   return true;
                 }
                 return false;
             }
@@ -152,7 +155,7 @@ public class SousuoAcitivity extends AppCompatActivity {
         lsjlBeanDao = DaoMaster.newDevSession(this, LsjlBeanDao.TABLENAME).getLsjlBeanDao();
         rmssPresenter = new RmssPresenter(new RmssShow());
         rmssPresenter.reqeust();
-//往容器内添加TextView数据
+        //往容器内添加TextView数据
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(10, 5, 10, 5);
         if (flowLayout != null) {

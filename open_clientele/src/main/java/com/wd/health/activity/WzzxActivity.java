@@ -1,21 +1,30 @@
 package com.wd.health.activity;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -25,13 +34,18 @@ import com.dingtao.common.bean.homepage.WzysbtnBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.adapter.homepageadapter.AAdapter;
 import com.wd.health.adapter.homepageadapter.ImageAdapter;
+import com.wd.health.presenter.homepagepresenter.QianBaoPresenter;
 import com.wd.health.presenter.homepagepresenter.WzzxPresenter;
 import com.wd.health.presenter.homepagepresenter.YslbPresenter;
+import com.wd.health.presenter.videopresenter.VideoGetPricePresenter;
+import com.wd.health.util.CommomDialog;
+import com.wd.health.util.MyDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +99,8 @@ public class WzzxActivity extends AppCompatActivity {
     TextView jg;
     @BindView(R2.id.ljzx)
     TextView ljzx;
-    @BindView(R2.id.viewpager)
-    RecyclerView viewPager;
+   /* @BindView(R2.id.viewpager)
+    RecyclerView viewPager;*/
     @BindView(R2.id.container)
     RelativeLayout container;
     @BindView(R2.id.weizhaodao1)
@@ -101,17 +115,26 @@ public class WzzxActivity extends AppCompatActivity {
     TextView zuo;
     @BindView(R2.id.you)
     TextView you;
+    @BindView(R2.id.lv)
+    GridView listView;
+    @BindView(R2.id.ysxqjid)
+    ImageView ysxqjid;
 
     private AAdapter aAdapter;
     private YslbPresenter yslbPresenter;
     private int tj=1;
     private int jgpx;
     private int idid=1;
-    private ImageAdapter imageAdapter;
-    //private int xb;
+    //private ImageAdapter imageAdapter;
+    private ListViewAdapter adapter;
+    private int qwer=1;
     int index=0;
     int pagerCount=3;
-
+    private int clickTemp = -1;
+    private boolean hasChecked = false;
+    private int pos;
+    private String userId;
+    private String sesssionId;
 
 
     @Override
@@ -138,83 +161,12 @@ public class WzzxActivity extends AppCompatActivity {
         aRecycler.setAdapter(aAdapter);
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(this);
-        String userId = intt.get(0);
-        String sesssionId = intt.get(1);
+        userId = intt.get(0);
+        sesssionId = intt.get(1);
         String tx = intt.get(2);
         Glide.with(this).load(tx).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(aImages);
         bton1.setTextColor(Color.parseColor("#D92109"));
         yslbPresenter = new YslbPresenter(new DataCall<List<WzysBean>>() {
-
-           /* class ImageAdapter1 extends RecyclerView.Adapter<ImageAdapter1.ViewHolder> {
-                private Context context;
-                private  List<WzysBean> dataCall;
-                public ImageAdapter1(WzzxActivity wzzxActivity, List<WzysBean> dataCall) {
-                    this.context = wzzxActivity;
-                    this.dataCall = dataCall;
-                }
-
-                @androidx.annotation.NonNull
-                @Override
-                public ImageAdapter1.ViewHolder onCreateViewHolder(@androidx.annotation.NonNull ViewGroup parent, int viewType) {
-                    View view = View.inflate(context,R.layout.image_item,null);
-                    ImageAdapter1.ViewHolder viewHolder = new ImageAdapter1.ViewHolder(view);
-                    return viewHolder;
-                }
-
-                @Override
-                public void onBindViewHolder(@androidx.annotation.NonNull ImageAdapter1.ViewHolder holder, int position) {
-                    RoundedCorners roundedCorners= new RoundedCorners(10);
-                    RequestOptions options=RequestOptions.bitmapTransform(roundedCorners).override(240, 240);
-                    if(dataCall.get(position).getImagePic()==null){
-                        Glide.with(context).load(R.drawable.system_image7).apply(options).into(holder.imageView);
-                    }else{
-                        Glide.with(context).load(dataCall.get(position).getImagePic()).apply(options).into(holder.imageView);
-                    }
-                    holder.textView1.setText(dataCall.get(position).getDoctorName());
-                    holder.textView1.setBackgroundColor(dataCall.get(position).getTextcolor());
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            for (int i = 0; i < dataCall.size(); i++) {
-                                dataCall.get(i).setTextcolor(0xff999999);
-                                holder.textView1.setBackgroundColor(dataCall.get(i).getTextcolor());
-                            }
-                            dataCall.get(position).setTextcolor(0xff3087ea);
-                            holder.textView1.setBackgroundColor(dataCall.get(position).getTextcolor());
-                            // huIdiaoId.huidiaoId(position);
-                            notifyDataSetChanged();
-                        }
-                    });
-                }
-
-                @Override
-                public int getItemCount() {
-                    *//*int current = index * pagerCount;
-                    return dataCall.size()-current<pagerCount?dataCall.size()-current:pagerCount;*//*
-                    return dataCall.size();
-                }
-
-                class ViewHolder extends RecyclerView.ViewHolder {
-                    ImageView imageView;
-                    TextView textView1;
-                    public ViewHolder(@androidx.annotation.NonNull View itemView) {
-                        super(itemView);
-                        imageView = itemView.findViewById(R.id.yszp);
-                        textView1 = itemView.findViewById(R.id.ysname);
-                    }
-                }
-
-                private ImageAdapter.HUIdiaoId huIdiaoId;
-
-                public void getKjens(ImageAdapter.HUIdiaoId callBackj) {
-                    this.huIdiaoId = callBackj;
-                }
-
-                abstract class HUIdiaoId{
-                    public abstract void huidiaoId(int position);
-                }
-            }*/
-
             @Override
             public void success(List<WzysBean> data, Object... args) {
                 Log.e("aaaa",data+"+++++++");
@@ -223,9 +175,7 @@ public class WzzxActivity extends AppCompatActivity {
                     q.setVisibility(View.GONE);
                     w.setVisibility(View.GONE);
                     weizhaodao1.setVisibility(View.VISIBLE);
-                }/*else if(){
-
-                }*/else{
+                }else{
                     /*checkButton(data);*/
                     q.setVisibility(View.VISIBLE);
                     w.setVisibility(View.VISIBLE);
@@ -236,77 +186,115 @@ public class WzzxActivity extends AppCompatActivity {
                             return false;
                         }
                     };
-                    shuzi.setText(index+1+"/"+(int) Math.ceil((double)data.size()/pagerCount));
+                    //shuzi.setText(index+1+"/"+(int) Math.ceil((double)data.size()/pagerCount));
                     you.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(WzzxActivity.this, "+++", Toast.LENGTH_SHORT).show();
                             index++;
                             System.out.println(index+"nexPager");
                             shuzi.setText(index+1+"/"+(int) Math.ceil((double)data.size()/pagerCount));
-                            imageAdapter .notifyDataSetChanged();
+                            zhanshi(data,index*3);
                             //隐藏上一个或下一个按钮
-                           /* if (index<=0){
+                            if (index<=0){
                                 zuo.setVisibility(View.GONE);
                                 you.setVisibility(View.VISIBLE);
                             }else if (data.size()-index*pagerCount<=pagerCount){    //数据总数减每页数当小于每页可显示的数字时既是最后一页
                                 you.setVisibility(View.GONE);
                                 zuo.setVisibility(View.VISIBLE);
-                            }*/
+                            }else{
+                                you.setVisibility(View.VISIBLE);
+                                zuo.setVisibility(View.VISIBLE);
+                            }
+                            adapter.notifyDataSetChanged();
+
                         }
                     });
-
-
                     zuo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             index--;
                             System.out.println(index+"prePager");
-                            imageAdapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
                             shuzi.setText(index+1+"/"+(int) Math.ceil((double)data.size()/pagerCount));
+                            zhanshi(data,index*3);
                             //隐藏上一个或下一个按钮
-                            /*if (index<=0){
+                            if (index<=0){
                                 zuo.setVisibility(View.GONE);
                                 you.setVisibility(View.VISIBLE);
                             }else if (data.size()-index*pagerCount<=pagerCount){    //数据总数减每页数当小于每页可显示的数字时既是最后一页
                                 you.setVisibility(View.GONE);
                                 zuo.setVisibility(View.VISIBLE);
-                            }*/
+                            }else{
+                                you.setVisibility(View.VISIBLE);
+                                zuo.setVisibility(View.VISIBLE);
+                            }
+                            adapter .notifyDataSetChanged();
+
                         }
                     });
+                    //禁止滑动
+                    listView.setOnTouchListener(new View.OnTouchListener() {
+
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return MotionEvent.ACTION_MOVE == event.getAction() ? true
+                                    : false;
+                        }
+                    });
+                    //去掉点击效果
+                    listView.setSelector(new ColorDrawable(Color.TRANSPARENT));
+                    adapter = new ListViewAdapter(data);
+                    listView.setAdapter(adapter);
+                    you.setVisibility(View.VISIBLE);
+                    shuzi.setText(index+1+"/"+(int) Math.ceil((double)data.size()/pagerCount));
+                    if (index<=0){
+                        zuo.setVisibility(View.GONE);
+                        you.setVisibility(View.VISIBLE);
+                    }else if (data.size()-index*pagerCount<=pagerCount){    //数据总数减每页数当小于每页可显示的数字时既是最后一页
+                        you.setVisibility(View.GONE);
+                        zuo.setVisibility(View.VISIBLE);
+                    }
+                    if (index+1==(int) Math.ceil((double)data.size()/pagerCount)){
+                        you.setVisibility(View.GONE);
+                        zuo.setVisibility(View.GONE);
+                    }
                     //设置方向为横向，不设置默认为纵向
                     // layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    viewPager.setLayoutManager(layoutManager);
+                    /*viewPager.setLayoutManager(layoutManager);
                     imageAdapter = new ImageAdapter(WzzxActivity.this,data);
                     //ImageAdapter1 imageAdapter = new ImageAdapter1(WzzxActivity.this,data);
-                    viewPager.setAdapter(imageAdapter);
+                    viewPager.setAdapter(imageAdapter);*/
 
-                    String img = data.get(0).getImagePic();
-                    String name = data.get(0).getDoctorName();
-                    String zrys = data.get(0).getJobTitle();
-                    String yiyuan = data.get(0).getInauguralHospital();
-                    String aho = data.get(0).getPraise();
-                    int zhsu = data.get(0).getServerNum();
-                    int jiage = data.get(0).getServicePrice();
-                    setKognajina(img,name,zrys,yiyuan,aho,zhsu,jiage);
-                    for (int i = 0; i < data.size(); i++) {
-                        data.get(i).setTextcolor(0xff999999);
-                    }
-                    data.get(0).setTextcolor(0xff3087ea);
-                    imageAdapter.getKjens(new ImageAdapter.HUIdiaoId() {
+                    //int pos = position + index * pagerCount;
+                    zhanshi(data,0);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public void huidiaoId(int position) {
-                            String img = data.get(position).getImagePic();
-                            String name = data.get(position).getDoctorName();
-                            String zrys = data.get(position).getJobTitle();
-                            String yiyuan = data.get(position).getInauguralHospital();
-                            String aho = data.get(position).getPraise();
-                            int zhsu = data.get(position).getServerNum();
-                            int jiage = data.get(position).getServicePrice();
-                            setKognajina(img,name,zrys,yiyuan,aho,zhsu,jiage);
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            int pos = position + index * pagerCount;
+                            WzysBean wzysBean = data.get(pos);
+                            String img =wzysBean.getImagePic();
+                            String name = wzysBean.getDoctorName();
+                            String zrys = wzysBean.getJobTitle();
+                            String yiyuan = wzysBean.getInauguralHospital();
+                            String aho = wzysBean.getPraise();
+                            int zhsu = wzysBean.getServerNum();
+                            int jiage = wzysBean.getServicePrice();
+                            int doctorId = wzysBean.getDoctorId();
+                            setKognajina(img,name,zrys,yiyuan,aho,zhsu,jiage,doctorId);
+                            TextView name1 = (TextView) view.findViewById(R.id.name_l);
+                            for (int i = 0; i < data.size(); i++) {
+                                data.get(i).setTextcolor(0xff999999);
+                                name1.setBackgroundColor(data.get(i).getTextcolor());
+                            }
+                            data.get(pos).setTextcolor(0xff3087ea);
+                            name1.setBackgroundColor(data.get(pos).getTextcolor());
+                            adapter.notifyDataSetChanged();
+
                         }
                     });
-                    imageAdapter.notifyDataSetChanged();
+
+
                 }
             }
 
@@ -315,7 +303,7 @@ public class WzzxActivity extends AppCompatActivity {
 
             }
         });
-        yslbPresenter.reqeust(userId,sesssionId,idid,1,jgpx,1,10);
+        yslbPresenter.reqeust(userId, sesssionId,idid,1,jgpx,1,10);
 
         WzzxPresenter wzzxPresenter = new WzzxPresenter(new DataCall<List<WzzxBean>>() {
             @Override
@@ -344,7 +332,7 @@ public class WzzxActivity extends AppCompatActivity {
                     @Override
                     public void callback1(int id) {
                         Log.e("iiiiiiiiiiiiiii123",id+"");
-                        yslbPresenter.reqeust(userId,sesssionId,id,tj,jgpx,1,10);
+                        yslbPresenter.reqeust(userId, sesssionId,id,tj,jgpx,1,10);
                         idid = id;
                     }
                 });
@@ -369,7 +357,7 @@ public class WzzxActivity extends AppCompatActivity {
                 bton2.setTextColor(Color.parseColor("#3B3B3B"));
                 bton3.setTextColor(Color.parseColor("#3B3B3B"));
                 bton4.setTextColor(Color.parseColor("#3B3B3B"));
-                yslbPresenter.reqeust(userId,sesssionId,idid,tj,jgpx,1,10);
+                yslbPresenter.reqeust(userId, sesssionId,idid,tj,jgpx,1,10);
             }
         });
         bton2.setOnClickListener(new View.OnClickListener() {
@@ -380,7 +368,7 @@ public class WzzxActivity extends AppCompatActivity {
                 bton1.setTextColor(Color.parseColor("#3B3B3B"));
                 bton3.setTextColor(Color.parseColor("#3B3B3B"));
                 bton4.setTextColor(Color.parseColor("#3B3B3B"));
-                yslbPresenter.reqeust(userId,sesssionId,idid,tj,jgpx,1,10);
+                yslbPresenter.reqeust(userId, sesssionId,idid,tj,jgpx,1,10);
             }
         });
         bton3.setOnClickListener(new View.OnClickListener() {
@@ -391,7 +379,7 @@ public class WzzxActivity extends AppCompatActivity {
                 bton1.setTextColor(Color.parseColor("#3B3B3B"));
                 bton2.setTextColor(Color.parseColor("#3B3B3B"));
                 bton4.setTextColor(Color.parseColor("#3B3B3B"));
-                yslbPresenter.reqeust(userId,sesssionId,idid,tj,jgpx,1,10);
+                yslbPresenter.reqeust(userId, sesssionId,idid,tj,jgpx,1,10);
             }
         });
         bton4.setOnClickListener(new View.OnClickListener() {
@@ -402,16 +390,16 @@ public class WzzxActivity extends AppCompatActivity {
                 bton1.setTextColor(Color.parseColor("#3B3B3B"));
                 bton2.setTextColor(Color.parseColor("#3B3B3B"));
                 bton3.setTextColor(Color.parseColor("#3B3B3B"));
-               /* if (qwer==1){
-                    Glide.with(WzzxActivity.this).load(R.drawable.common_button_sequence_n).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageSx);
+                if (qwer==1){
+                    Glide.with(WzzxActivity.this).load(R.drawable.common_button_descending_s).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageSx);
                     qwer=2;
-                    yslbPresenter.reqeust(userId,sesssionId,idi,tj,jgpx,1,10);
+                    yslbPresenter.reqeust(userId, sesssionId,idid,tj,jgpx,1,10);
                 }else{
                     Glide.with(WzzxActivity.this).load(R.drawable.common_button_ascending_s).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageSx);
                     qwer=1;
-                    yslbPresenter.reqeust(userId,sesssionId,idi,tj,1,1,10);
-                }*/
-                yslbPresenter.reqeust(userId,sesssionId,idid,tj,jgpx,1,10);
+                    yslbPresenter.reqeust(userId, sesssionId,idid,tj,1,1,10);
+                }
+                //yslbPresenter.reqeust(userId,sesssionId,idid,tj,jgpx,1,10);
 
             }
         });
@@ -419,21 +407,7 @@ public class WzzxActivity extends AppCompatActivity {
 
     }
 
-   /* private void checkButton(List<WzysBean> data) {
-        if (index<=0){
-            zuo.setVisibility(View.GONE);
-            you.setVisibility(View.VISIBLE);
-        }else if (data.size()-index*pagerCount<=pagerCount){    //数据总数减每页数当小于每页可显示的数字时既是最后一页
-            you.setVisibility(View.GONE);
-            zuo.setVisibility(View.VISIBLE);
-        }
-    }*/
-
-    private void checkButton() {
-
-    }
-
-    private void setKognajina(String img,String name,String zrys,String yiyuan,String aho,int zhsu,int jiage) {
+    private void setKognajina(String img,String name,String zrys,String yiyuan,String aho,int zhsu,int jiage,int doctorId) {
         RoundedCorners roundedCorners= new RoundedCorners(4);
         RequestOptions options=RequestOptions.bitmapTransform(roundedCorners);
         if(img==null){
@@ -447,6 +421,124 @@ public class WzzxActivity extends AppCompatActivity {
         hp.setText("好评率"+aho);
         hzs.setText("服务患者数  "+zhsu);
         jg.setText(jiage+"H币/次");
+        ljzx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QianBaoPresenter qianBaoPresenter = new QianBaoPresenter(new DataCall<Double>() {
+                    @Override
+                    public void success(Double data, Object... args) {
+                        if (data>=jiage){
+                        CommomDialog commomDialog = new CommomDialog(WzzxActivity.this, R.style.dialog_xz, "本次咨询将扣除"+jiage+"H币！", new CommomDialog.OnCloseListener() {
+                            @Override
+                            public void onClick(Dialog dialog, boolean confirm) {
+                                if (confirm==true){
+                                    Toast.makeText(WzzxActivity.this, "跳转医生即时通讯对话", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(WzzxActivity.this, "取消", Toast.LENGTH_SHORT).show();
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                        commomDialog.setPositiveButton("去咨询").show();
+                        }else{
+                            CommomDialog commomDialog = new CommomDialog(WzzxActivity.this, R.style.dialog_xz, "H币不足"+jiage+"，充值再来吧！", new CommomDialog.OnCloseListener() {
+                                @Override
+                                public void onClick(Dialog dialog, boolean confirm) {
+                                    if (confirm==true){
+                                        Toast.makeText(WzzxActivity.this, "跳转充值页面", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(WzzxActivity.this, "取消", Toast.LENGTH_SHORT).show();
+                                    }
+                                    dialog.dismiss();
+                                }
+                            });
+                            commomDialog.setPositiveButton("去充值").show();
+                        }
+                    }
+
+                    @Override
+                    public void fail(ApiException data, Object... args) {
+                        Log.e("aaaaaaaaaaaaa++",data+"");
+                    }
+                });
+                qianBaoPresenter.reqeust(userId,sesssionId);//请求用户余额
+            }
+        });
+        ysxqjid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WzzxActivity.this,YsxqActivity.class);
+                intent.putExtra("doctorId",doctorId);
+                startActivity(intent);
+            }
+        });
     }
+
+    class ListViewAdapter extends BaseAdapter {
+        private Context context;
+        private List<WzysBean> data ;
+
+
+        public ListViewAdapter(List<WzysBean> data) {
+            this.data = data;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            //数据大于页数*每页个数,显示默认数字,小于时显示剩余的
+            int current = index * pagerCount;
+            return data.size()-current<pagerCount?data.size()-current:pagerCount;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+            convertView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.pager_item,viewGroup,false);
+            TextView name = (TextView) convertView.findViewById(R.id.name_l);
+            ImageView yszp = (ImageView) convertView.findViewById(R.id.yszp_l);
+            pos = position+index*pagerCount;
+            Log.e("qqqqqqqqqqqqqqqq",pos+"+ pos = position + index * pagerCount;+++++"+position);
+            WzysBean wzysBean = data.get(pos);
+            if(data.get(pos).getImagePic()==null){
+                Glide.with(WzzxActivity.this).load(R.drawable.system_image7).into(yszp);
+            }else{
+                Glide.with(WzzxActivity.this).load(wzysBean.getImagePic()).into(yszp);
+            }
+            name.setText(wzysBean.getDoctorName());
+            name.setBackgroundColor(data.get(pos).getTextcolor());
+            int doctorId = wzysBean.getDoctorId();
+
+            return convertView;
+        }
+    }
+    private void zhanshi(List<WzysBean> data,int index) {
+        WzysBean wzysBean = data.get(index);
+        String img =wzysBean.getImagePic();
+        String name = wzysBean.getDoctorName();
+        String zrys = wzysBean.getJobTitle();
+        String yiyuan = wzysBean.getInauguralHospital();
+        String aho = wzysBean.getPraise();
+        int zhsu = wzysBean.getServerNum();
+        int jiage = wzysBean.getServicePrice();
+        int doctorId = wzysBean.getDoctorId();
+        setKognajina(img,name,zrys,yiyuan,aho,zhsu,jiage,doctorId);
+        for (int i = 0; i < data.size(); i++) {
+            data.get(i).setTextcolor(0xff999999);
+        }
+        data.get(index).setTextcolor(0xff3087ea);
+
+    }
+
+
 
 }

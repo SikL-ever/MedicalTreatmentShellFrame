@@ -60,7 +60,6 @@ public class WzzxAdapter extends RecyclerView.Adapter<WzzxAdapter.ViewHolder> {
                 if (intt!=null){
                     Intent intent = new Intent(context, WzzxActivity.class);
                     intent.putExtra("idid", wzzxBeans.get(position).getId());
-
                     context.startActivity(intent);
                 }else{
                     ARouter.getInstance().build(Constant.ACTIVITY_LOGIN_LOGIN).navigation(context);

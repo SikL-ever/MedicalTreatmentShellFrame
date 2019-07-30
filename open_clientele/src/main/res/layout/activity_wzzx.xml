@@ -128,16 +128,19 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
             android:background="#fff">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/viewpager"
+            <GridView
+                android:id="@+id/lv"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_110"
+                android:layout_height="@dimen/dp_118"
                 android:layout_above="@+id/shuzi"
-                android:layout_toLeftOf="@+id/you"
-                android:layout_toRightOf="@+id/zuo"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_30"
+                android:orientation="horizontal"
+                android:scrollbars="none"
+                android:overScrollMode="never"
+                android:numColumns="3"
                 >
-            </androidx.recyclerview.widget.RecyclerView>
+            </GridView>
             <TextView
                 android:id="@+id/shuzi"
                 android:layout_width="match_parent"
@@ -153,7 +156,7 @@
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:layout_alignBottom="@+id/viewpager"
+                android:layout_alignBottom="@+id/lv"
                 android:textColor="#3087ea"
                 android:gravity="center"/>
             <TextView
@@ -163,7 +166,7 @@
                 android:text="《"
                 android:textColor="#3087ea"
                 android:layout_alignParentLeft="true"
-                android:layout_alignBottom="@+id/viewpager"
+                android:layout_alignBottom="@+id/lv"
                 android:gravity="center"/>
         </RelativeLayout>
 
@@ -180,9 +183,9 @@
             <ImageView
                 android:id="@+id/image_big"
                 android:layout_centerHorizontal="true"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
+
                 android:layout_above="@id/rel"
                 />
             <RelativeLayout
@@ -242,6 +245,7 @@
                     android:layout_marginLeft="@dimen/dp_20"
                     android:textColor="#333333"/>
                 <ImageView
+                    android:id="@+id/ysxqjid"
                     android:layout_width="@dimen/dp_24"
                     android:layout_height="@dimen/dp_24"
                     android:layout_marginRight="@dimen/dp_20"

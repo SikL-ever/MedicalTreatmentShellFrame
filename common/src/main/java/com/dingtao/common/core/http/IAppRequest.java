@@ -16,6 +16,7 @@ import com.dingtao.common.bean.homepage.WzysBean;
 import com.dingtao.common.bean.homepage.WzzxBean;
 import com.dingtao.common.bean.homepage.XqBean;
 import com.dingtao.common.bean.homepage.YpxqBean;
+import com.dingtao.common.bean.homepage.YsxqBean;
 import com.dingtao.common.bean.homepage.ZhuBean;
 import com.dingtao.common.bean.homepage.ZiBean;
 import com.dingtao.common.bean.homepage.ZxbkBean;
@@ -322,5 +323,13 @@ public interface IAppRequest {
     Observable<Result> qxscshow(@Header("userId") String userId,@Header("sessionId") String sessionId,@Query("infoId") int infoId);
     @GET("user/inquiry/v1/findDoctorList")
     Observable<Result<List<WzysBean>>> yslbShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("deptId") int deptId, @Query("condition") int condition, @Query("sortBy") int sortBy, @Query("page") int page, @Query("count") int count);
+    @GET("user/verify/v1/findUserWallet")
+    Observable<Result<Double>> moneyShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
+    @GET("user/inquiry/v1/findDoctorInfo")
+    Observable<Result<YsxqBean>> ysxqShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("doctorId") int doctorId);
+    @POST("user/inquiry/verify/v1/followDoctor")
+    Observable<Result> gzysShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("doctorId") int doctorId);
+    @DELETE("user/inquiry/verify/v1/cancelFollow")
+    Observable<Result> qxysShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("doctorId") int doctorId);
     //xieqi-------------------------------------------------------------------别动我的
 }

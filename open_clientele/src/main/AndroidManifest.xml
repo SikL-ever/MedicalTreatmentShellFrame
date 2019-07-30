@@ -12,10 +12,12 @@
         <activity android:name=".activity.wardActivity.PublishActivity" />
         <activity android:name=".activity.wardActivity.fabiaoactivity.PlusImageActivity" />
         <activity android:name=".activity.DuoXiangActivity" />
-        <activity android:name=".activity.CommunicationActivity"></activity>
+        <activity android:name=".activity.CommunicationActivity" />
         <activity android:name=".PhotoXuan.PlusImageActivity" />
         <activity android:name=".activity.ZxxqActivity" />
         <activity android:name=".activity.WzzxActivity" />
+        <activity android:name=".activity.YsxqActivity" />
+        <activity android:name=".activity.GdplActivity"></activity>
     </application>
 
 </manifest>
