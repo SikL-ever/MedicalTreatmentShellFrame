@@ -10,7 +10,12 @@
         <activity android:name=".childactivity.MyUserCollectActivity" />
         <activity android:name=".childactivity.MyUserWalletActivity" />
         <activity android:name=".childactivity.MyUserSuggestActivity" />
-        <activity android:name=".childactivity.MyUserSetActivity"></activity>
+        <activity android:name=".childactivity.MyUserSetActivity" />
+        <activity android:name=".childactivity.MyVideoActivity" />
+        <activity android:name=".childactivity.MyDiseaseActivity" />
+        <activity android:name=".childactivity.MyInterestActivity" />
+        <activity android:name=".childactivity.MyHMoneyActivity"></activity>
+        <activity android:name=".childactivity.MyUserSetActivity" />
     </application>
 
 </manifest>

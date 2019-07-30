@@ -56,7 +56,6 @@ public class MyUserSetActivity extends WDActivity {
             public void onClick(View v) {
                 if (new LoginDaoUtil().intt(MyUserSetActivity.this)==null) {
                     Toast.makeText(MyUserSetActivity.this, "已经是退出登录状态", Toast.LENGTH_SHORT).show();
-
                 }else{
                     View view=View.inflate(MyUserSetActivity.this, com.wd.health.R.layout.videodialong_item,null);
                     final MyDialog dialog = new MyDialog(MyUserSetActivity.this, 200, 100, view, com.wd.health.R.style.dialog);

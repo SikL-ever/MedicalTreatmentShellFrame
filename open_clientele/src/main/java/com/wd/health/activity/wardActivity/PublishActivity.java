@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -36,15 +38,24 @@ import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.google.gson.Gson;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.suke.widget.SwitchButton;
+import com.wd.health.PhotoXuan.GridViewAdapter;
+import com.wd.health.PhotoXuan.MainConstant;
+import com.wd.health.PhotoXuan.PictureSelectorConfig;
+import com.wd.health.PhotoXuan.PlusImageActivity;
 import com.wd.health.R;
 import com.wd.health.adapter.wardmateadapter.BingzhengAdapater;
 import com.wd.health.adapter.wardmateadapter.XuanAdapater;
 import com.wd.health.presenter.wardmatepresenter.BingzhengPresenter;
 import com.wd.health.presenter.wardmatepresenter.FabuPresenter;
+import com.wd.health.presenter.wardmatepresenter.ImagePresenter;
 import com.wd.health.presenter.wardmatepresenter.TabPresenter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +70,6 @@ public class PublishActivity extends AppCompatActivity {
     private TimePickerView pvCustomTime;
     private SwitchButton switchButton;
     private LinearLayout linearLayout;
-    private ImageView add_iamge;
     private Button publish;
     private ImageView bz_pop;
     private ImageView xuanze_pop;
@@ -80,6 +90,9 @@ public class PublishActivity extends AppCompatActivity {
     private TextView therapeutic;
     private TextView chongzhi;
     private FabuPresenter fabuPresenter;
+    private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
+    private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
+    private GridView addrecord_recycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +112,11 @@ public class PublishActivity extends AppCompatActivity {
         start_time = findViewById(R.id.start_time);
         //结束时间
         stop_time = findViewById(R.id.stop_time);
+        //添加图片addrecord_recycler
+        addrecord_recycler = findViewById(R.id.addrecord_recycler);
         start_text = findViewById(R.id.start_text);
         stop_text = findViewById(R.id.stop_text);
         linearLayout = findViewById(R.id.linear);
-        add_iamge = findViewById(R.id.add_image);
         publish = findViewById(R.id.publish);
         bz_pop = findViewById(R.id.bz_pop);
         layouta = findViewById(R.id.layouta);
@@ -114,7 +128,7 @@ public class PublishActivity extends AppCompatActivity {
         xuanze_pop = findViewById(R.id.xuanze_pop);
         one_img = findViewById(R.id.one_img);
         final LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
-        List<String> intt = loginDaoUtil.intt(PublishActivity.this);
+        final List<String> intt = loginDaoUtil.intt(PublishActivity.this);
         String userid = intt.get(0);
         String sessonid = intt.get(1);
         String image = intt.get(2);
@@ -157,13 +171,13 @@ public class PublishActivity extends AppCompatActivity {
             }
         });
 
-        //添加图片
-        add_iamge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        //添加图片
+//        add_iamge.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         //选择科室
         xuanze_pop.setOnClickListener(new View.OnClickListener() {
@@ -267,8 +281,25 @@ public class PublishActivity extends AppCompatActivity {
                 LoginDaoUtil loginDaoUtil1=new LoginDaoUtil();
                 List<String> intt1 = loginDaoUtil.intt(PublishActivity.this);
                 fabuPresenter.reqeust(intt1.get(0),intt1.get(1),body);
+
+//                ImagePresenter imagePresenter=new ImagePresenter(new sengimage());
+//                imagePresenter.reqeust(intt.get(0),intt.get(1),);
             }
         });
+        initGridView();
+    }
+    //发表图片
+    class sengimage implements DataCall{
+
+        @Override
+        public void success(Object data, Object... args) {
+
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
     }
 
     //发布病友圈
@@ -372,5 +403,80 @@ public class PublishActivity extends AppCompatActivity {
         return format.format(date);
     }
 
+    //--------------------------------------------------------------------------------------相机
+    //初始化展示上传图片的GridView
+    private void initGridView() {
+        mGridViewAddImgAdapter = new GridViewAdapter(PublishActivity.this, mPicList);
+        addrecord_recycler.setAdapter(mGridViewAddImgAdapter);
+        addrecord_recycler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if (position == parent.getChildCount() - 1) {
+                    //如果“增加按钮形状的”图片的位置是最后一张，且添加了的图片的数量不超过5张，才能点击
+                    if (mPicList.size() == MainConstant.MAX_SELECT_PIC_NUM) {
+                        //最多添加5张图片
+                        viewPluImg(position);
+                    } else {
+                        //添加凭证图片
+                        selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
+                    }
+                } else {
+                    viewPluImg(position);
+                }
+            }
+        });
+    }
+    //查看大图
+    private void viewPluImg(int position) {
+        Intent intent = new Intent(PublishActivity.this, PlusImageActivity.class);
+        intent.putStringArrayListExtra(MainConstant.IMG_LIST, mPicList);
+        intent.putExtra(MainConstant.POSITION, position);
+        startActivityForResult(intent, MainConstant.REQUEST_CODE_MAIN);
+    }
+    /**
+     * 打开相册或者照相机选择凭证图片，最多5张
+     *
+     * @param maxTotal 最多选择的图片的数量
+     */
+    private void selectPic(int maxTotal) {
+        PictureSelectorConfig.initMultiConfig(this, maxTotal);
+    }
+
+    // 处理选择的照片的地址
+    private void refreshAdapter(List<LocalMedia> picList) {
+        for (LocalMedia localMedia : picList) {
+            //被压缩后的图片路径
+            if (localMedia.isCompressed()) {
+                String compressPath = localMedia.getCompressPath(); //压缩后的图片路径
+                mPicList.add(compressPath); //把图片添加到将要上传的图片数组中
+                mGridViewAddImgAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片选择结果回调
+                    refreshAdapter(PictureSelector.obtainMultipleResult(data));
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                    break;
+            }
+        }
+        if (requestCode == MainConstant.REQUEST_CODE_MAIN && resultCode == MainConstant.RESULT_CODE_VIEW_IMG) {
+            //查看大图页面删除了图片
+            ArrayList<String> toDeletePicList = data.getStringArrayListExtra(MainConstant.IMG_LIST); //要删除的图片的集合
+            mPicList.clear();
+            mPicList.addAll(toDeletePicList);
+            mGridViewAddImgAdapter.notifyDataSetChanged();
+        }
+    }
 
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".childactivity.MyVideoActivity">
+    <RelativeLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_54">
+
+        <ImageView
+            android:id="@+id/video_back"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:background="@drawable/common_icon_back_black_n"
+            android:layout_marginLeft="20dp"
+            android:text="急症科"
+            android:textColor="#3087ea"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/seach_text"
+            android:text="我购买的视频"
+            android:layout_marginRight="20dp"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/viedo_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

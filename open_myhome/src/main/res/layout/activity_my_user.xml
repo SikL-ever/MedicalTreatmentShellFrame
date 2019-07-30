@@ -266,6 +266,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <ImageView
+                    android:id="@+id/my_video"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
@@ -288,6 +289,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/my_disease"
                     android:layout_width="31dp"
                     android:layout_height="@dimen/dp_30"
                     android:layout_gravity="center_horizontal"
@@ -316,6 +318,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <ImageView
+                    android:id="@+id/my_interest"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
@@ -336,6 +339,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <ImageView
+                    android:id="@+id/my_h_money"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
@@ -374,5 +378,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>

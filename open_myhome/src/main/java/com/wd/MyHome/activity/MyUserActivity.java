@@ -7,12 +7,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.dingtao.common.bean.Result;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.core.exception.ApiException;
@@ -20,16 +20,21 @@ import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.childactivity.MyDiseaseActivity;
+import com.wd.MyHome.childactivity.MyHMoneyActivity;
+import com.wd.MyHome.childactivity.MyInterestActivity;
 import com.wd.MyHome.childactivity.MyUserCollectActivity;
 import com.wd.MyHome.childactivity.MyUserRecordActivity;
 import com.wd.MyHome.childactivity.MyUserSetActivity;
 import com.wd.MyHome.childactivity.MyUserSuggestActivity;
 import com.wd.MyHome.childactivity.MyUserWalletActivity;
+import com.wd.MyHome.childactivity.MyVideoActivity;
 import com.wd.MyHome.presenter.UserSignPresenter;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 @Route(path = Constant.ACTIVITY_LOGIN_MYUSERACTIVITY)
 public class MyUserActivity extends WDActivity {
@@ -65,10 +70,18 @@ public class MyUserActivity extends WDActivity {
     LinearLayout myuserset;
     @BindView(R2.id.myuserattention)
     LinearLayout myuserattention;
-    private String uid=null;//userid
-    private String sid=null;//senserid
+    @BindView(R2.id.my_video)
+    ImageView myVideo;
+    @BindView(R2.id.my_disease)
+    ImageView myDisease;
+    @BindView(R2.id.my_interest)
+    ImageView myInterest;
+    @BindView(R2.id.my_h_money)
+    ImageView myHMoney;
+    private String uid = null;//userid
+    private String sid = null;//senserid
     private UserSignPresenter userSignPresenter;
-
+    private List<String> intt;
     //布局
     @Override
     protected int getLayoutId() {
@@ -92,7 +105,12 @@ public class MyUserActivity extends WDActivity {
         myuserQiandao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userSignPresenter.reqeust(uid,sid);
+                if (intt != null) {
+                    userSignPresenter.reqeust(uid,sid);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         //当前问诊点击
@@ -113,53 +131,132 @@ public class MyUserActivity extends WDActivity {
         myuserrecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyUserRecordActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    Intent intent = new Intent(MyUserActivity.this, MyUserRecordActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //我的收藏点击
         myusercollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转
-                Intent intent = new Intent(MyUserActivity.this, MyUserCollectActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyUserCollectActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //我的钱包点击
         myuserwallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转
-                Intent intent = new Intent(MyUserActivity.this, MyUserWalletActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyUserWalletActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //查询被采纳的建议
         myusersuggest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转
-                Intent intent = new Intent(MyUserActivity.this, MyUserSuggestActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyUserSuggestActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //我的视频点击
+        myuservideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
         //设置跳转
         myuserset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转
-                Intent intent = new Intent(MyUserActivity.this, MyUserSetActivity.class);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyUserSetActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+        //我的视频
+        myVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyVideoActivity.class);
                 startActivity(intent);
             }
         });
+        //我的病友圈
+        myDisease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyDiseaseActivity.class);
+                startActivity(intent);
+            }
+        });
+        //我的关注
+        myInterest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyInterestActivity.class);
+                startActivity(intent);
+            }
+        });
+        //我的任务
+        myHMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyHMoneyActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+        //头像点击
+        myuserheadportrait.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //如果是在登录状态
+                if (intt != null) {
+
+                }else{
+                    //跳转登录
+                    intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
+                }
+            }
+        });
+
+
     }
     @Override
     protected void destoryData() {
 
     }
     //回来的数据---------------------------------------------------------------
-    class getsigndata implements DataCall{
+    class getsigndata implements DataCall {
         @Override
         public void success(Object data, Object... args) {
             myuserQiandao.setText("签到成功");
@@ -173,7 +270,7 @@ public class MyUserActivity extends WDActivity {
     protected void onResume() {
         super.onResume();
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
-        List<String> intt = loginDaoUtil.intt(MyUserActivity.this);
+        intt = loginDaoUtil.intt(MyUserActivity.this);
         if (intt != null) {
             //设置用户头像
             uid=intt.get(0);
@@ -181,6 +278,10 @@ public class MyUserActivity extends WDActivity {
             Glide.with(MyUserActivity.this).load(intt.get(2)).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
             myusername.setText(intt.get(3));//昵称
+        }else{
+            myusername.setText("请先登录!");//设置昵称
+            Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).
+                    apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//设置头像
         }
 
 

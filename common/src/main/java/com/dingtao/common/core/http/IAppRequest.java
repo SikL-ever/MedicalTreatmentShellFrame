@@ -1,6 +1,7 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
@@ -26,6 +27,7 @@ import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
 import com.dingtao.common.bean.wardBean.BingzhengBean;
 import com.dingtao.common.bean.wardBean.List_xiang_Bean;
+import com.dingtao.common.bean.wardBean.MyVideo;
 import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
 import com.dingtao.common.bean.wardBean.SeachBean;
 import com.dingtao.common.bean.wardBean.TaFaBean;
@@ -39,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -47,8 +50,10 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -155,6 +160,13 @@ public interface IAppRequest {
     Observable<Result> addrecord(@Header("userId") String userId,
                                  @Header("sessionId") String sessionId,
                                  @Body RequestBody body);
+    //上传图片
+    //上传用户档案相关图片
+    @Multipart
+    @POST("user/verify/v1/uploadArchivesPicture")
+    Observable<Result> addrecordphoto(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Part MultipartBody.Part[] picture);
     //修改我的档案
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @PUT("user/verify/v1/updateUserArchives")
@@ -177,21 +189,26 @@ public interface IAppRequest {
 
     //.用户收藏健康课堂视频列表
     @GET("user/verify/v1/findVideoCollectionList")
-    Observable<Result<List<VideoBean>>> mycollectvideo(@Header("userId") String userId,
-                                                       @Header("sessionId") String sessionId,
-                                                       @Query("page") int page,
-                                                       @Query("count") int count);
+    Observable<Result<List<MyCollectVideoBean>>> mycollectvideo(@Header("userId") String userId,
+                                                                          @Header("sessionId") String sessionId,
+                                                                          @Query("page") int page,
+                                                                          @Query("count") int count);
     //取消收藏将康视频
-
     @DELETE("user/verify/v1/cancelVideoCollection")
     Observable<Result> deletemyuservideo(@Header("userId") String userId,
                                           @Header("sessionId") String sessionId,
                                           @Query("videoId") int videoId);
-    //取消收藏将康视频
-   @DELETE("user/verify/v1/cancelVideoCollection")
-   Observable<Result> deletemyconsult(@Header("userId") String userId,
-                                      @Header("sessionId") String sessionId,
-                                      @Query("infoId") int infoId);
+    //取消收藏病友圈
+   @DELETE("user/verify/v1/cancelSickCollection")
+   Observable<Result> deletemybing(@Header("userId") String userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("sickCircleId") int sickCircleId);
+
+    //取消收藏咨询
+    @DELETE("user/verify/v1/cancelInfoCollection")
+    Observable<Result> deletemyconsult(@Header("userId") String userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("infoId") int infoId);
 
    //进行查询用户消费记录
    @GET("user/verify/v1/findUserConsumptionRecordList")
@@ -284,12 +301,26 @@ public interface IAppRequest {
                                 @Header("sessionId") String sessionId,
                                 @Field("sickCircleId") int sickCircleId);
     //发表图片
-    @FormUrlEncoded
+    @Multipart
     @POST("user/sickCircle/verify/v1/uploadSickCirclePicture")
     Observable<Result> image(@Header("userId") String userId,
                              @Header("sessionId") String sessionId,
                              @Field("sickCircleId") int sickCircleId,
-                             @Field("picture") File picture);
+                             @Part MultipartBody.Part[] picture);
+    //我的视频
+    @GET("user/verify/v1/findUserVideoBuyList")
+    Observable<Result<List<MyVideo>>> videos(@Header("userId") String userId,
+                                             @Header("sessionId") String sessionId,
+                                             @Query("page") int page,
+                                             @Query("count") int count
+    );
+    //删除我购买的视频
+    @DELETE("user/verify/v1/deleteVideoBuy")
+    Observable<Result> del(@Header("userId") String userId,
+                           @Header("sessionId") String sessionId,
+                           @Query("videoId") int page);
+    //我的关注
+
     /*==========================================LIFANGXIAN====================================================*/
 
 

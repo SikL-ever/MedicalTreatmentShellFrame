@@ -364,24 +364,17 @@
                             android:text="最多可添加6张图片;长按为图片排序"
                             android:textSize="@dimen/sp_12" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/dp_20"
-                            android:layout_marginTop="@dimen/dp_20">
-
-                            <ImageView
-                                android:id="@+id/add_image"
-                                android:layout_width="@dimen/dp_72"
-                                android:layout_height="@dimen/dp_72"
-                                android:src="@drawable/add" />
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/image_recyclerVi"
+                            <GridView
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:id="@+id/addrecord_recycler"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                            </androidx.recyclerview.widget.RecyclerView>
-                        </LinearLayout>
+                                android:layout_height="wrap_content"
+                                android:columnWidth="60dp"
+                                android:horizontalSpacing="10dp"
+                                android:numColumns="auto_fit"
+                                android:verticalSpacing="10dp"
+                                android:layout_marginRight="@dimen/dp_20"
+                                android:layout_marginLeft="@dimen/dp_20"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
