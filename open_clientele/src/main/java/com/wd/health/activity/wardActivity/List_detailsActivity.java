@@ -246,7 +246,6 @@ public class List_detailsActivity extends AppCompatActivity {
             String detail = data.getDetail();
             String treatmentHospital = data.getTreatmentHospital();
             String treatmentProcess = data.getTreatmentProcess();
-//            String picture = data.getPicture();
             String disease = data.getDisease();
             int commentNum = data.getCommentNum();
             int collectionNum = data.getCollectionNum();
@@ -286,8 +285,8 @@ public class List_detailsActivity extends AppCompatActivity {
             //用户头像
 //            touxiang.setImageURI(Glide.with(List_detailsActivity.this).load(data.getAdoptHeadPic()).into(adoptHeadPic.split(","))
 //            nameSsss.setText(adoptNickName+"");
-            collect.setText(collectionNum+"");
-            advise.setText(commentNum+"");
+            collect.setText(collectionNum+1+"");
+            advise.setText(commentNum+1+"");
             String picture1 = data.picture;
             symptom.setText(disease);
             textContent.setText(title);

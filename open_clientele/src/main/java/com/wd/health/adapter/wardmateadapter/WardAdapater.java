@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dingtao.common.bean.wardBean.WardLieBean;
@@ -37,6 +38,7 @@ public class WardAdapater extends XRecyclerView.Adapter<WardAdapater.MyHolder> {
     public void onBindViewHolder(@NonNull WardAdapater.MyHolder holder, final int position) {
         holder.titles.setText(list.get(position).getTitle()+"");
         holder.times.setText(list.get(position).getReleaseTime()+"");
+        holder.h_num.setText(list.get(position).getAmount()+"");
         holder.contents.setText(list.get(position).getDetail());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +48,16 @@ public class WardAdapater extends XRecyclerView.Adapter<WardAdapater.MyHolder> {
                 context.startActivity(intent);
             }
         });
+        holder.jianyi.setText(list.get(position).getCollectionNum()+"");
+        holder.advice.setText(list.get(position).getCommentNum()+"");
+
+        int amount = list.get(position).getAmount();
+        if(amount>0){
+            holder.h.setVisibility(View.VISIBLE);
+        }else{
+            holder.h.setVisibility(View.GONE);
+        }
+
     }
 
     private Call call;
@@ -75,12 +87,20 @@ public class WardAdapater extends XRecyclerView.Adapter<WardAdapater.MyHolder> {
         TextView titles;
         TextView times;
         TextView contents;
+        TextView h_num;
+        RelativeLayout h;
+        TextView jianyi;
+        TextView advice;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             titles = itemView.findViewById(R.id.titles);
             times = itemView.findViewById(R.id.times);
             contents = itemView.findViewById(R.id.contents);
+            h_num = itemView.findViewById(R.id.H_num);
+            h = itemView.findViewById(R.id.H);
+            jianyi = itemView.findViewById(R.id.jainyi);
+            advice = itemView.findViewById(R.id.advise);
         }
     }
 }

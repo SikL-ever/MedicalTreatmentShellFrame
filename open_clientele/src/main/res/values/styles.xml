@@ -39,6 +39,5 @@
         <!-- 遮罩层 -->
         <item name="android:backgroundDimAmount">0.5</item>
     </style>
-
     <color name="white">#ffffff</color>
 </resources>

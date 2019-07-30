@@ -160,8 +160,14 @@ public class MainActivity extends WDActivity {
                             bt4.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent=new Intent(MainActivity.this,PublishActivity.class);
-                                    startActivity(intent);
+                                    LoginDaoUtil loginDaoUtil=new LoginDaoUtil();
+                                    List<String> intt = loginDaoUtil.intt(MainActivity.this);
+                                    if(intt==null){
+                                        intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
+                                    }     else{
+                                        Intent intent=new Intent(MainActivity.this,PublishActivity.class);
+                                        startActivity(intent);
+                                    }
                                 }
                             });
                         }

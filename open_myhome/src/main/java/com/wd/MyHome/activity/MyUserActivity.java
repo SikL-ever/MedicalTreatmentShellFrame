@@ -1,6 +1,7 @@
 package com.wd.MyHome.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,7 +13,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.dingtao.common.bean.Result;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.core.exception.ApiException;
@@ -20,16 +20,21 @@ import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.childactivity.MyDiseaseActivity;
+import com.wd.MyHome.childactivity.MyHMoneyActivity;
+import com.wd.MyHome.childactivity.MyInterestActivity;
 import com.wd.MyHome.childactivity.MyUserCollectActivity;
 import com.wd.MyHome.childactivity.MyUserRecordActivity;
 import com.wd.MyHome.childactivity.MyUserSetActivity;
 import com.wd.MyHome.childactivity.MyUserSuggestActivity;
 import com.wd.MyHome.childactivity.MyUserWalletActivity;
+import com.wd.MyHome.childactivity.MyVideoActivity;
 import com.wd.MyHome.presenter.UserSignPresenter;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 @Route(path = Constant.ACTIVITY_LOGIN_MYUSERACTIVITY)
 public class MyUserActivity extends WDActivity {
@@ -65,8 +70,16 @@ public class MyUserActivity extends WDActivity {
     LinearLayout myuserset;
     @BindView(R2.id.myuserattention)
     LinearLayout myuserattention;
-    private String uid=null;//userid
-    private String sid=null;//senserid
+    @BindView(R2.id.my_video)
+    ImageView myVideo;
+    @BindView(R2.id.my_disease)
+    ImageView myDisease;
+    @BindView(R2.id.my_interest)
+    ImageView myInterest;
+    @BindView(R2.id.my_h_money)
+    ImageView myHMoney;
+    private String uid = null;//userid
+    private String sid = null;//senserid
     private UserSignPresenter userSignPresenter;
 
     //布局
@@ -92,7 +105,7 @@ public class MyUserActivity extends WDActivity {
         myuserQiandao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userSignPresenter.reqeust(uid,sid);
+                userSignPresenter.reqeust(uid, sid);
             }
         });
         //当前问诊点击
@@ -153,21 +166,64 @@ public class MyUserActivity extends WDActivity {
                 startActivity(intent);
             }
         });
+        //我的视频
+        myVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyVideoActivity.class);
+                startActivity(intent);
+            }
+        });
+        //我的病友圈
+        myDisease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyDiseaseActivity.class);
+                startActivity(intent);
+            }
+        });
+        //我的关注
+        myInterest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyInterestActivity.class);
+                startActivity(intent);
+            }
+        });
+        //我的任务
+        myHMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserActivity.this, MyHMoneyActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
     @Override
     protected void destoryData() {
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
     //回来的数据---------------------------------------------------------------
-    class getsigndata implements DataCall{
+    class getsigndata implements DataCall {
         @Override
         public void success(Object data, Object... args) {
             myuserQiandao.setText("签到成功");
         }
+
         @Override
         public void fail(ApiException data, Object... args) {
         }
     }
+
     //---------------------------------------------------------------获取焦点
     @Override
     protected void onResume() {
@@ -176,16 +232,16 @@ public class MyUserActivity extends WDActivity {
         List<String> intt = loginDaoUtil.intt(MyUserActivity.this);
         if (intt != null) {
             //设置用户头像
-            uid=intt.get(0);
-            sid=intt.get(1);
+            uid = intt.get(0);
+            sid = intt.get(1);
             Glide.with(MyUserActivity.this).load(intt.get(2)).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
             myusername.setText(intt.get(3));//昵称
         }
 
 
-
     }
+
     //销毁
     @Override
     protected void onDestroy() {
