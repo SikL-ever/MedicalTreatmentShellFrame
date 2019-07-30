@@ -36,6 +36,7 @@ import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.activity.DuoXiangActivity;
 import com.wd.health.activity.SousuoAcitivity;
+import com.wd.health.activity.WebActivity;
 import com.wd.health.activity.ZsbdActivity;
 import com.wd.health.adapter.homepageadapter.DuotiaomuAdapter;
 import com.wd.health.adapter.homepageadapter.WzzxAdapter;
@@ -44,6 +45,11 @@ import com.wd.health.presenter.homepagepresenter.DuotiaomuPresenter;
 import com.wd.health.presenter.homepagepresenter.WzzxPresenter;
 import com.wd.health.presenter.homepagepresenter.ZxbkPresenter;
 
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -275,7 +281,20 @@ public class HomePagerFragement extends WDFragment {
             flybanner.setOnItemClickListener(new FlyBanner.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    Toast.makeText(getActivity(), "点击了第"+position+"照片", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(),WebActivity.class);
+                    String jumpUrl = data.get(position).getJumpUrl();
+                    intent.putExtra("webUrl",jumpUrl);
+                    startActivity(intent);
+
+                }
+            });
+            jkcp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(),WebActivity.class);
+                    String jumpUrl = data.get(2).getJumpUrl();
+                    intent.putExtra("webUrl",jumpUrl);
+                    startActivity(intent);
                 }
             });
 
