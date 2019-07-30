@@ -167,6 +167,8 @@ public class SousuoAcitivity extends AppCompatActivity {
         recordsAdapter.setOnDeleteListener(position -> deleteHistory(DELETEONE, position));
         recordsAdapter.setOnItemClickListener(position -> {
             edit_item.setText(list.get(position).getName());
+            SousuoPresenter sousuoPresenter = new SousuoPresenter(new sousuo());
+            sousuoPresenter.reqeust(list.get(position).getName());
             insertHistory();
         });
         // btnClearall.setOnClickListener(view -> showDeleteDialog());
@@ -273,6 +275,9 @@ public class SousuoAcitivity extends AppCompatActivity {
             yishengRecycler.setLayoutManager(new LinearLayoutManager(SousuoAcitivity.this));
             List<SousuoBean.DrugsSearchVoListBean> drugsSearchVoList = data.getDrugsSearchVoList();
             yaopinRecycler.setLayoutManager(new LinearLayoutManager(SousuoAcitivity.this));
+            bingzhengRecycler.setNestedScrollingEnabled(false);
+            yishengRecycler.setNestedScrollingEnabled(false);
+            yaopinRecycler.setNestedScrollingEnabled(false);
             if (diseaseSearchVoList.size() > 0 || doctorSearchVoList.size() > 0 || drugsSearchVoList.size() > 0) {
                 weizhaodao.setVisibility(View.GONE);
                 yizhaodao.setVisibility(View.GONE);

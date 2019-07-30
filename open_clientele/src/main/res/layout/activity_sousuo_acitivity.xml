@@ -137,84 +137,90 @@
         </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/asdfghjkl"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/xian"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:scrollbars="none">
         <LinearLayout
-            android:id="@+id/yisheng"
+            android:id="@+id/asdfghjkl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/xian"
+            android:visibility="gone"
             android:orientation="vertical">
-            <TextView
+            <LinearLayout
+                android:id="@+id/yisheng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="医生"
-                android:textSize="@dimen/sp_14"
-                android:layout_marginLeft="@dimen/dp_11"
-                android:textColor="#3087ea"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_10"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/yisheng_recycler"
-                android:layout_marginLeft="@dimen/dp_11"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="医生"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:textColor="#3087ea"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_10"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/yisheng_recycler"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/yaopin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/yaopin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="药品"
-                android:textSize="@dimen/sp_14"
-                android:layout_marginLeft="@dimen/dp_11"
-                android:textColor="#3087ea"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_10"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/yaopin_recycler"
-                android:layout_marginLeft="@dimen/dp_11"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="药品"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:textColor="#3087ea"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_10"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/yaopin_recycler"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/bingzheng"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/bingzheng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="病症"
-                android:textSize="@dimen/sp_14"
-                android:layout_marginLeft="@dimen/dp_11"
-                android:textColor="#3087ea"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_10"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/bingzheng_recycler"
-                android:layout_marginLeft="@dimen/dp_11"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="病症"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:textColor="#3087ea"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_10"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bingzheng_recycler"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
