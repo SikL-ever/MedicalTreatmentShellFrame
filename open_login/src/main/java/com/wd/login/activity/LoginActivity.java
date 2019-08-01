@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,18 +24,21 @@ import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LoginBeanDao;
 import com.dingtao.common.util.Constant;
 //import com.wd.health.activity.MainActivity;
+import com.dingtao.common.util.MD5Utils;
 import com.wd.login.R;
 import com.wd.login.R2;
 import com.wd.login.presenter.LoginPresenter;
 import com.wd.login.util.RsaCoder;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 
 @Route(path = Constant.ACTIVITY_LOGIN_LOGIN)
 public class LoginActivity extends WDActivity {
@@ -83,6 +87,7 @@ public class LoginActivity extends WDActivity {
                     if (email) {//请求数据
                         try {
                             String s = RsaCoder.encryptByPublicKey(pass);
+                            mLoadDialog.show();
                             loginPresenter.reqeust(emila,s);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -135,6 +140,7 @@ public class LoginActivity extends WDActivity {
     class getlogindata implements DataCall<LoginBean> {
         @Override
         public void success(LoginBean data, Object... args) {
+            mLoadDialog.cancel();
             //先清空
             List<LoginBean> loginBeans = dao.loadAll();
             for (int i = 0; i < loginBeans.size(); i++) {
@@ -146,10 +152,39 @@ public class LoginActivity extends WDActivity {
             data.ttt=2;
             dao.insertOrReplaceInTx(loginBeans);
             dao.insertOrReplaceInTx(data);
-
+            //先进行解密，让后进行加密，再去登录
+            try {
+                String ss = new RsaCoder().decryptByPublicKey(data.jiGuangPwd);//rsa解密
+                MD5Utils md5Utils = new MD5Utils();
+                String s = md5Utils.md5(ss);//MD5加密
+                //进行极光即时通讯登录
+                JMessageClient.login(data.userName, s, new BasicCallback() {
+                    @Override
+                    public void gotResult(int i, String s) {
+                        switch (i) {
+                            case 801003:
+                                Toast.makeText(LoginActivity.this, "用户名不存在", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 871301:
+                                Toast.makeText(LoginActivity.this, "密码格式错误", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 801004:
+                                Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 0:
+                                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             //跳转跳转
             //intentByRouter(Constant.ACTIVITY_LOGIN_MAIN);
-
             finish();
         }
 

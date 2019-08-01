@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="health.wd.com.open_mymessage">
+
+    <application>
+        <activity android:name="com.bw.message.activity.MyUserMessageActivity" />
+        <activity android:name="com.bw.message.childactivity.HActivity" />
+        <activity android:name="com.bw.message.childactivity.InquiryActivity" />
+        <activity android:name="com.bw.message.childactivity.SystemActivity"></activity>
+    </application>
+
+</manifest>

@@ -186,7 +186,8 @@ public class MyUserRecordActivity extends WDActivity {
             for (int i = 0; i < listimage.length; i++) {
                 adapter.add(listimage[i]);
             }
-            if (listimage.length ==1) {
+            recordtextrecycler.setAdapter(adapter);
+            if (listimage.length ==0) {
                 recordtextrecycler.setLayoutManager(new GridLayoutManager(MyUserRecordActivity.this,1));
             }else if (listimage.length == 2 || listimage.length == 4) {
                 recordtextrecycler.setLayoutManager(new GridLayoutManager(MyUserRecordActivity.this,2));

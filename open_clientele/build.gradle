@@ -37,4 +37,5 @@ dependencies {
     implementation 'com.contrarywind:wheelview:4.0.9'
 
     implementation project(path: ':common')
+    implementation project(path: ':open_Im')
 }

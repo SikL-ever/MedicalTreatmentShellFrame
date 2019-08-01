@@ -20,6 +20,9 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.im.android.api.JMessageClient;
+
 
 /**
  * @name: MyApplication
@@ -82,8 +85,11 @@ public class WDApplication extends Application {
         //推送
         //统计
         instance = this;
-        setupDatabase("database.db");
-
+        //初始化即时通讯IM
+        JMessageClient.init(context);
+        //初始化极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     @Override
@@ -91,19 +97,7 @@ public class WDApplication extends Application {
         super.onTerminate();
         ARouter.getInstance().destroy();
     }
-    /**
-     * 配置数据库
-     */
-    private void setupDatabase(String name) {
-        //创建数据库
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, name, null);
-        //获取可写数据库
-        SQLiteDatabase db = helper.getWritableDatabase();
-        //获取数据库对象
-        DaoMaster daoMaster = new DaoMaster(db);
-        //获取Dao对象管理者
-        daoSession = daoMaster.newSession();
-    }
+
     public static SharedPreferences getShare() {
         return sharedPreferences;
     }

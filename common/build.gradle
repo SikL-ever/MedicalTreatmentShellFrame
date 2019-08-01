@@ -84,4 +84,11 @@ dependencies {
     api 'com.github.chrisbanes.photoview:library:+'
     //这个是选择图片
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
+    //android Snackbar
+    api 'com.google.android.material:material:1.1.0-alpha09'
+    //IM
+    api 'cn.jiguang.sdk:jmessage:2.9.0'  // 此处以JMessage 2.9.0 版本为例。
+    api 'cn.jiguang.sdk:jcore:2.0.0'  // 此处以JCore 2.0.0 版本为例。
+    //推送
+    api 'cn.jiguang.sdk:jpush:3.3.4'  // 此处以JPush 3.3.4 版本为例。
 }

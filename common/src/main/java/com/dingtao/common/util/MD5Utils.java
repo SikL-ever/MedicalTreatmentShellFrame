@@ -1,9 +1,11 @@
-package com.dingtao.rrmmp.util;
+package com.dingtao.common.util;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class MD5Utils {
     //公盐
-    private static final String PUBLIC_SALT = "w928r982r";
+    private static final String PUBLIC_SALT = "";
     //十六进制下数字到字符的映射数组  
     private final static String[] hexDigits = {"0", "1", "2", "3", "4",  
         "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
@@ -23,7 +25,7 @@ public class MD5Utils {
      * @return 
      */
     private static String encodeByMD5(String originString){  
-        if (originString != null){  
+        /*if (originString != null){
             try{  
                 //创建具有指定算法名称的信息摘要  
                 MessageDigest md = MessageDigest.getInstance("MD5");  
@@ -36,7 +38,33 @@ public class MD5Utils {
                 ex.printStackTrace();  
             }  
         }  
-        return null;  
+        return null; */
+        /**
+         *  MD5加密
+         * @param sourceStr
+         * @return
+         */
+            String result = "";
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(originString.getBytes());
+                byte b[] = md.digest();
+                int i;
+                StringBuffer buf = new StringBuffer("");
+                for (int offset = 0; offset < b.length; offset++) {
+                    i = b[offset];
+                    if (i < 0)
+                        i += 256;
+                    if (i < 16)
+                        buf.append("0");
+                    buf.append(Integer.toHexString(i));
+                }
+                result = buf.toString();
+            } catch (NoSuchAlgorithmException e) {
+                System.out.println(e);
+            }
+            return result;
+
     } 
      
     /**  
@@ -62,7 +90,7 @@ public class MD5Utils {
     }
 
     public static void main(String[] args) {
-        String pasMd5 = md5("12345a");
+        String pasMd5 = md5("");
         System.out.println(pasMd5);
     }
 }

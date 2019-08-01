@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
 
 public class MyUserSetActivity extends WDActivity {
 
@@ -83,6 +84,8 @@ public class MyUserSetActivity extends WDActivity {
                                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
                             Toast.makeText(MyUserSetActivity.this, "退出登录成功", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                            //退出极光登录
+                            JMessageClient.logout();
                             //跳转登录
                             intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                         }
