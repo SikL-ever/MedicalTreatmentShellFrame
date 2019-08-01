@@ -1,5 +1,7 @@
 package com.wd.MyHome.presenter;
 
+import android.util.Log;
+
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDApplication;
 import com.dingtao.common.core.WDPresenter;
@@ -22,9 +24,6 @@ import okhttp3.RequestBody;
  */
 public class AddRecordPhotoPresenter extends WDPresenter<IAppRequest> {
 
-    private List<String> path;
-    private List<File> fileList;
-    File file1;
     public AddRecordPhotoPresenter(DataCall dataCall) {
         super(dataCall);
     }
@@ -32,9 +31,9 @@ public class AddRecordPhotoPresenter extends WDPresenter<IAppRequest> {
     @Override
     protected Observable getModel(Object... args) {
 
-        /*MultipartBody.Builder builder = new MultipartBody.Builder()
+        MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
-        builder.addFormDataPart("picture", (String)args[2]);
+        //builder.addFormDataPart("picture", (String)args[2]);
         List<Object> list = (List<Object>) args[2];
         if (list.size()>1) {
             for (int i = 1; i < list.size(); i++) {
@@ -43,28 +42,7 @@ public class AddRecordPhotoPresenter extends WDPresenter<IAppRequest> {
                         RequestBody.create(MediaType.parse("multipart/form-data"),
                                 file));
             }
-        }*/
-        if (path != null){
-            path.clear();
         }
-        path = (List<String>) args[3];
-        fileList = new ArrayList<>();
-        for (int i = 0; i < path.size(); i++) {
-            file1 = new File(path.get(i));
-            fileList.add(file1);
-        }
-        MultipartBody.Part[] parts = new MultipartBody.Part[path.size()];
-        int index = 0;
-        for (File file : fileList) {
-            //File newFile = CompressHelper.getDefault(WDApplication.getContext()).compressToFile(file);
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            MultipartBody.Part image = MultipartBody.Part.createFormData("picture", file.getName(), requestBody);
-            parts[index] = image;
-            index++;
-        }
-        if (parts.length<1){
-            return null;
-        }
-        return iRequest.addrecordphoto((String)args[0],(String)args[1], parts);
+        return iRequest.addrecordphoto((String)args[0],(String)args[1],builder.build());
     }
 }

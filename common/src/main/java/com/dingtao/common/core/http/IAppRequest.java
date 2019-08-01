@@ -6,6 +6,7 @@ import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
+import com.dingtao.common.bean.MyUserMessage;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.homepage.CjypBean;
@@ -167,11 +168,11 @@ public interface IAppRequest {
                                  @Body RequestBody body);
     //上传图片
     //上传用户档案相关图片
-    @Multipart
-    @POST("user/verify/v1/uploadArchivesPicture")
+    //@Multipart
+    @POST("/user/verify/v1/modifyHeadPic")
     Observable<Result> addrecordphoto(@Header("userId") String userId,
                                       @Header("sessionId") String sessionId,
-                                      @Part MultipartBody.Part[] picture);
+                                      @Body MultipartBody body);
     //修改我的档案
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @PUT("user/verify/v1/updateUserArchives")
@@ -227,6 +228,50 @@ public interface IAppRequest {
                                                              @Header("sessionId") String sessionId,
                                                              @Query("page") int page,
                                                              @Query("count") int count);
+    //6.上传头像
+    @POST("user/verify/v1/modifyHeadPic")
+    Observable<Result> updatahead(@Header("userId") String userId,
+                                  @Header("sessionId") String sessionId,
+                                  @Body MultipartBody body);
+
+    //查询消息
+    //.查询用户系统通知列表
+    //接口地址：http://172.17.8.100/health/
+    @GET("user/verify/v1/findSystemNoticeList")
+    Observable<Result<List<MyUserMessage>>> myusersystemMessage(@Header("userId") String userId,
+                                                          @Header("sessionId") String sessionId,
+                                                          @Query("page") int page,
+                                                          @Query("count") int count);
+    //问诊通知列表
+    @GET("user/verify/v1/findInquiryNoticeList")
+    Observable<Result<List<MyUserMessage>>> myuserinquiryMessage(@Header("userId") String userId,
+                                                                @Header("sessionId") String sessionId,
+                                                                @Query("page") int page,
+                                                                @Query("count") int count);
+    //H币消费通知
+    @GET("user/verify/v1/findHealthyCurrencyNoticeList")
+    Observable<Result<List<MyUserMessage>>> myuserHMessage(@Header("userId") String userId,
+                                                                @Header("sessionId") String sessionId,
+                                                                @Query("page") int page,
+                                                                @Query("count") int count);
+
+    //3. 咨询医生
+    //接口地址：http://172.17.8.100/health/
+    @PUT("user/inquiry/verify/v1/consultDoctor")
+    Observable<Result> consultAdoctor(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("doctorId") int doctorId);
+    //.问诊-发送消息
+    //接口地址：http://172.17.8.100/health/user/inquiry/verify/v1/pushMessage
+    @FormUrlEncoded
+    @POST("user/video/verify/v1/addVideoComment")
+    Observable<Result> sendmessage(@Header("userId") String userId,
+                                             @Header("sessionId") String sessionId,
+                                             @Field("inquiryId") int inquiryId,
+                                             @Field("msgContent") String msgContent,
+                                             @Field("content") String content,
+                                   @Field("type") int type,
+                                   @Field("doctorId") int doctorId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 

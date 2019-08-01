@@ -4,8 +4,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,7 +17,10 @@ import android.view.KeyEvent;
 import android.view.WindowManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.dingtao.common.R;
 import com.dingtao.common.util.LogUtils;
+import com.dingtao.common.util.MyProgressDialog;
+import com.dingtao.common.util.Network;
 
 
 import butterknife.ButterKnife;
@@ -28,12 +34,14 @@ public abstract class WDActivity extends AppCompatActivity {
 
     public final static int PHOTO = 0;// 相册选取
     public final static int CAMERA = 1;// 拍照
-    public Dialog mLoadDialog;// 加载框
+    public MyProgressDialog mLoadDialog;// 加载框
 
     /**
      * 记录处于前台的Activity
      */
     private static WDActivity mForegroundActivity = null;
+    //网络监听
+    private Network netBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,18 @@ public abstract class WDActivity extends AppCompatActivity {
         initView();
         //禁止RadioGroup在打字板上面
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        //动态注册网络监听
+        //Android 7.0以上需要动态注册在页面加载后注册广播监听网络
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //实例化IntentFilter对象
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+            filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            netBroadcastReceiver = new Network();
+            registerReceiver(netBroadcastReceiver, filter);
+        }
+
     }
 
     /**
@@ -106,15 +126,17 @@ public abstract class WDActivity extends AppCompatActivity {
      * 初始化加载框
      */
     private void initLoad() {
-        mLoadDialog = new ProgressDialog(this);// 加载框
+        mLoadDialog = new MyProgressDialog(this);// 加载框
+        mLoadDialog = new MyProgressDialog(this,R.style.CustomDialog);//样式
         mLoadDialog.setCanceledOnTouchOutside(false);
+
         mLoadDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode,
                                  KeyEvent event) {
                 if (mLoadDialog.isShowing() && keyCode == KeyEvent.KEYCODE_BACK) {
                     cancelLoadDialog();//加载消失的同时
-                    mLoadDialog.cancel();
+                    mLoadDialog.dismiss();
                 }
                 return false;
             }
@@ -125,6 +147,8 @@ public abstract class WDActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         destoryData();
+        //取消网络监听
+        unregisterReceiver(netBroadcastReceiver);
     }
 
     //取消操作：请求或者其他

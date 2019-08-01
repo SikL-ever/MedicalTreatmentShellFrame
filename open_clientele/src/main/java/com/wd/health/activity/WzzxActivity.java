@@ -54,6 +54,7 @@ import com.wd.health.presenter.homepagepresenter.YslbPresenter;
 import com.wd.health.presenter.videopresenter.VideoGetPricePresenter;
 import com.wd.health.util.CommomDialog;
 import com.wd.health.util.MyDialog;
+import com.wd.im.activity.ConsultChatMainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -484,7 +485,11 @@ public class WzzxActivity extends AppCompatActivity {
                             @Override
                             public void onClick(Dialog dialog, boolean confirm) {
                                 if (confirm==true){
-                                    Toast.makeText(WzzxActivity.this, "跳转医生即时通讯对话", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(WzzxActivity.this,ConsultChatMainActivity.class);
+                                    //穿一个医生id和名字
+                                    intent.putExtra("name",name);
+                                    intent.putExtra("id",doctorId);
+                                    startActivity(intent);
                                 }else{
                                     Toast.makeText(WzzxActivity.this, "取消", Toast.LENGTH_SHORT).show();
                                 }

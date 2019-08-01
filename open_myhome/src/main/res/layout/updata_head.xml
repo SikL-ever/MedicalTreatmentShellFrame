@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource"
+    android:background="#f3f3f3f3"
+    >
+    <TextView
+        android:background="@drawable/addrecord_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拍照"
+        android:padding="@dimen/dp_10"
+        android:textSize="@dimen/dp_13"
+        android:textColor="#000"
+        android:gravity="center"
+        android:id="@+id/paizhao"/>
+    <TextView
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="相册"
+        android:padding="@dimen/dp_10"
+        android:textSize="@dimen/dp_13"
+        android:textColor="#000"
+        android:gravity="center"
+        android:id="@+id/xiangce"/>
+
+    <TextView
+        android:background="#fff"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:padding="@dimen/dp_10"
+        android:textSize="@dimen/dp_13"
+        android:textColor="#000"
+        android:gravity="center"
+        android:id="@+id/updata_finish"/>
+</LinearLayout>

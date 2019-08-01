@@ -85,6 +85,7 @@ public class RegisterActivity extends WDActivity {
                                     String a = rsaCoder.encryptByPublicKey(passone);
                                     String b = rsaCoder.encryptByPublicKey(passtwo);
                                     registerPresenter.reqeust(em,code,a,a,yaoqingcode);
+                                    mLoadDialog.show();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -107,6 +108,7 @@ public class RegisterActivity extends WDActivity {
                     Toast.makeText(RegisterActivity.this, "请输入邮箱", Toast.LENGTH_SHORT).show();
                 }else{
                     if (email) {
+                        mLoadDialog.show();
                         emailPresenter.reqeust(emailtext);
                     }else{
                         Toast.makeText(RegisterActivity.this, "邮箱格式不对", Toast.LENGTH_SHORT).show();
@@ -152,6 +154,7 @@ public class RegisterActivity extends WDActivity {
     class getregister implements DataCall{
         @Override
         public void success(Object data, Object... args) {
+            mLoadDialog.cancel();
             finish();
             Toast.makeText(RegisterActivity.this, "注册成功",Toast.LENGTH_SHORT).show();
         }
@@ -163,6 +166,7 @@ public class RegisterActivity extends WDActivity {
     class getverificationcodedata implements DataCall{
         @Override
         public void success(Object data, Object... args) {
+            mLoadDialog.cancel();
             Toast.makeText(RegisterActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
         }
         @Override

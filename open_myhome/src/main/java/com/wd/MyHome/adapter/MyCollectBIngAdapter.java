@@ -63,6 +63,7 @@ public class MyCollectBIngAdapter extends RecyclerView.Adapter<MyCollectBIngAdap
                 List<String> intt = loginDaoUtil.intt(context);
                 holder.myCollectBingDeletePresenter.reqeust(intt.get(0),intt.get(1),list.get(position).sickCircleId);
                 list.remove(list.get(position));
+                holder.mycollectdelect.setVisibility(View.GONE);
             }
         });
         //左滑删除

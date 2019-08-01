@@ -3,6 +3,7 @@ package com.wd.MyHome.childthreeactivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -79,8 +80,8 @@ public class UpdataRecordActivity extends WDActivity {
     @BindView(R2.id.uprecord_bt)
     Button uprecordBt;
     private TimePickerView pvCustomTime;
-    private String uid=null;
-    private String sid=null;
+    private String uid;
+    private String sid;
     private int cid;
     private UserRecordPresenter userRecordPresenter;
     private UpRecordPresenter upRecordPresenter;
@@ -97,8 +98,12 @@ public class UpdataRecordActivity extends WDActivity {
     protected void initView() {
         uprecordone.setTitle("我的档案");
         //进去页面先进项查询 ， 然后进行赋值，之后进行修改请求接口
+        LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
+        List<String> intt = loginDaoUtil.intt(UpdataRecordActivity.this);
+        uid=intt.get(0);sid=intt.get(1);
         //p
         userRecordPresenter = new UserRecordPresenter(new getuserrecord());//查看我的档案
+        userRecordPresenter.reqeust(uid, sid);
         upRecordPresenter = new UpRecordPresenter(new getupdata());
         //添加图片
         addRecordPhotoPresenter = new AddRecordPhotoPresenter(new getphoto());
@@ -151,26 +156,12 @@ public class UpdataRecordActivity extends WDActivity {
                     Gson gson = new Gson();
                     String s = gson.toJson(map);
                     RequestBody body=RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),s);
-                    //upRecordPresenter.reqeust(uid,sid,body);
-
-                    MultipartBody.Builder builder = new MultipartBody.Builder()
-                            .setType(MultipartBody.FORM);
-                    builder.addFormDataPart("picture", String.valueOf(mlist));
-                    List<String> list = (List<String>) mlist;
-                    if (list.size()>1) {
-                        for (int i = 1; i < list.size(); i++) {
-                            File file = new File((String) list.get(i));
-                            builder.addFormDataPart("picture", file.getName(),
-                                    RequestBody.create(MediaType.parse("multipart/form-data"),
-                                            file));
-                        }
-                    }
-
+                    upRecordPresenter.reqeust(uid,sid,body);
+                    //请求图片
                     addRecordPhotoPresenter.reqeust(uid,sid,mlist);
                 }
             }
         });
-        initGridView();
     }
     class getupdata implements DataCall{
         @Override
@@ -188,7 +179,11 @@ public class UpdataRecordActivity extends WDActivity {
         public void success(UserRecordBean data, Object... args) {
             cid=data.id;
             recordnew(data);
-            
+            String[] listimage = data.picture.split(",");
+            for (int i = 0; i < listimage.length; i++) {
+                mlist.add(listimage[i]);
+            }
+            initGridView();
         }
         @Override
         public void fail(ApiException data, Object... args) {
@@ -198,7 +193,7 @@ public class UpdataRecordActivity extends WDActivity {
     class getphoto implements DataCall{
         @Override
         public void success(Object data, Object... args) {
-
+            Toast.makeText(UpdataRecordActivity.this, "111", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -220,7 +215,7 @@ public class UpdataRecordActivity extends WDActivity {
         String endString = formatter.format(list.treatmentEndTime);
         uprecordBegin.setText(begString);//开始
         uprecordEnd.setText(endString);//结束时间
-        addrecordCourse.setText(list.treatmentProcess);//治疗过程
+        addrecordCourse.setText(list.treatmentProcess);//治疗过程[
     }
 
 
@@ -231,10 +226,6 @@ public class UpdataRecordActivity extends WDActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
-        List<String> intt = loginDaoUtil.intt(UpdataRecordActivity.this);
-        userRecordPresenter.reqeust(intt.get(0), intt.get(1));
-        uid=intt.get(0);sid=intt.get(1);
     }
     //----------------------------------------------------------------------------选择时间
     private void initTime(final TextView view) {

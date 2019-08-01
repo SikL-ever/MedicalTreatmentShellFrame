@@ -59,12 +59,10 @@ public class RsaCoder {
      */
     public static String decryptByPublicKey(String data) throws Exception{
         try {
-
             if(null == data || "".equals(data))
             {
                 return null;
             }
-
             byte[] key = publicKey.getEncoded();
             byte[] datas = Base64.decode(data);
             //实例化密钥工厂
@@ -76,7 +74,6 @@ public class RsaCoder {
             PublicKey pubKey=keyFactory.generatePublic(x509KeySpec);
             //数据解密
             String algorithm = keyFactory.getAlgorithm();
-
             Cipher cipher=Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, pubKey);
             String s = new String(cipher.doFinal(datas));

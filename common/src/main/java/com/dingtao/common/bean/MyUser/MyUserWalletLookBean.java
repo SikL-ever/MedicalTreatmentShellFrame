@@ -5,7 +5,7 @@ public class MyUserWalletLookBean {
     public long createTime;
     public int direction;
     public String remark;
-    public String type;
+    public int type;
 
     @Override
     public String toString() {

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LoginBeanDao;
@@ -30,6 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.im.android.api.JMessageClient;
 
 public class MyUserSetActivity extends WDActivity {
 
@@ -168,30 +170,5 @@ public class MyUserSetActivity extends WDActivity {
         ButterKnife.bind(this);
     }
 
-  /*  @OnClick({R2.id.grxx, R2.id.xgmm, R2.id.qchc, R2.id.pmld, R2.id.bbjc, R2.id.bzzx, R2.id.gywm, R2.id.yqhy})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R2.id.grxx:
-                startActivity(new Intent(MyUserSetActivity.this,WdxxActivity.class));
-                Toast.makeText(this, "0", Toast.LENGTH_SHORT).show();
-                *//*Toast.makeText(MyUserSetActivity.this, "0", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MyUserSetActivity.this,WdxxActivity.class);
-                startActivity(intent);*//*
-                break;
-            case R2.id.xgmm:
-                break;
-            case R2.id.qchc:
-                break;
-            case R2.id.pmld:
-                break;
-            case R2.id.bbjc:
-                break;
-            case R2.id.bzzx:
-                break;
-            case R2.id.gywm:
-                break;
-            case R2.id.yqhy:
-                break;
-        }
-    }*/
+
 }
