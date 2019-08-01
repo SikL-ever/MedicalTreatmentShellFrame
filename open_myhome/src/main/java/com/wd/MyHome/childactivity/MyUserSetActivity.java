@@ -1,7 +1,9 @@
 package com.wd.MyHome.childactivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,7 +13,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LoginBeanDao;
@@ -19,6 +20,7 @@ import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.activity.WdxxActivity;
 import com.wd.MyHome.util.TopView;
 import com.wd.health.util.MyDialog;
 
@@ -27,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MyUserSetActivity extends WDActivity {
 
@@ -39,7 +42,24 @@ public class MyUserSetActivity extends WDActivity {
     TextView myusersetName;
     @BindView(R2.id.logout)
     RelativeLayout logout;
+    @BindView(R2.id.grxx)
+    ImageView grxx;
+    @BindView(R2.id.xgmm)
+    ImageView xgmm;
+    @BindView(R2.id.qchc)
+    ImageView qchc;
+    @BindView(R2.id.pmld)
+    ImageView pmld;
+    @BindView(R2.id.bbjc)
+    ImageView bbjc;
+    @BindView(R2.id.bzzx)
+    ImageView bzxx;
+    @BindView(R2.id.gywm)
+    ImageView gywm;
+    @BindView(R2.id.yqhy)
+    ImageView yqhy;
     private LoginBeanDao dao;//数据库
+    private  boolean iosInterceptFlag;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_user_set;
@@ -49,23 +69,30 @@ public class MyUserSetActivity extends WDActivity {
     protected void initView() {
         //顶部栏
         myusersetTop.setTitle("设置");
-        dao=DaoMaster.newDevSession(this,LoginBeanDao.TABLENAME).getLoginBeanDao();//数据库
+        dao = DaoMaster.newDevSession(this, LoginBeanDao.TABLENAME).getLoginBeanDao();//数据库@Override
+
+        grxx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,WdxxActivity.class));
+            }
+        });
         //退出登录点击
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (new LoginDaoUtil().intt(MyUserSetActivity.this)==null) {
+                if (new LoginDaoUtil().intt(MyUserSetActivity.this) == null) {
                     Toast.makeText(MyUserSetActivity.this, "已经是退出登录状态", Toast.LENGTH_SHORT).show();
-                }else{
-                    View view=View.inflate(MyUserSetActivity.this, com.wd.health.R.layout.videodialong_item,null);
+                } else {
+                    View view = View.inflate(MyUserSetActivity.this, com.wd.health.R.layout.videodialong_item, null);
                     final MyDialog dialog = new MyDialog(MyUserSetActivity.this, 200, 100, view, com.wd.health.R.style.dialog);
                     dialog.show();
                     final TextView cancel =
                             (TextView) view.findViewById(com.wd.health.R.id.cancel);
                     final TextView confirm =
-                            (TextView)view.findViewById(com.wd.health.R.id.confirm);
+                            (TextView) view.findViewById(com.wd.health.R.id.confirm);
                     final TextView text =
-                            (TextView)view.findViewById(com.wd.health.R.id.textView10);
+                            (TextView) view.findViewById(com.wd.health.R.id.textView10);
                     text.setText("是否确认退出登录");
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -97,12 +124,14 @@ public class MyUserSetActivity extends WDActivity {
                 if (new LoginDaoUtil().intt(MyUserSetActivity.this) == null) {
                     //跳转登录
                     intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
-                }else{
+                } else {
                     //无操作
                 }
             }
         });
     }
+
+
 
     @Override
     protected void destoryData() {
@@ -120,9 +149,8 @@ public class MyUserSetActivity extends WDActivity {
             myusersetName.setText("请先登录!");//设置昵称
             Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
-        }else{
-            Glide.with(this).load(intt.get(2)).
-                    apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
+        } else {
+            Glide.with(this).load(intt.get(2)).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
             myusersetName.setText(intt.get(3));//设置昵称
         }
 
@@ -132,4 +160,38 @@ public class MyUserSetActivity extends WDActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+  /*  @OnClick({R2.id.grxx, R2.id.xgmm, R2.id.qchc, R2.id.pmld, R2.id.bbjc, R2.id.bzzx, R2.id.gywm, R2.id.yqhy})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R2.id.grxx:
+                startActivity(new Intent(MyUserSetActivity.this,WdxxActivity.class));
+                Toast.makeText(this, "0", Toast.LENGTH_SHORT).show();
+                *//*Toast.makeText(MyUserSetActivity.this, "0", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MyUserSetActivity.this,WdxxActivity.class);
+                startActivity(intent);*//*
+                break;
+            case R2.id.xgmm:
+                break;
+            case R2.id.qchc:
+                break;
+            case R2.id.pmld:
+                break;
+            case R2.id.bbjc:
+                break;
+            case R2.id.bzzx:
+                break;
+            case R2.id.gywm:
+                break;
+            case R2.id.yqhy:
+                break;
+        }
+    }*/
 }

@@ -19,6 +19,7 @@ import com.dingtao.common.bean.homepage.YsxqBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.LoginDaoUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.presenter.homepagepresenter.GzysPresenter;
@@ -48,7 +49,7 @@ public class YsxqActivity extends AppCompatActivity {
     @BindView(R2.id.c_aaaa)
     RelativeLayout cAaaa;
     @BindView(R2.id.c_img)
-    ImageView cImg;
+    SimpleDraweeView cImg;
     @BindView(R2.id.c_gz)
     ImageView cGz;
     @BindView(R2.id.c_name)
@@ -192,8 +193,10 @@ public class YsxqActivity extends AppCompatActivity {
             RequestOptions options=RequestOptions.bitmapTransform(roundedCorners);
             if(data.getImagePic()==null){
                 Glide.with(YsxqActivity.this).load(R.drawable.system_image7).apply(options).into(cImg);
+                //cImg.setImageURI();
             }else{
-                Glide.with(YsxqActivity.this).load(data.getImagePic()).apply(options).into(cImg);
+             //   Glide.with(YsxqActivity.this).load(data.getImagePic()).apply(options).into(cImg);
+                cImg.setImageURI(data.getImagePic());
             }
             followFlag = data.getFollowFlag();
             if (followFlag ==1){
