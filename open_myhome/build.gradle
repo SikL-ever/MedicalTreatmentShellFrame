@@ -41,4 +41,5 @@ dependencies {
     //导入其他model
     implementation project(path: ':open_clientele')
     implementation project(path: ':common')
+    implementation project(path: ':open_Im')
 }

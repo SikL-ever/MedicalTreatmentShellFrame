@@ -38,6 +38,9 @@ import com.wd.MyHome.childactivity.MyDiseaseActivity;
 import com.wd.MyHome.childactivity.MyHMoneyActivity;
 import com.wd.MyHome.childactivity.MyInterestActivity;
 import com.wd.MyHome.childactivity.MyUserCollectActivity;
+import com.wd.MyHome.childactivity.MyUserEvaluateActivity;
+import com.wd.MyHome.childactivity.MyUserHistoryActivity;
+import com.wd.MyHome.childactivity.MyUserNewInquiryActivity;
 import com.wd.MyHome.childactivity.MyUserRecordActivity;
 import com.wd.MyHome.childactivity.MyUserSetActivity;
 import com.wd.MyHome.childactivity.MyUserSuggestActivity;
@@ -56,6 +59,8 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 
 @Route(path = Constant.ACTIVITY_LOGIN_MYUSERACTIVITY)
 public class MyUserActivity extends WDActivity {
@@ -113,6 +118,8 @@ public class MyUserActivity extends WDActivity {
 
     private LoginBeanDao dao;
     private static String path = "/sdcard/DemoHead/";//sd路径
+    private File file;//头像
+
     //布局
     @Override
     protected int getLayoutId() {
@@ -167,13 +174,17 @@ public class MyUserActivity extends WDActivity {
         myusernew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MyUserActivity.this,MyUserNewInquiryActivity.class);
+                startActivity(intent);
             }
         });
         //历史问诊点击
         myuserhistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //跳转到历史问诊的页面
+                Intent intent = new Intent(MyUserActivity.this,MyUserHistoryActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -384,7 +395,7 @@ public class MyUserActivity extends WDActivity {
             Bitmap bitmap = data.getParcelableExtra("data");
             //setPicToView(bitmap);//保存在SD卡中
             ABitMap aBitMap = new ABitMap();
-            File file = aBitMap.compressImage(bitmap);
+            file = aBitMap.compressImage(bitmap);
             myUserUpdataHead.reqeust(uid,sid,file);
             myuserheadportrait.setImageBitmap(bitmap);
             mLoadDialog.show();
@@ -456,6 +467,18 @@ public class MyUserActivity extends WDActivity {
             dao.insertOrReplaceInTx(loginBean);
             Glide.with(MyUserActivity.this).load(data).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
+            //更新Im头像
+            JMessageClient.updateUserAvatar(file, new BasicCallback() {
+                @Override
+                public void gotResult(int i, String s) {
+                    if (i == 0) {
+                        Toast.makeText(MyUserActivity.this, "IM头像更新完成", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MyUserActivity.this, "IM头像更新失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
             mLoadDialog.cancel();
             window.dismiss();
             Snackbar.make(myuserlayout, "更换成功", Snackbar.LENGTH_SHORT).show();

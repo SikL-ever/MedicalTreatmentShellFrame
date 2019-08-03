@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 @Route(path = Constant.ACTIVITY_LOGIN_LOGIN)
@@ -173,6 +174,8 @@ public class LoginActivity extends WDActivity {
                                 break;
                             case 0:
                                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                UserInfo myInfo = JMessageClient.getMyInfo();
+                                Log.i("ppp", "gotResult: "+myInfo.toString());
                                 break;
                             default:
                                 Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();

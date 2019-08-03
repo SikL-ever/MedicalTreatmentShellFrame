@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:id="@+id/xingone"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:background="@drawable/evaluation_star_n"/>
+    <ImageView
+        android:id="@+id/xingtwo"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:background="@drawable/evaluation_star_n"/>
+    <ImageView
+        android:id="@+id/xingthree"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:background="@drawable/evaluation_star_n"/>
+    <ImageView
+        android:id="@+id/xingfour"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:background="@drawable/evaluation_star_n"/>
+    <ImageView
+        android:id="@+id/xingfive"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:background="@drawable/evaluation_star_n"/>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/xingsix"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"/>
+</LinearLayout>
