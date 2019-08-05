@@ -9,7 +9,6 @@
 
 
 
-
     <application
         android:largeHeap="true"
         android:name="com.dingtao.common.core.WDApplication"

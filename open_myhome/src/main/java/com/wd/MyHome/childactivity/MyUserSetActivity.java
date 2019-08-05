@@ -1,5 +1,6 @@
 package com.wd.MyHome.childactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.childthreeactivity.SichangyongMyShenfenActivity;
 import com.wd.MyHome.util.TopView;
 import com.wd.health.util.MyDialog;
 
@@ -40,6 +42,8 @@ public class MyUserSetActivity extends WDActivity {
     TextView myusersetName;
     @BindView(R2.id.logout)
     RelativeLayout logout;
+    @BindView(R2.id.myusersetmy)
+    RelativeLayout myusersetmy;
     private LoginBeanDao dao;//数据库
     @Override
     protected int getLayoutId() {
@@ -91,6 +95,14 @@ public class MyUserSetActivity extends WDActivity {
                         }
                     });
                 }
+            }
+        });
+        //绑定银行卡
+        myusersetmy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserSetActivity.this,SichangyongMyShenfenActivity.class);
+                startActivity(intent);
             }
         });
         //退出状态下的头像点击

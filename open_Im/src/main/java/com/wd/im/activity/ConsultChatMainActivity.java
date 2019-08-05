@@ -11,9 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dingtao.common.core.DataCall;
+import com.dingtao.common.core.exception.ApiException;
 import com.wd.Im.R;
 import com.wd.Im.R2;
 import com.wd.im.adapter.JG_details_Adapter;
+import com.wd.im.presenter.SendMessagePresenter;
 import com.wd.im.util.GlobalEventListener;
 import com.wd.im.util.RsaCoder;
 
@@ -55,9 +58,10 @@ public class ConsultChatMainActivity extends AppCompatActivity {
     RelativeLayout chatlayout;
     private String appkey = "b5f102cc307091e167ce52e0";
     private Conversation singleConversation;
-    private String ss;
     private boolean one;
     private JG_details_Adapter jg_details_adapter;
+    private SendMessagePresenter sendp;
+    private String ss;//对方极光找好
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,28 +69,28 @@ public class ConsultChatMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_consult_chat_main);
         ButterKnife.bind(this);//绑定布局
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //创建发送消息的p层
+        sendp = new SendMessagePresenter(new getdata());
         //设置消息接收监听
         //GlobalEventListener.setJG(this, false);
         JMessageClient.registerEventReceiver(this);//注册消息监听
-
-        String id = getIntent().getStringExtra("id");//获取医生的username
-        //进行解密
-        try {
-            ss = new RsaCoder().decryptByPublicKey(id);//rsa解密
-            JMessageClient.enterSingleConversation(ss);// 进入会话状态,不接收通知栏
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         String name = getIntent().getStringExtra("name");//获取名字
         chatname.setText(name);
         //获取类型
         int type = getIntent().getIntExtra("type", 0);
-        singleConversation = Conversation.createSingleConversation(ss, appkey);
         if (type==1){//创建会话
-
+            String id = getIntent().getStringExtra("id");//获取医生的username
+            //进行解密
+            try {
+                ss = new RsaCoder().decryptByPublicKey(id);//rsa解密
+                JMessageClient.enterSingleConversation(ss);// 进入会话状态,不接收通知栏
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }else{//有会话，找之前会话
-            initData();
+            ss = getIntent().getStringExtra("id");//获取医生的username
         }
+        singleConversation = Conversation.createSingleConversation(ss, appkey);
         //设置布局
         jg_details_adapter = new JG_details_Adapter(this);
         Chatrecycler.setAdapter(jg_details_adapter);
@@ -109,6 +113,8 @@ public class ConsultChatMainActivity extends AppCompatActivity {
                                 Toast.makeText(ConsultChatMainActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
                                 //添加一下
                                 initData();
+                                //添加到接口上
+                                sendp.reqeust();
                             } else {
                                 //消息发送失败
                                 Toast.makeText(ConsultChatMainActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
@@ -120,7 +126,9 @@ public class ConsultChatMainActivity extends AppCompatActivity {
                 }
             }
         });
+        initData();
         //接受消息
+
     }
     public void onEvent(MessageEvent event) {
         //获取事件发生的会话对象
@@ -138,6 +146,21 @@ public class ConsultChatMainActivity extends AppCompatActivity {
         JMessageClient.unRegisterEventReceiver(this);
         super.onDestroy();
     }
+    //**********************************************************************************
+    //发送消息的返回值
+    class getdata implements DataCall{
+
+        @Override
+        public void success(Object data, Object... args) {
+
+        }
+
+        @Override
+        public void fail(ApiException data, Object... args) {
+
+        }
+    }
+    //**********************************************************************************
     //--------------------------------------------------------------------------------------------------
     public void initData() {
         /*List<Conversation> msgList = JMessageClient.getConversationList();
