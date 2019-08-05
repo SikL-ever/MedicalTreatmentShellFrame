@@ -4,6 +4,8 @@ package com.dingtao.common.core.http;
 import com.dingtao.common.bean.MyUser.CxxxBean;
 import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
+import com.dingtao.common.bean.MyUser.MyUserHistoryBean;
+import com.dingtao.common.bean.MyUser.MyUserLookNewinquiryBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
@@ -255,15 +257,12 @@ public interface IAppRequest {
                                                                 @Header("sessionId") String sessionId,
                                                                 @Query("page") int page,
                                                                 @Query("count") int count);
-
-    //3. 咨询医生
-    //接口地址：http://172.17.8.100/health/
+    //咨询医生
     @PUT("user/inquiry/verify/v1/consultDoctor")
     Observable<Result> consultAdoctor(@Header("userId") String userId,
                                       @Header("sessionId") String sessionId,
                                       @Query("doctorId") int doctorId);
     //.问诊-发送消息
-    //接口地址：http://172.17.8.100/health/user/inquiry/verify/v1/pushMessage
     @FormUrlEncoded
     @POST("user/video/verify/v1/addVideoComment")
     Observable<Result> sendmessage(@Header("userId") String userId,
@@ -271,8 +270,8 @@ public interface IAppRequest {
                                              @Field("inquiryId") int inquiryId,
                                              @Field("msgContent") String msgContent,
                                              @Field("content") String content,
-                                   @Field("type") int type,
-                                   @Field("doctorId") int doctorId);
+                                             @Field("type") int type,
+                                                @Field("doctorId") int doctorId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 

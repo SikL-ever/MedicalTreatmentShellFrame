@@ -22,6 +22,8 @@ public class Constant {
     public final static String ACTIVITY_LOGIN_MYUSERACTIVITY = "/open_myhome/MyUserActivity";//用户页面
 
     public final static String ACTIVITY_MYUSERMESSAGE = "/open_mymessage/MyUserMessageActivity";//消息页面
+    public final static String ACTIVITY_MODE_MYUSERNEW_INQUIRY  = "/open_myhome/MyUserNewInquiryActivity";//我的当前问诊
+
 
     //-----------佀常勇----都不要动我的开放登录变量，谁动谁傻叉-----
 

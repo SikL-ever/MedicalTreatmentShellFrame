@@ -103,13 +103,22 @@ public abstract class WDPresenter<T> {
                 public void accept(Result result) throws Exception {
                     running = false;
                     if (result.getStatus().equals("0000")) {
-                        dataCall.success(result.getResult(), args);
+                        if (result.getResult() == null) {
+                            if (result.doctorUserName==null){
+                                dataCall.success(result.getResult(), args);
+                            }else{
+                                dataCall.success(result.doctorUserName, args);
+                            }
+                        }else{
+                            dataCall.success(result.getResult(), args);
+                        }
                     }else{
                         dataCall.fail(new ApiException(result.getStatus(),result.getMessage()));
                     }
                     ///-----------------------视频用到的判断，其他不用管
                     if (result.getStatus().equals("8001")) {
                         if (result.result == null) {
+                            dataCall.success(result.getResult(), args);
                             Log.i("ccc", "accept: "+result.message);
                         }else{
                             dataCall.success(result, args);

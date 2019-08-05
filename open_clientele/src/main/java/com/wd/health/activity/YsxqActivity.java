@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -18,6 +19,7 @@ import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.YsxqBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.health.R;
@@ -28,6 +30,8 @@ import com.wd.health.presenter.homepagepresenter.QianBaoPresenter;
 import com.wd.health.presenter.homepagepresenter.QxysPresenter;
 import com.wd.health.presenter.homepagepresenter.YsxqPresenter;
 import com.wd.health.util.CommomDialog;
+import com.wd.im.activity.ConsultChatMainActivity;
+import com.wd.im.presenter.ConsultADoctorPresenter;
 
 import java.util.List;
 
@@ -114,6 +118,8 @@ public class YsxqActivity extends AppCompatActivity {
     private String sesssionId;
     private int a;
     private int followFlag;
+    private int doctorId;//医生id
+    private String doctorName;//医生姓名
 
 
     @Override
@@ -127,7 +133,7 @@ public class YsxqActivity extends AppCompatActivity {
                 finish();
             }
         });
-        int doctorId = getIntent().getIntExtra("doctorId", 0);
+        doctorId = getIntent().getIntExtra("doctorId", 0);
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(this);
         userId = intt.get(0);
@@ -189,6 +195,7 @@ public class YsxqActivity extends AppCompatActivity {
     private class YsxqShow implements DataCall<YsxqBean> {
         @Override
         public void success(YsxqBean data, Object... args) {
+            doctorName = data.getDoctorName();
             RoundedCorners roundedCorners= new RoundedCorners(8);
             RequestOptions options=RequestOptions.bitmapTransform(roundedCorners);
             if(data.getImagePic()==null){
@@ -225,7 +232,9 @@ public class YsxqActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(Dialog dialog, boolean confirm) {
                                         if (confirm==true){
-                                            Toast.makeText(YsxqActivity.this, "跳转医生即时通讯对话", Toast.LENGTH_SHORT).show();
+                                            ConsultADoctorPresenter consultADoctorPresenter = new ConsultADoctorPresenter(new getdata());
+                                            List<String> intt = new LoginDaoUtil().intt(YsxqActivity.this);
+                                            consultADoctorPresenter.reqeust(intt.get(0), intt.get(1), doctorId);//请求咨询
                                         }else{
                                             Toast.makeText(YsxqActivity.this, "取消", Toast.LENGTH_SHORT).show();
                                         }
@@ -278,4 +287,39 @@ public class YsxqActivity extends AppCompatActivity {
 
         }
     }
+    //**************************************************************************************************
+    //创建数据
+    class getdata implements DataCall<String>{
+        @Override
+        public void success(String data, Object... args) {
+
+            if (data==null){
+                CommomDialog commomDialog = new CommomDialog(YsxqActivity.this, R.style.dialog_xz, "您还有尚未完成的咨询", new CommomDialog.OnCloseListener() {
+                    @Override
+                    public void onClick(Dialog dialog, boolean confirm) {
+                        if (confirm==true){
+                            ARouter.getInstance().build(Constant.ACTIVITY_MODE_MYUSERNEW_INQUIRY)
+                                    .navigation(YsxqActivity.this);
+                        }else{
+                            Toast.makeText(YsxqActivity.this, "取消", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                commomDialog.setPositiveButton("我的咨询").show();
+            }else{
+                Intent intent = new Intent(YsxqActivity.this,ConsultChatMainActivity.class);
+                //穿一个医生id和名字
+                intent.putExtra("name",doctorName);
+                intent.putExtra("id",data);
+                intent.putExtra("type",1);
+                startActivity(intent);
+            }
+
+        }
+        @Override
+        public void fail(ApiException data, Object... args) {
+        }
+    }
+    //**************************************************************************************************
 }

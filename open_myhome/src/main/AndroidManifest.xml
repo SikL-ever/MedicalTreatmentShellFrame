@@ -20,6 +20,15 @@
         <activity android:name=".activity.SzncActivity" />
         <activity android:name=".activity.XbActivity" />
         <activity android:name=".activity.TzActivity"></activity>
+        <activity android:name=".childactivity.MyUserNewInquiryActivity" />
+        <activity android:name=".childactivity.MyUserEvaluateActivity" />
+        <activity android:name=".childthreeactivity.FinishActivity" />
+        <activity android:name=".childactivity.MyUserHistoryActivity" />
+        <activity android:name=".childthreeactivity.SichangyongMyShenfenActivity"></activity>
+        <activity
+            android:name="com.baidu.ocr.ui.camera.CameraActivity"
+            android:configChanges="screenSize|orientation"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"/>
     </application>
 
 </manifest>

@@ -55,6 +55,7 @@ import com.wd.health.presenter.videopresenter.VideoGetPricePresenter;
 import com.wd.health.util.CommomDialog;
 import com.wd.health.util.MyDialog;
 import com.wd.im.activity.ConsultChatMainActivity;
+import com.wd.im.presenter.ConsultADoctorPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +145,8 @@ public class WzzxActivity extends AppCompatActivity {
     private int pos;
     private String userId;
     private String sesssionId;
+    private String myname;//医生名字
+
     private int screenWidth;
 
     @Override
@@ -480,16 +483,16 @@ public class WzzxActivity extends AppCompatActivity {
                 QianBaoPresenter qianBaoPresenter = new QianBaoPresenter(new DataCall<Double>() {
                     @Override
                     public void success(Double data, Object... args) {
+                        myname=name;
                         if (data>=jiage){
-                        CommomDialog commomDialog = new CommomDialog(WzzxActivity.this, R.style.dialog_xz, "本次咨询将扣除"+jiage+"H币！", new CommomDialog.OnCloseListener() {
+                       CommomDialog commomDialog = new CommomDialog(WzzxActivity.this, R.style.dialog_xz, "本次咨询将扣除"+jiage+"H币！", new CommomDialog.OnCloseListener() {
                             @Override
                             public void onClick(Dialog dialog, boolean confirm) {
                                 if (confirm==true){
-                                    Intent intent = new Intent(WzzxActivity.this,ConsultChatMainActivity.class);
-                                    //穿一个医生id和名字
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("id",doctorId);
-                                    startActivity(intent);
+                                    //进行判断如果正在咨询别的医生进行，条页面
+                                    ConsultADoctorPresenter consultADoctorPresenter = new ConsultADoctorPresenter(new getdata());
+                                    List<String> intt = new LoginDaoUtil().intt(WzzxActivity.this);
+                                    consultADoctorPresenter.reqeust(intt.get(0), intt.get(1), doctorId);//请求咨询
                                 }else{
                                     Toast.makeText(WzzxActivity.this, "取消", Toast.LENGTH_SHORT).show();
                                 }
@@ -515,7 +518,6 @@ public class WzzxActivity extends AppCompatActivity {
 
                     @Override
                     public void fail(ApiException data, Object... args) {
-                        Log.e("aaaaaaaaaaaaa++",data+"");
                     }
                 });
                 qianBaoPresenter.reqeust(userId,sesssionId);//请求用户余额
@@ -530,7 +532,41 @@ public class WzzxActivity extends AppCompatActivity {
             }
         });
     }
+    //**************************************************************************************************
+    //创建数据
+    class getdata implements DataCall<String>{
+        @Override
+        public void success(String data, Object... args) {
 
+            if (data==null){
+                CommomDialog commomDialog = new CommomDialog(WzzxActivity.this, R.style.dialog_xz, "您还有尚未完成的咨询", new CommomDialog.OnCloseListener() {
+                    @Override
+                    public void onClick(Dialog dialog, boolean confirm) {
+                        if (confirm==true){
+                            ARouter.getInstance().build(Constant.ACTIVITY_MODE_MYUSERNEW_INQUIRY)
+                                    .navigation(WzzxActivity.this);
+                        }else{
+                            Toast.makeText(WzzxActivity.this, "取消", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                commomDialog.setPositiveButton("我的咨询").show();
+            }else{
+                Intent intent = new Intent(WzzxActivity.this,ConsultChatMainActivity.class);
+                //穿一个医生id和名字
+                intent.putExtra("name",myname);
+                intent.putExtra("id",data);
+                intent.putExtra("type",1);
+                startActivity(intent);
+            }
+
+        }
+        @Override
+        public void fail(ApiException data, Object... args) {
+        }
+    }
+    //**************************************************************************************************
     class ListViewAdapter extends BaseAdapter {
         private Context context;
         private List<WzysBean> data ;

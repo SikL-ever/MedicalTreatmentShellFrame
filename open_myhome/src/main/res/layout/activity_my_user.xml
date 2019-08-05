@@ -46,8 +46,7 @@
                 android:id="@+id/myuserheadportrait"
                 android:layout_centerVertical="true"
                 android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:background="@drawable/evaluation_icon_angry_n"/>
+                android:layout_height="@dimen/dp_50"/>
             <TextView
                 android:id="@+id/myusername"
                 android:layout_toRightOf="@+id/myuserheadportrait"

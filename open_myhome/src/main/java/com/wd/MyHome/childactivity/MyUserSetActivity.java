@@ -2,6 +2,7 @@ package com.wd.MyHome.childactivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.activity.WdxxActivity;
+import com.wd.MyHome.childthreeactivity.SichangyongMyShenfenActivity;
 import com.wd.MyHome.util.TopView;
 import com.wd.health.util.MyDialog;
 
@@ -59,6 +61,8 @@ public class MyUserSetActivity extends WDActivity {
     ImageView gywm;
     @BindView(R2.id.yqhy)
     ImageView yqhy;
+    @BindView(R2.id.myusersetmy)
+    RelativeLayout myusersetmy;
     private LoginBeanDao dao;//数据库
     private  boolean iosInterceptFlag;
     @Override
@@ -82,18 +86,18 @@ public class MyUserSetActivity extends WDActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (new LoginDaoUtil().intt(MyUserSetActivity.this) == null) {
+                if (new LoginDaoUtil().intt(MyUserSetActivity.this)==null) {
                     Toast.makeText(MyUserSetActivity.this, "已经是退出登录状态", Toast.LENGTH_SHORT).show();
-                } else {
-                    View view = View.inflate(MyUserSetActivity.this, com.wd.health.R.layout.videodialong_item, null);
+                }else{
+                    View view=View.inflate(MyUserSetActivity.this, com.wd.health.R.layout.videodialong_item,null);
                     final MyDialog dialog = new MyDialog(MyUserSetActivity.this, 200, 100, view, com.wd.health.R.style.dialog);
                     dialog.show();
                     final TextView cancel =
                             (TextView) view.findViewById(com.wd.health.R.id.cancel);
                     final TextView confirm =
-                            (TextView) view.findViewById(com.wd.health.R.id.confirm);
+                            (TextView)view.findViewById(com.wd.health.R.id.confirm);
                     final TextView text =
-                            (TextView) view.findViewById(com.wd.health.R.id.textView10);
+                            (TextView)view.findViewById(com.wd.health.R.id.textView10);
                     text.setText("是否确认退出登录");
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -111,11 +115,21 @@ public class MyUserSetActivity extends WDActivity {
                                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
                             Toast.makeText(MyUserSetActivity.this, "退出登录成功", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                            //退出极光登录
+                            JMessageClient.logout();
                             //跳转登录
                             intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
                         }
                     });
                 }
+            }
+        });
+        //绑定银行卡
+        myusersetmy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyUserSetActivity.this,SichangyongMyShenfenActivity.class);
+                startActivity(intent);
             }
         });
         //退出状态下的头像点击
@@ -150,8 +164,9 @@ public class MyUserSetActivity extends WDActivity {
             myusersetName.setText("请先登录!");//设置昵称
             Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
-        } else {
-            Glide.with(this).load(intt.get(2)).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
+        }else{
+            Glide.with(this).load(intt.get(2)).
+                    apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myusersetImage);//设置头像
             myusersetName.setText(intt.get(3));//设置昵称
         }
 

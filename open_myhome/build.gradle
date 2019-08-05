@@ -3,8 +3,6 @@ apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
@@ -17,7 +15,6 @@ android {
             }
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -28,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -36,9 +33,11 @@ dependencies {
     //时间选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
     implementation 'com.contrarywind:wheelview:4.0.9'
-
-    //金钱转换
     //导入其他model
     implementation project(path: ':open_clientele')
     implementation project(path: ':common')
+    implementation project(path: ':open_Im')
+    implementation project(path: ':identify')//这个是获取银行卡信息
+
+    implementation files('libs/ocr-sdk.jar')
 }
