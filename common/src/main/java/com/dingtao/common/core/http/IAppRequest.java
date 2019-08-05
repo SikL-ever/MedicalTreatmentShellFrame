@@ -1,6 +1,7 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.CxxxBean;
 import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
@@ -414,5 +415,13 @@ public interface IAppRequest {
     Observable<Result> qxysShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("doctorId") int doctorId);
     @POST("user/verify/v1/modifyHeadPic")
     Observable<Result> sctxShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Body MultipartBody body);
+    @PUT("user/verify/v1/modifyNickName")
+    Observable<Result> xgncShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("nickName") String nickName);
+    @PUT("user/verify/v1/updateUserSex")
+    Observable<Result> sexShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("sex") int sex);
+    @GET("user/verify/v1/getUserInfoById")
+    Observable<Result<CxxxBean>> yhxxShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
+    @PUT("user/verify/v1/perfectUserInfo")
+    Observable<Result> nstShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("age") int age,@Query("height") int height,@Query("weight") int weight);
     //xieqi-------------------------------------------------------------------别动我的
 }

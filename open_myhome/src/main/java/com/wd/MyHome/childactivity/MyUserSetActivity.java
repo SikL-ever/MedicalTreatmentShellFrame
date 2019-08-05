@@ -31,7 +31,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.im.android.api.JMessageClient;
 
 public class MyUserSetActivity extends WDActivity {
 

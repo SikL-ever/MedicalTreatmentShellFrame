@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="top">#3087EA</color>
+    <color name="default_background">#f00</color>
+    <color name="color_blue">#3087ea</color>
+    <color name="color_gray">#8e8e8e</color>
+    <color name="color_pink">#ff0090</color>
 </resources>

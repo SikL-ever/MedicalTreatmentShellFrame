@@ -15,7 +15,6 @@ import com.wd.health.activity.ZsbdActivity;
 import com.wd.health.adapter.homepageadapter.ZsbdAdapter;
 import com.wd.health.adapter.homepageadapter.ZsbdAdapter1;
 import com.wd.health.presenter.homepagepresenter.WzzxPresenter;
-import com.wd.health.presenter.homepagepresenter.ZhuPresenter;
 import com.wd.health.presenter.homepagepresenter.ZiPresenter;
 
 import java.util.List;
