@@ -148,7 +148,7 @@ public abstract class WDActivity extends AppCompatActivity {
         super.onDestroy();
         destoryData();
         //取消网络监听
-        unregisterReceiver(netBroadcastReceiver);
+        //unregisterReceiver(netBroadcastReceiver);
     }
 
     //取消操作：请求或者其他

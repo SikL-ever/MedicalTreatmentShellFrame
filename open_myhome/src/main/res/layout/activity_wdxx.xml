@@ -271,6 +271,7 @@
             android:layout_marginLeft="@dimen/dp_20"
             />
         <TextView
+            android:id="@+id/qbd_wx"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="去绑定"
@@ -347,6 +348,7 @@
             android:layout_marginLeft="@dimen/dp_20"
             />
         <TextView
+            android:id="@+id/qbdyhk"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="去绑定"

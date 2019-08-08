@@ -2,6 +2,7 @@ package com.dingtao.common.core.http;
 
 
 import com.dingtao.common.bean.MyUser.CxxxBean;
+import com.dingtao.common.bean.MyUser.GiftBean;
 import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
 import com.dingtao.common.bean.MyUser.MyUserHistoryBean;
@@ -9,6 +10,7 @@ import com.dingtao.common.bean.MyUser.MyUserLookNewinquiryBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
+import com.dingtao.common.bean.MyUser.YhBean;
 import com.dingtao.common.bean.MyUserMessage;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
@@ -262,6 +264,45 @@ public interface IAppRequest {
     Observable<Result> consultAdoctor(@Header("userId") String userId,
                                       @Header("sessionId") String sessionId,
                                       @Query("doctorId") int doctorId);
+    //9.用户查看当前问诊
+    @GET("user/inquiry/verify/v1/findCurrentInquiryRecord")
+    Observable<Result<MyUserLookNewinquiryBean>> looknewinquiry(@Header("userId") String userId,
+                                                                @Header("sessionId") String sessionId);
+    //结束当前问诊
+    @PUT("user/inquiry/verify/v1/endInquiry")
+    Observable<Result> endnewinquiry(@Header("userId") String userId,
+                                     @Header("sessionId") String sessionId,
+                                     @Query("recordId") int recordId);
+    //7. 用户评论问诊服务
+    //接口地址：http://172.17.8.100/health/
+    @PUT("user/inquiry/verify/v1/evaluationInquiry")
+    Observable<Result> evaluatedoctor(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("inquiryRecordId") int inquiryRecordId,
+                                      @Query("doctorId") int doctorId,
+                                      @Query("evaluate") String evaluate,
+                                      @Query("majorDegree") int majorDegree,
+                                      @Query("satisfactionDegree") int satisfactionDegree);
+    //14.查询礼物列表
+    //接口地址：http://172.17.8.100/health/
+    @GET("user/inquiry/v1/findGiftList")
+    Observable<Result<List<GiftBean>>> GiftList();
+    // 8. 送礼物
+    //接口地址：http://172.17.8.100/health/
+    @PUT("user/inquiry/verify/v1/handselGift")
+    Observable<Result> giveGift(@Header("userId") String userId,
+                                @Header("sessionId") String sessionId,
+                                @Query("inquiryRecordId") int inquiryRecordId,
+                                @Query("giftId") int giftId);
+    //10.查看历史问诊
+    //接口地址：http://172.17.8.100/health/
+    @GET("user/inquiry/verify/v1/findHistoryInquiryRecord")
+    Observable<Result<List<MyUserHistoryBean>>> myuserhistory(@Header("userId") String userId,
+                                                              @Header("sessionId") String sessionId,
+                                                              @Query("page") int page,
+                                                              @Query("count") int count);
+
+
     //.问诊-发送消息
     @FormUrlEncoded
     @POST("user/video/verify/v1/addVideoComment")
@@ -422,5 +463,13 @@ public interface IAppRequest {
     Observable<Result<CxxxBean>> yhxxShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
     @PUT("user/verify/v1/perfectUserInfo")
     Observable<Result> nstShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("age") int age,@Query("height") int height,@Query("weight") int weight);
+    @FormUrlEncoded
+    @POST("user/verify/v1/bindUserBankCard")
+    Observable<Result> bdyhShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Field("bankCardNumber") String bankCardNumber,@Field("bankName") String bankName,@Field ("bankCardType") int bankCardType);
+    @GET("user/verify/v1/findUserBankCardByUserId")
+    Observable<Result<YhBean>> cxyhShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
+    @PUT("user/verify/v1/updateUserPwd")
+    Observable<Result> xgmmShow(@Header("userId") String userId, @Header("sessionId") String sessionId,@Query("oldPwd") String oldPwd,@Query("newPwd") String newPwd);
+
     //xieqi-------------------------------------------------------------------别动我的
 }

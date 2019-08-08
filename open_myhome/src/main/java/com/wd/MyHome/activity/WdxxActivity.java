@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.dingtao.common.bean.MyUser.CxxxBean;
+import com.dingtao.common.bean.MyUser.YhBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.core.DataCall;
@@ -31,6 +32,11 @@ import com.dingtao.common.util.LoginDaoUtil;
 import com.google.android.material.snackbar.Snackbar;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.childactivity.MyUserSetActivity;
+import com.wd.MyHome.childthreeactivity.SichangyongMyShenfenActivity;
+import com.wd.MyHome.childthreeactivity.XieqibangdingyinhangkaActivity;
+import com.wd.MyHome.childthreeactivity.XieqiyinhangkaActivity;
+import com.wd.MyHome.presenter.CxYhPresenter;
 import com.wd.MyHome.presenter.CxyhxxPresenter;
 import com.wd.MyHome.presenter.SctxPresenter;
 import com.wd.MyHome.util.ABitMap;
@@ -76,6 +82,10 @@ public class WdxxActivity extends AppCompatActivity {
     TextView tSg;
     @BindView(R2.id.t_sg_sg)
     TextView tSgSg;
+    @BindView(R2.id.qbd_wx)
+    TextView qbdwx;
+    @BindView(R2.id.qbdyhk)
+    TextView qbdyhk;
     @BindView(R2.id.t_tp_tz)
     ImageView tTpTz;
     @BindView(R2.id.t_yx)
@@ -87,11 +97,11 @@ public class WdxxActivity extends AppCompatActivity {
     @BindView(R2.id.t_tp_qbdyhk)
     ImageView tTpQbdyhk;
     private File filea;
-    private String userId;
-    private String sessionId;
     private SctxPresenter sctxPresenter;
     private String file=Environment.getExternalStorageDirectory()+"/t.png";
     private PopupWindow window;
+    private String userId;
+    private String sessionId;
     private List<String> intt;
     private View inflate;
     private TextView paizhao,xiangce,updata_finish;
@@ -100,6 +110,7 @@ public class WdxxActivity extends AppCompatActivity {
     private int height;
     private int weight;
     private int age;
+    private CxYhPresenter cxYhPresenter;
 
 
     @Override
@@ -114,6 +125,37 @@ public class WdxxActivity extends AppCompatActivity {
         Glide.with(this).load(intt.get(2)).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ttx);//设置头像
         orl.setText(intt.get(3));
 
+        cxYhPresenter = new CxYhPresenter(new DataCall<YhBean>() {
+            @Override
+            public void success(final YhBean data, Object... args) {
+                if (data!=null){
+                    qbdyhk.setText("已绑定");
+                    tTpQbdyhk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(WdxxActivity.this,XieqibangdingyinhangkaActivity.class));
+                        }
+                    });
+
+                }else{
+                    qbdyhk.setText("去绑定");
+                    tTpQbdyhk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(WdxxActivity.this,XieqiyinhangkaActivity.class));
+                        }
+                    });
+
+                }
+
+
+            }
+
+            @Override
+            public void fail(ApiException data, Object... args) {
+
+            }
+        });
         cxyhxxPresenter = new CxyhxxPresenter(new DataCall<CxxxBean>() {
             @Override
             public void success(CxxxBean data, Object... args) {
@@ -130,6 +172,13 @@ public class WdxxActivity extends AppCompatActivity {
                 tTiTi.setText(weight+"kg");
                 age = data.getAge();
                 tNlNl.setText(age+"");
+                int chat = data.getWhetherBingWeChat();
+                if (chat==1){
+                    qbdwx.setText("已绑定");
+                }else{
+                    qbdwx.setText("去绑定");
+                }
+                cxYhPresenter.reqeust(userId,sessionId);
 
             }
 
@@ -169,21 +218,17 @@ public class WdxxActivity extends AppCompatActivity {
         tTpQbd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(WdxxActivity.this,SichangyongMyShenfenActivity.class));
             }
         });
         tTpQrz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(WdxxActivity.this,SichangyongMyShenfenActivity.class);
+                startActivity(intent);
             }
         });
-        tTpQbdyhk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         inflate = View.inflate(WdxxActivity.this, R.layout.updata_head, null);
         paizhao=inflate.findViewById(R.id.paizhao);
         xiangce=inflate.findViewById(R.id.xiangce);
