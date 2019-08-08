@@ -13,7 +13,7 @@
         <activity android:name=".childactivity.MyUserSetActivity" />
         <activity android:name=".childactivity.MyVideoActivity" />
         <activity android:name=".childactivity.MyDiseaseActivity" />
-        <activity android:name=".childactivity.MyInterestActivity" />
+        <activity android:name=".childactivity.MyInteresterActivity"/>
         <activity android:name=".childactivity.MyHMoneyActivity" />
         <activity android:name=".childactivity.MyUserSetActivity" />
         <activity android:name=".childactivity.MyUserNewInquiryActivity" />
