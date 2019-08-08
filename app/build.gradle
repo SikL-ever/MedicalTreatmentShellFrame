@@ -44,7 +44,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(path: ':open_clientele')
     implementation project(path: ':open_login')
     implementation project(path: ':open_myhome')

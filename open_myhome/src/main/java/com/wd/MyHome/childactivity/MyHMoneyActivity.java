@@ -70,7 +70,7 @@ public class MyHMoneyActivity extends AppCompatActivity {
 
         cotinuousPresenter = new CotinuousPresenter(new cotinus());
         LoginDaoUtil loginDaoUtil=new LoginDaoUtil();
-        List<String> intt = loginDaoUtil.intt(MyHMoneyActivity.this);
+        final List<String> intt = loginDaoUtil.intt(MyHMoneyActivity.this);
         cotinuousPresenter.reqeust(intt.get(0),intt.get(1));
 
 //        WhetherPresenter whetherPresenter=new WhetherPresenter(new whether());
