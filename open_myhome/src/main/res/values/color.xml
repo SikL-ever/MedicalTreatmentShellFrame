@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="top">#3087EA</color>
+    <color name="default_background">#f00</color>
+    <color name="color_blue">#3087ea</color>
+    <color name="color_gray">#8e8e8e</color>
+    <color name="color_pink">#ff0090</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -16,16 +20,16 @@
     <color name="fastlane_background">#0096a6</color>
     <color name="search_opaque">#ffaa3f</color>
     <color name="selected_background">#ffaa3f</color>
-    <color name="default_background">#3d3d3d</color>
+
     <color name="lan">#6495ED</color>
     <color name="dot_hong">#E73111</color>
     <color name="text_bottom_comment">#9B9B9B</color>
 
     <color name="color_2"></color>
-    <color name="color_gray">#C6B4B4</color>
+
     <color name="color_red">#FF0000</color>
     <color name="color_green">#00FF00</color>
-    <color name="color_blue">#007dff</color>
+
     <color name="color_yellow">#FFFF00</color>
-    <color name="color_pink">#FF00FF</color>
+
 </resources>

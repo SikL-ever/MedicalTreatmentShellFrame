@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PmldActivity">
+    <com.wd.MyHome.util.TopView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:id="@+id/pmld_top">
+    </com.wd.MyHome.util.TopView>
+    <RelativeLayout
+        android:layout_below="@+id/pmld_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_84"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        android:background="#fff"
+        >
+        <ImageView
+            android:id="@+id/g"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:src="@drawable/setting_icon_deep_color_sun_n"/>
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/g"
+            android:layout_toLeftOf="@+id/d"
+            android:maxHeight="2dp"
+            android:progressDrawable="@drawable/seek_bar_bg"
+            android:thumb="@drawable/seek_bar_thumb" />
+        <ImageView
+            android:id="@+id/d"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/setting_icon_light_color_sun_n"
+            />
+    </RelativeLayout>
+</RelativeLayout>

@@ -26,7 +26,7 @@
 
     </LinearLayout>
 
-    <com.wd.health.open_my.seekbarutils.ArrowView
+    <com.wd.MyHome.util.ArrowView
         android:id="@+id/indicator_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

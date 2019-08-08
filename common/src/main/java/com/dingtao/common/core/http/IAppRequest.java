@@ -1,6 +1,7 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.CxxxBean;
 import com.dingtao.common.bean.MyUser.GiftBean;
 import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
@@ -9,6 +10,7 @@ import com.dingtao.common.bean.MyUser.MyUserLookNewinquiryBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
+import com.dingtao.common.bean.MyUser.YhBean;
 import com.dingtao.common.bean.MyUserMessage;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
@@ -36,16 +38,20 @@ import com.dingtao.common.bean.video.VideoBean;*/
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -53,6 +59,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 /**
  * @author dingtao
@@ -227,6 +234,7 @@ public interface IAppRequest {
 
     //查询消息
     //.查询用户系统通知列表
+    //接口地址：http://172.17.8.100/health/
     @GET("user/verify/v1/findSystemNoticeList")
     Observable<Result<List<MyUserMessage>>> myusersystemMessage(@Header("userId") String userId,
                                                           @Header("sessionId") String sessionId,
@@ -256,8 +264,8 @@ public interface IAppRequest {
     //结束当前问诊
     @PUT("user/inquiry/verify/v1/endInquiry")
     Observable<Result> endnewinquiry(@Header("userId") String userId,
-                                      @Header("sessionId") String sessionId,
-                                      @Query("recordId") int recordId);
+                                     @Header("sessionId") String sessionId,
+                                     @Query("recordId") int recordId);
     //7. 用户评论问诊服务
     //接口地址：http://172.17.8.100/health/
     @PUT("user/inquiry/verify/v1/evaluationInquiry")
@@ -276,16 +284,17 @@ public interface IAppRequest {
     //接口地址：http://172.17.8.100/health/
     @PUT("user/inquiry/verify/v1/handselGift")
     Observable<Result> giveGift(@Header("userId") String userId,
-                                      @Header("sessionId") String sessionId,
-                                      @Query("inquiryRecordId") int inquiryRecordId,
-                                      @Query("giftId") int giftId);
+                                @Header("sessionId") String sessionId,
+                                @Query("inquiryRecordId") int inquiryRecordId,
+                                @Query("giftId") int giftId);
     //10.查看历史问诊
     //接口地址：http://172.17.8.100/health/
     @GET("user/inquiry/verify/v1/findHistoryInquiryRecord")
     Observable<Result<List<MyUserHistoryBean>>> myuserhistory(@Header("userId") String userId,
-                                                               @Header("sessionId") String sessionId,
-                                                               @Query("page") int page,
-                                                               @Query("count") int count);
+                                                              @Header("sessionId") String sessionId,
+                                                              @Query("page") int page,
+                                                              @Query("count") int count);
+
 
     //.问诊-发送消息
     @FormUrlEncoded
@@ -481,5 +490,23 @@ public interface IAppRequest {
     Observable<Result> gzysShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("doctorId") int doctorId);
     @DELETE("user/inquiry/verify/v1/cancelFollow")
     Observable<Result> qxysShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("doctorId") int doctorId);
+    @POST("user/verify/v1/modifyHeadPic")
+    Observable<Result> sctxShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Body MultipartBody body);
+    @PUT("user/verify/v1/modifyNickName")
+    Observable<Result> xgncShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("nickName") String nickName);
+    @PUT("user/verify/v1/updateUserSex")
+    Observable<Result> sexShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("sex") int sex);
+    @GET("user/verify/v1/getUserInfoById")
+    Observable<Result<CxxxBean>> yhxxShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
+    @PUT("user/verify/v1/perfectUserInfo")
+    Observable<Result> nstShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("age") int age,@Query("height") int height,@Query("weight") int weight);
+    @FormUrlEncoded
+    @POST("user/verify/v1/bindUserBankCard")
+    Observable<Result> bdyhShow(@Header("userId") String userId, @Header("sessionId") String sessionId, @Field("bankCardNumber") String bankCardNumber,@Field("bankName") String bankName,@Field ("bankCardType") int bankCardType);
+    @GET("user/verify/v1/findUserBankCardByUserId")
+    Observable<Result<YhBean>> cxyhShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
+    @PUT("user/verify/v1/updateUserPwd")
+    Observable<Result> xgmmShow(@Header("userId") String userId, @Header("sessionId") String sessionId,@Query("oldPwd") String oldPwd,@Query("newPwd") String newPwd);
+
     //xieqi-------------------------------------------------------------------别动我的
 }

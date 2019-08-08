@@ -390,6 +390,7 @@ public class Camera1Control implements ICameraControl {
                             camera.autoFocus(new Camera.AutoFocusCallback() {
                                 @Override
                                 public void onAutoFocus(boolean success, Camera camera) {
+                                    camera.cancelAutoFocus();
                                 }
                             });
                         }

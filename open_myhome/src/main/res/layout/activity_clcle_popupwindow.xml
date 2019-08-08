@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent">
+    
+    <LinearLayout
+        android:background="@drawable/my_shapesea"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_134">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_90">
+
+            <TextView
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_gravity="center"
+                android:textColor="#333333"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="清除缓存" />
+
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="#333333"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="清除缓存会导致下载的内容删除，是否清除缓存?" />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/cicle_qu"
+                android:background="#999999"
+                android:textColor="#fff"
+                android:textSize="@dimen/dp_14"
+                android:gravity="center"
+                android:text="取消"
+                android:layout_width="@dimen/dp_99"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_gravity=""
+                android:id="@+id/cicle_que"
+                android:background="#3087ea"
+                android:textColor="#fff"
+                android:textSize="@dimen/dp_14"
+                android:gravity="center"
+                android:text="确定"
+                android:layout_width="@dimen/dp_99"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

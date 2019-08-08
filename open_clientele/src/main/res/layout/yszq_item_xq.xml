@@ -68,11 +68,11 @@
                     android:layout_height="wrap_content"
                     android:background="#fff"
                     android:padding="@dimen/dp_20">
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/c_img"
                         android:layout_width="@dimen/dp_128"
                         android:layout_height="@dimen/dp_160"
-                        android:scaleType="fitXY"
+                        android:background="@drawable/system_image7"
                         android:layout_marginRight="@dimen/dp_10"/>
                     <ImageView
                         android:id="@+id/c_gz"

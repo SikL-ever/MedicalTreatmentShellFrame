@@ -3,6 +3,8 @@ package com.wd.MyHome.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -342,14 +344,14 @@ public class MyUserActivity extends WDActivity {
         paizhao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*try {
+                try {
                     Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//开启相机应用程序获取并返回图片（capture：俘获）
                     intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
                             "head.jpg")));//指明存储图片或视频的地址URI
                     startActivityForResult(intent2, 200);//采用ForResult打开
                 } catch (Exception e) {
                     Toast.makeText(MyUserActivity.this, "相机无法启动，请先开启相机权限", Toast.LENGTH_LONG).show();
-                }*/
+                }
                 window.dismiss();
                 Snackbar.make(myuserlayout, "待开发", Snackbar.LENGTH_SHORT).show();
             }
@@ -385,9 +387,9 @@ public class MyUserActivity extends WDActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //
         if (requestCode == 200 &&resultCode == RESULT_OK) {
-            /*File temp = new File(Environment.getExternalStorageDirectory()
+            File temp = new File(Environment.getExternalStorageDirectory()
                     + "/head.jpg");
-            crop(Uri.fromFile(temp));//裁剪图片*/
+            crop(Uri.fromFile(temp));//裁剪图片
 
         }
 
@@ -480,6 +482,19 @@ public class MyUserActivity extends WDActivity {
             dao.insertOrReplaceInTx(loginBean);
             Glide.with(MyUserActivity.this).load(data).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
+            //更新Im头像
+            JMessageClient.updateUserAvatar(file, new BasicCallback() {
+                @Override
+                public void gotResult(int i, String s) {
+                    if (i == 0) {
+                        Toast.makeText(MyUserActivity.this, "IM头像更新完成", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MyUserActivity.this, "IM头像更新失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            Glide.with(MyUserActivity.this).load(data).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
             mLoadDialog.cancel();
             window.dismiss();
             Snackbar.make(myuserlayout, "更换成功", Snackbar.LENGTH_SHORT).show();
@@ -503,6 +518,8 @@ public class MyUserActivity extends WDActivity {
             Glide.with(MyUserActivity.this).load(intt.get(2)).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
             myusername.setText(intt.get(3));//昵称
+
+
         }else{
             myusername.setText("请先登录!");//设置昵称
             Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).
