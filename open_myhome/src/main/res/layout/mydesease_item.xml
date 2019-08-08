@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/a"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_height="@dimen/dp_100">
+            <TextView
+                android:id="@+id/time_month"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="#333333"
+                android:text="05"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/timemonth"
+                android:textColor="#333333"
+                android:text="05月"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_35"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_toRightOf="@+id/a"
+            android:background="@drawable/button2"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="@dimen/dp_100">
+            <TextView
+                android:id="@+id/texttitle"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:text="口腔溃疡可能是癌症预警"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/text_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:lines="2"
+                android:lineHeight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:textSize="12sp"
+                android:textColor="#333333"
+                android:text="在临床上，经常能看到有些人口吐白沫经常能看到有些人反复发作四季不断，深受坤肉其实这已经是来看"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/look"
+                    android:text="查看评论"
+                    android:layout_toLeftOf="@+id/much"
+                    android:layout_centerVertical="true"
+                    android:textColor="#3087ea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/much"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_centerVertical="true"
+                    android:textColor="#3087ea"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="》"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

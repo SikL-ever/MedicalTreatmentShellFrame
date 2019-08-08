@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".childactivity.MyDiseaseActivity">
+        tools:context=".childactivity.MyInteresterActivity">
     <RelativeLayout
             android:background="#fff"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_54">
 
         <ImageView
-                android:id="@+id/desease_back"
+                android:id="@+id/interest_back"
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
                 android:layout_centerVertical="true"
@@ -23,7 +23,7 @@
                 android:textColor="#3087ea"
                 android:textSize="18sp" />
         <TextView
-                android:text="我的病友圈"
+                android:text="我的关注"
                 android:layout_marginRight="20dp"
                 android:layout_centerInParent="true"
                 android:textSize="20sp"
@@ -31,9 +31,32 @@
                 android:layout_height="wrap_content"
                 />
     </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/gones"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+                android:id="@+id/tu"
+                android:layout_width="@dimen/dp_180"
+                android:layout_centerInParent="true"
+                android:layout_height="@dimen/dp_180"
+                android:background="@drawable/no_message"/>
+        <TextView
+                android:layout_below="@+id/tu"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/sp_20"
+                android:text="您暂无任何关注的信息"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+            android:background="#f2f2f2"
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
     <androidx.recyclerview.widget.RecyclerView
             android:background="#fff"
-            android:id="@+id/desease_recycler"
+            android:id="@+id/interest_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

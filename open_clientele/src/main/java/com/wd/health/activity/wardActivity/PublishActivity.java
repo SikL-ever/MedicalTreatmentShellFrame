@@ -284,6 +284,8 @@ public class PublishActivity extends AppCompatActivity {
 
 //                ImagePresenter imagePresenter=new ImagePresenter(new sengimage());
 //                imagePresenter.reqeust(intt.get(0),intt.get(1),);
+
+
             }
         });
         initGridView();
@@ -308,9 +310,12 @@ public class PublishActivity extends AppCompatActivity {
         public void success(Double data, Object... args) {
 
 //            Toast.makeText(PublishActivity.this,data.getMessage(),Toast.LENGTH_SHORT).show();
-
+            Intent intent= new Intent();
             Toast.makeText(PublishActivity.this,"发布成功",Toast.LENGTH_SHORT).show();
             finish();
+
+
+
         }
 
         @Override

@@ -31,10 +31,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viedo_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RelativeLayout
+                android:id="@+id/goness"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <ImageView
+                    android:id="@+id/tu"
+                    android:layout_width="@dimen/dp_180"
+                    android:layout_centerInParent="true"
+                    android:layout_height="@dimen/dp_180"
+                    android:background="@drawable/no_message"/>
+            <TextView
+                    android:layout_below="@+id/tu"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/sp_20"
+                    android:text="您暂无任何关注的信息"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/viedo_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
+
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import android.widget.RelativeLayout;
 import com.dingtao.common.bean.wardBean.MyVideo;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
@@ -33,6 +34,7 @@ public class MyVideoActivity extends AppCompatActivity {
     RecyclerView viedoRecycler;
     private MyVideoPresenter myVideoPresenter;
     private MyVideoAdapater myVideoAdapater;
+    private RelativeLayout relativeLayout;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -41,11 +43,8 @@ public class MyVideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_video);
         ButterKnife.bind(this);
         //返回
-
-        //视频列表
-
-
         //获取数据
+        relativeLayout = findViewById(R.id.goness);
         myVideoPresenter = new MyVideoPresenter(new video());
         LoginDaoUtil loginDaoUtil = new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(MyVideoActivity.this);
@@ -65,12 +64,18 @@ public class MyVideoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     class video implements DataCall<List<MyVideo>> {
         @Override
         public void success(List<MyVideo> data, Object... args) {
             Log.i("ff",data.toString());
+            if(data.size()==0){
+                relativeLayout.setVisibility(View.VISIBLE);
+            }else {
+                relativeLayout.setVisibility(View.GONE);
+            }
             myVideoAdapater.setVideo(data);
             myVideoAdapater.notifyDataSetChanged();
         }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--this color is for marks those are at left side of thumb-->
+    <item android:color="#3087ea" android:state_selected="true" />
+    <!--for marks those are at right side of thumb-->
+    <item android:color="@color/color_gray" />
+
+</selector>

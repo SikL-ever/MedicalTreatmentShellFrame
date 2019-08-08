@@ -1,9 +1,485 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".childactivity.MyHMoneyActivity">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".childactivity.MyHMoneyActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:background="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_54">
+
+                <ImageView
+                        android:id="@+id/desease_back"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/common_icon_back_black_n"
+                        android:layout_marginLeft="20dp"
+                        android:text="急症科"
+                        android:textColor="#3087ea"
+                        android:textSize="18sp"/>
+
+                <TextView
+                        android:text="我的任务 "
+                        android:layout_centerInParent="true"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+            </RelativeLayout>
+
+            <TextView
+                    android:background="#f2f2f2"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"/>
+
+            <RelativeLayout
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40">
+
+                <TextView
+                        android:text="签到条"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textColor="#fff"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_36"
+                        android:background="@drawable/my_task_title"
+                        />
+
+                <TextView
+                        android:text="注：连续签到H币将会积累"
+                        android:textColor="#3087ea"
+                        android:textSize="10sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="+1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="+2"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="+3"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="+4"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="+5"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="+6"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="+N"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+                    <!--<com.wd.MyHome.seekbarutils.IndicatorStayLayout-->
+                        <!--android:id="@+id/relat"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:background="#fff0"-->
+                        <!--android:layout_height="@dimen/dp_30"-->
+                        <!--android:layout_marginLeft="@dimen/dp_20"-->
+                        <!--android:layout_marginRight="@dimen/dp_20">-->
+                <!--</com.wd.MyHome.seekbarutils.IndicatorStayLayout>-->
+            <!--<com.warkiz.widget.IndicatorSeekBar-->
+                    <!--android:id="@+id/tag_IndicatorSeekBar"-->
+                    <!--android:paddingTop="@dimen/dp_5"-->
+                    <!--android:paddingBottom="@dimen/dp_5"-->
+                    <!--android:layout_marginTop="@dimen/dp_5"-->
+                    <!--android:layout_marginLeft="@dimen/dp_10"-->
+                    <!--android:layout_marginRight="@dimen/dp_10"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--app:isb_seek_smoothly="true"-->
+                    <!--app:isb_show_indicator="rectangle"-->
+                    <!--app:isb_show_tick_marks_type="oval"-->
+                    <!--app:isb_show_tick_texts="false"-->
+                    <!--app:isb_thumb_adjust_auto="true"-->
+                    <!--app:isb_ticks_count="7"-->
+                    <!--app:isb_min="1"-->
+                    <!--app:isb_max="7"-->
+                    <!--app:isb_thumb_color="#3087ea"-->
+                    <!--app:isb_track_progress_size="3dp"-->
+                    <!--app:isb_tick_marks_color="@color/selector_tick_marks_color"-->
+                    <!--app:isb_indicator_color="@color/hui_dd"-->
+                    <!--app:isb_track_progress_color="@color/lan_3087ea"-->
+                    <!--app:isb_user_seekable="false"-->
+                    <!--app:isb_track_background_size="@dimen/dp_10"-->
+                    <!--app:isb_tick_marks_size="@dimen/dp_20"-->
+                    <!--app:isb_tick_texts_color="#333333"-->
+                    <!--app:isb_thumb_drawable="@drawable/my_task_select"-->
+                    <!--/>-->
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="1天"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="2天"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="3天"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="4天"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="5天"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="6天"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="N天"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:background="@drawable/my_task_title"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_36"/>
+
+                <TextView
+                        android:text="每日任务"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="签到"
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                <Button
+                        android:id="@+id/qiandao"
+                        android:text="已完成"
+                        android:textColor="#333"
+                        android:background="#f2f2f2"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_40"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/ss"
+                        android:text="首发病友圈"
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_below="@+id/ss"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:text="+10"
+                            android:textColor="#3087ea"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:text="H币"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/go_war"
+                        android:text="去完成"
+                        android:textColor="#fff"
+                        android:background="#3087ea"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_40"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="病友圈首评"
+                        android:id="@+id/o"
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_below="@+id/o"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:text="+10"
+                            android:textColor="#3087ea"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:text="H币"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/lingsss"
+                        android:text="领H币"
+                        android:textColor="#fff"
+                        android:background="#4FCB9F"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_40"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:background="@drawable/my_task_title"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_36"/>
+
+                <TextView
+                        android:text="一次性任务"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:text="完善我的信息"
+                        android:id="@+id/a"
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_below="@+id/a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:text="+30"
+                            android:textColor="#3087ea"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:text="H币"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/record"
+                        android:text="去完成"
+                        android:textColor="#fff"
+                        android:background="#3087ea"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_40"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/aa"
+                        android:text="参与健康评测"
+                        android:layout_centerVertical="true"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_below="@+id/aa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:text="+30"
+                            android:textColor="#3087ea"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <TextView
+                            android:text="H币"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <Button
+                        android:id="@+id/health"
+                        android:text="去完成"
+                        android:textColor="#fff"
+                        android:background="#3287ea"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_40"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

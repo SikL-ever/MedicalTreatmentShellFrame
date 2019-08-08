@@ -5,4 +5,31 @@
     <color name="color_blue">#3087ea</color>
     <color name="color_gray">#8e8e8e</color>
     <color name="color_pink">#ff0090</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="hui_dd">#dddddd</color>
+
+    <color name="lan_3087ea">#3087ea</color>
+    <color name="baif">#ffffff</color>
+    <color name="hui3">#333333</color>
+    <color name="hui9">#999999</color>
+    <color name="hui6">#666666</color>
+    <color name="background_gradient_start">#000000</color>
+    <color name="background_gradient_end">#DDDDDD</color>
+    <color name="fastlane_background">#0096a6</color>
+    <color name="search_opaque">#ffaa3f</color>
+    <color name="selected_background">#ffaa3f</color>
+
+    <color name="lan">#6495ED</color>
+    <color name="dot_hong">#E73111</color>
+    <color name="text_bottom_comment">#9B9B9B</color>
+
+    <color name="color_2"></color>
+
+    <color name="color_red">#FF0000</color>
+    <color name="color_green">#00FF00</color>
+
+    <color name="color_yellow">#FFFF00</color>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.wd.health.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebSettings;
@@ -39,6 +40,7 @@ public class WebActivity extends AppCompatActivity {
         }
         String content = parse.toString();
         webViewWeb.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);*/
+
         WebSettings settings = webViewWeb.getSettings();
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
