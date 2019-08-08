@@ -1,12 +1,8 @@
 package com.wd.MyHome.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -36,7 +32,7 @@ import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.childactivity.MyDiseaseActivity;
 import com.wd.MyHome.childactivity.MyHMoneyActivity;
-import com.wd.MyHome.childactivity.MyInterestActivity;
+import com.wd.MyHome.childactivity.MyInteresterActivity;
 import com.wd.MyHome.childactivity.MyUserCollectActivity;
 import com.wd.MyHome.childactivity.MyUserRecordActivity;
 import com.wd.MyHome.childactivity.MyUserSetActivity;
@@ -48,14 +44,10 @@ import com.wd.MyHome.presenter.UserSignPresenter;
 import com.wd.MyHome.util.ABitMap;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 @Route(path = Constant.ACTIVITY_LOGIN_MYUSERACTIVITY)
 public class MyUserActivity extends WDActivity {
@@ -149,7 +141,6 @@ public class MyUserActivity extends WDActivity {
                 }else{
                     Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         //消息点击
@@ -254,32 +245,66 @@ public class MyUserActivity extends WDActivity {
         myVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyVideoActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyVideoActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //我的病友圈
         myDisease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyDiseaseActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyDiseaseActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         //我的关注
+//        myInterest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (intt != null) {
+//                    //跳转
+//                    Intent intent = new Intent(MyUserActivity.this, MyInterestActivity.class);
+//                    startActivity(intent);
+//                }else{
+//                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
         myInterest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyInterestActivity.class);
-                startActivity(intent);
+                if(intt!=null){
+                    Intent intent=new Intent(MyUserActivity.this,MyInteresterActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //我的任务
         myHMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyHMoneyActivity.class);
-                startActivity(intent);
+
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyHMoneyActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //头像点击

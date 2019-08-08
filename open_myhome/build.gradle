@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
+//apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
 
@@ -10,7 +11,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
@@ -41,4 +42,7 @@ dependencies {
     //导入其他model
     implementation project(path: ':open_clientele')
     implementation project(path: ':common')
+    //seekbar
+//    implementation 'com.android.support:design:27.1.1'
+//    implementation 'com.github.warkiz.widget:indicatorseekbar:1.2.3'
 }

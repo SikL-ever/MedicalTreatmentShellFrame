@@ -13,13 +13,12 @@
             android:layout_height="@dimen/dp_54">
 
         <ImageView
-                android:id="@+id/desease_back"
+                android:id="@+id/disease_back"
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
                 android:layout_centerVertical="true"
                 android:background="@drawable/common_icon_back_black_n"
                 android:layout_marginLeft="20dp"
-                android:text="急症科"
                 android:textColor="#3087ea"
                 android:textSize="18sp" />
         <TextView
@@ -28,12 +27,12 @@
                 android:layout_centerInParent="true"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
-            android:background="#fff"
-            android:id="@+id/desease_recycler"
+            android:id="@+id/disease_recycler"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

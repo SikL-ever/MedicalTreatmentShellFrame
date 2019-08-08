@@ -26,14 +26,7 @@ import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.bean.video.DanBean;
 import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;
-import com.dingtao.common.bean.wardBean.BingzhengBean;
-import com.dingtao.common.bean.wardBean.List_xiang_Bean;
-import com.dingtao.common.bean.wardBean.MyVideo;
-import com.dingtao.common.bean.wardBean.Ping_lie_Bean;
-import com.dingtao.common.bean.wardBean.SeachBean;
-import com.dingtao.common.bean.wardBean.TaFaBean;
-import com.dingtao.common.bean.wardBean.TabBean;
-import com.dingtao.common.bean.wardBean.WardLieBean;
+import com.dingtao.common.bean.wardBean.*;
 /*import com.dingtao.common.bean.video.TopBean;
 import com.dingtao.common.bean.video.VideoBean;*/
 
@@ -163,7 +156,7 @@ public interface IAppRequest {
                                  @Body RequestBody body);
     //上传图片
     //上传用户档案相关图片
-    //@Multipart
+    @Multipart
     @POST("/user/verify/v1/modifyHeadPic")
     Observable<Result> addrecordphoto(@Header("userId") String userId,
                                       @Header("sessionId") String sessionId,
@@ -365,7 +358,51 @@ public interface IAppRequest {
                            @Header("sessionId") String sessionId,
                            @Query("videoId") int page);
     //我的关注
+    @GET("user/verify/v1/findUserDoctorFollowList")
+    Observable<Result<List<MyDoctorBean>>> doctor(@Header("userId") String userId,
+                                                  @Header("sessionId") String sessionId,
+                                                  @Query("page") int page,
+                                                  @Query("count") int count);
+    //采纳病友圈评论
+    @PUT("user/sickCircle/verify/v1/adoptionProposal")
+    Observable<Result> caina(@Header("userId") String userId,
+                             @Header("sessionId") String sessionId,
+                             @Field("sickCircleId") int sickCircleId,
+                             @Field("commentId") int commentId);
+    //我的病友圈
+    @GET("user/verify/v1/findUserSickCollectionList")
+    Observable<Result<List<MyDiseaseBean>>> disease(@Header("userId") String userId,
+                                                    @Header("sessionId") String sessionId,
+                                                    @Query("page") int page,
+                                                    @Query("count") int count);
 
+    //取消关注医生
+    @DELETE("user/inquiry/verify/v1/cancelFollow")
+    Observable<Result> cancel(@Header("userId")String userId,
+                                    @Header("sessionId")String sessionId,
+                                    @Query("doctorId")int doctorId);
+    //查询用户连续签到的状态
+    @GET("user/verify/v1/findUserSign")
+    Observable<Result> continuous(@Header("userId")String userId,
+                                  @Header("sessionId")String sessionId);
+    //查询用户当天是否签到
+    @GET("user/verify/v1/whetherSignToday")
+    Observable<Result> whether(@Header("userId")String userId,
+                               @Header("sessionId")String sessionId);
+    //做任务
+    @POST("user/verify/v1/doTask")
+    Observable<Result> work(@Header("userId")String userId,
+                            @Header("sessionId")String sessionId);
+    //查询用户任务列表
+    @GET("user/verify/v1/findUserTaskList")
+    Observable<Result> chaxun(@Header("userId")String userId,
+                              @Header("sessionId")String sessionId);
+    //领任务奖励
+    @FormUrlEncoded
+    @POST("user/verify/v1/receiveReward")
+    Observable<Result> jiangli(@Header("userId")String userId,
+                               @Header("sessionId")String sessionId,
+                               @Field("taskId") int taskId);
     /*==========================================LIFANGXIAN====================================================*/
 
 

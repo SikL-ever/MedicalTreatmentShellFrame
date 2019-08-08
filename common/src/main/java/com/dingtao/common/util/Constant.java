@@ -32,7 +32,7 @@ public class Constant {
 
 
     //-----------李芳先----首页模块随便动，我看提交历史删你库-----
-
+    public final static String WEBACTIVITY = "/open_clientele/WebActivity";//健康评测
     //-----------李芳先----首页模块随便动，我看提交历史删你库-----
 
 
