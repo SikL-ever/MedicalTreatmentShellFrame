@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wd.MyHome">
+    package="com.wd.MyHome">
 
     <application>
-        <activity android:name=".activity.MyUserActivity"/>
-        <activity android:name=".childactivity.MyUserRecordActivity"/>
-        <activity android:name=".childthreeactivity.AddRecordActivity"/>
-        <activity android:name=".childthreeactivity.UpdataRecordActivity"/>
-        <activity android:name=".childactivity.MyUserCollectActivity"/>
-        <activity android:name=".childactivity.MyUserWalletActivity"/>
-        <activity android:name=".childactivity.MyUserSuggestActivity"/>
-        <activity android:name=".childactivity.MyUserSetActivity"/>
-        <activity android:name=".childactivity.MyVideoActivity"/>
-        <activity android:name=".childactivity.MyDiseaseActivity"/>
-        <activity android:name=".childactivity.MyHMoneyActivity"/>
-        <activity android:name=".childactivity.MyUserSetActivity"/>
-        <activity android:name=".childactivity.MyInteresterActivity"/>
-        <activity android:name=".childactivity.MyChildDiseaseActivity">
-        </activity>
-        <activity android:name=".childactivity.MyTaskActivity">
-        </activity>
+        <activity android:name=".activity.MyUserActivity" />
+        <activity android:name=".childactivity.MyUserRecordActivity" />
+        <activity android:name=".childthreeactivity.AddRecordActivity" />
+        <activity android:name=".childthreeactivity.UpdataRecordActivity" />
+        <activity android:name=".childactivity.MyUserCollectActivity" />
+        <activity android:name=".childactivity.MyUserWalletActivity" />
+        <activity android:name=".childactivity.MyUserSuggestActivity" />
+        <activity android:name=".childactivity.MyUserSetActivity" />
+        <activity android:name=".childactivity.MyVideoActivity" />
+        <activity android:name=".childactivity.MyDiseaseActivity" />
+        <activity android:name=".childactivity.MyInterestActivity" />
+        <activity android:name=".childactivity.MyHMoneyActivity" />
+        <activity android:name=".childactivity.MyUserSetActivity" />
+        <activity android:name=".childactivity.MyUserNewInquiryActivity" />
+        <activity android:name=".childactivity.MyUserEvaluateActivity" />
+        <activity android:name=".childthreeactivity.FinishActivity" />
+        <activity android:name=".childactivity.MyUserHistoryActivity" />
+        <activity android:name=".childthreeactivity.SichangyongMyShenfenActivity"></activity>
+        <activity
+            android:name="com.baidu.ocr.ui.camera.CameraActivity"
+            android:configChanges="screenSize|orientation"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"/>
     </application>
 
 </manifest>

@@ -1,8 +1,11 @@
 package com.dingtao.common.core.http;
 
 
+import com.dingtao.common.bean.MyUser.GiftBean;
 import com.dingtao.common.bean.MyUser.MyCollectVideoBean;
 import com.dingtao.common.bean.MyUser.MyConsultBean;
+import com.dingtao.common.bean.MyUser.MyUserHistoryBean;
+import com.dingtao.common.bean.MyUser.MyUserLookNewinquiryBean;
 import com.dingtao.common.bean.MyUser.MyUserSuggestBean;
 import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
@@ -224,7 +227,6 @@ public interface IAppRequest {
 
     //查询消息
     //.查询用户系统通知列表
-    //接口地址：http://172.17.8.100/health/
     @GET("user/verify/v1/findSystemNoticeList")
     Observable<Result<List<MyUserMessage>>> myusersystemMessage(@Header("userId") String userId,
                                                           @Header("sessionId") String sessionId,
@@ -242,15 +244,50 @@ public interface IAppRequest {
                                                                 @Header("sessionId") String sessionId,
                                                                 @Query("page") int page,
                                                                 @Query("count") int count);
-
-    //3. 咨询医生
-    //接口地址：http://172.17.8.100/health/
+    //咨询医生
     @PUT("user/inquiry/verify/v1/consultDoctor")
     Observable<Result> consultAdoctor(@Header("userId") String userId,
                                       @Header("sessionId") String sessionId,
                                       @Query("doctorId") int doctorId);
+    //9.用户查看当前问诊
+    @GET("user/inquiry/verify/v1/findCurrentInquiryRecord")
+    Observable<Result<MyUserLookNewinquiryBean>> looknewinquiry(@Header("userId") String userId,
+                                                                @Header("sessionId") String sessionId);
+    //结束当前问诊
+    @PUT("user/inquiry/verify/v1/endInquiry")
+    Observable<Result> endnewinquiry(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("recordId") int recordId);
+    //7. 用户评论问诊服务
+    //接口地址：http://172.17.8.100/health/
+    @PUT("user/inquiry/verify/v1/evaluationInquiry")
+    Observable<Result> evaluatedoctor(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("inquiryRecordId") int inquiryRecordId,
+                                      @Query("doctorId") int doctorId,
+                                      @Query("evaluate") String evaluate,
+                                      @Query("majorDegree") int majorDegree,
+                                      @Query("satisfactionDegree") int satisfactionDegree);
+    //14.查询礼物列表
+    //接口地址：http://172.17.8.100/health/
+    @GET("user/inquiry/v1/findGiftList")
+    Observable<Result<List<GiftBean>>> GiftList();
+    // 8. 送礼物
+    //接口地址：http://172.17.8.100/health/
+    @PUT("user/inquiry/verify/v1/handselGift")
+    Observable<Result> giveGift(@Header("userId") String userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("inquiryRecordId") int inquiryRecordId,
+                                      @Query("giftId") int giftId);
+    //10.查看历史问诊
+    //接口地址：http://172.17.8.100/health/
+    @GET("user/inquiry/verify/v1/findHistoryInquiryRecord")
+    Observable<Result<List<MyUserHistoryBean>>> myuserhistory(@Header("userId") String userId,
+                                                               @Header("sessionId") String sessionId,
+                                                               @Query("page") int page,
+                                                               @Query("count") int count);
+
     //.问诊-发送消息
-    //接口地址：http://172.17.8.100/health/user/inquiry/verify/v1/pushMessage
     @FormUrlEncoded
     @POST("user/video/verify/v1/addVideoComment")
     Observable<Result> sendmessage(@Header("userId") String userId,
@@ -258,8 +295,8 @@ public interface IAppRequest {
                                              @Field("inquiryId") int inquiryId,
                                              @Field("msgContent") String msgContent,
                                              @Field("content") String content,
-                                   @Field("type") int type,
-                                   @Field("doctorId") int doctorId);
+                                             @Field("type") int type,
+                                                @Field("doctorId") int doctorId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 

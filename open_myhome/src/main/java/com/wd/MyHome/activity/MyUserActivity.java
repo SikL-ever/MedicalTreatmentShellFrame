@@ -34,6 +34,9 @@ import com.wd.MyHome.childactivity.MyDiseaseActivity;
 import com.wd.MyHome.childactivity.MyHMoneyActivity;
 import com.wd.MyHome.childactivity.MyInteresterActivity;
 import com.wd.MyHome.childactivity.MyUserCollectActivity;
+import com.wd.MyHome.childactivity.MyUserEvaluateActivity;
+import com.wd.MyHome.childactivity.MyUserHistoryActivity;
+import com.wd.MyHome.childactivity.MyUserNewInquiryActivity;
 import com.wd.MyHome.childactivity.MyUserRecordActivity;
 import com.wd.MyHome.childactivity.MyUserSetActivity;
 import com.wd.MyHome.childactivity.MyUserSuggestActivity;
@@ -48,6 +51,9 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 
 @Route(path = Constant.ACTIVITY_LOGIN_MYUSERACTIVITY)
 public class MyUserActivity extends WDActivity {
@@ -105,6 +111,8 @@ public class MyUserActivity extends WDActivity {
 
     private LoginBeanDao dao;
     private static String path = "/sdcard/DemoHead/";//sd路径
+    private File file;//头像
+
     //布局
     @Override
     protected int getLayoutId() {
@@ -158,13 +166,17 @@ public class MyUserActivity extends WDActivity {
         myusernew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MyUserActivity.this,MyUserNewInquiryActivity.class);
+                startActivity(intent);
             }
         });
         //历史问诊点击
         myuserhistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //跳转到历史问诊的页面
+                Intent intent = new Intent(MyUserActivity.this,MyUserHistoryActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -269,19 +281,6 @@ public class MyUserActivity extends WDActivity {
             }
         });
         //我的关注
-//        myInterest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (intt != null) {
-//                    //跳转
-//                    Intent intent = new Intent(MyUserActivity.this, MyInterestActivity.class);
-//                    startActivity(intent);
-//                }else{
-//                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
         myInterest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,6 +1,7 @@
 package com.wd.im.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,25 +13,33 @@ import android.widget.Toast;
 
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
-import com.dingtao.common.util.LoginDaoUtil;
-import com.google.android.material.snackbar.Snackbar;
 import com.wd.Im.R;
 import com.wd.Im.R2;
-import com.wd.im.presenter.ConsultADoctorPresenter;
+import com.wd.im.adapter.JG_details_Adapter;
+import com.wd.im.presenter.SendMessagePresenter;
+import com.wd.im.util.GlobalEventListener;
+import com.wd.im.util.RsaCoder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jmessage.biz.httptask.task.GetEventNotificationTaskMng;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.event.ContactNotifyEvent;
+import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.api.BasicCallback;
-
 public class ConsultChatMainActivity extends AppCompatActivity {
 
     @BindView(R2.id.charfinish)
@@ -47,11 +56,12 @@ public class ConsultChatMainActivity extends AppCompatActivity {
     ImageView charSend;
     @BindView(R2.id.chatlayout)
     RelativeLayout chatlayout;
-    private ConsultADoctorPresenter consultADoctorPresenter;
-    private int id;
-    private String UserName;//医生的im账号
     private String appkey = "b5f102cc307091e167ce52e0";
-    private Conversation mConv;
+    private Conversation singleConversation;
+    private boolean one;
+    private JG_details_Adapter jg_details_adapter;
+    private SendMessagePresenter sendp;
+    private String ss;//对方极光找好
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,68 +69,141 @@ public class ConsultChatMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_consult_chat_main);
         ButterKnife.bind(this);//绑定布局
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        //获取医生的id
-        id = getIntent().getIntExtra("id", 0);
-        //获取uid
-        String name = getIntent().getStringExtra("name");
+        //创建发送消息的p层
+        sendp = new SendMessagePresenter(new getdata());
+        //设置消息接收监听
+        //GlobalEventListener.setJG(this, false);
+        JMessageClient.registerEventReceiver(this);//注册消息监听
+        String name = getIntent().getStringExtra("name");//获取名字
         chatname.setText(name);
-        //创建p层
-        consultADoctorPresenter = new ConsultADoctorPresenter(new getdatausername());
-        //获取输入框的值i，如果说是没数据隐藏有数据进行现实发送按钮
+        //获取类型
+        int type = getIntent().getIntExtra("type", 0);
+        if (type==1){//创建会话
+            String id = getIntent().getStringExtra("id");//获取医生的username
+            //进行解密
+            try {
+                ss = new RsaCoder().decryptByPublicKey(id);//rsa解密
+                JMessageClient.enterSingleConversation(ss);// 进入会话状态,不接收通知栏
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{//有会话，找之前会话
+            ss = getIntent().getStringExtra("id");//获取医生的username
+        }
+        singleConversation = Conversation.createSingleConversation(ss, appkey);
+        //设置布局
+        jg_details_adapter = new JG_details_Adapter(this);
+        Chatrecycler.setAdapter(jg_details_adapter);
+        Chatrecycler.setLayoutManager
+                (new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         //发送按钮点击
         charSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 final String text = chatEndit.getText().toString().trim();
-                Message message = mConv.createSendMessage(new TextContent("Hello jmessage."));
-                message.setOnSendCompleteCallback(new BasicCallback() {
-                    @Override
-                    public void gotResult(int responseCode, String responseDesc) {
-                        if (responseCode == 0) {
-                            //消息发送成功
-                            Toast.makeText(ConsultChatMainActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
-                            //添加一下
-
-                        } else {
-                            //消息发送失败
-                            Toast.makeText(ConsultChatMainActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(text)){
+                    Toast.makeText(ConsultChatMainActivity.this, "消息不能为空", Toast.LENGTH_SHORT).show();
+                }else{
+                    Message message = singleConversation.createSendMessage(new TextContent(text));
+                    message.setOnSendCompleteCallback(new BasicCallback() {
+                        @Override
+                        public void gotResult(int responseCode, String responseDesc) {
+                            if (responseCode == 0) {
+                                //消息发送成功
+                                Toast.makeText(ConsultChatMainActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                                //添加一下
+                                initData();
+                                //添加到接口上
+                                sendp.reqeust();
+                            } else {
+                                //消息发送失败
+                                Toast.makeText(ConsultChatMainActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-                JMessageClient.sendMessage(message);//使用默认控制参数发送消息
-                chatEndit.setText("");
-
-
+                    });
+                    JMessageClient.sendMessage(message);//使用默认控制参数发送消息
+                    chatEndit.setText("");
+                }
             }
         });
+        initData();
+        //接受消息
 
     }
+    public void onEvent(MessageEvent event) {
+        //获取事件发生的会话对象
+        Message newMessage = event.getMessage();//获取此次离线期间会话收到的新消息列表
+        Log.i("aaa ", "onEvent: "+newMessage);
+        initData();
+    }
+    @Override
+    protected void onDestroy() {
+        //退出会话界面 (开始接收通知栏)
+        JMessageClient.exitConversation();
+        //设置消息接收 监听
+        GlobalEventListener.setJG(null, false);
+        //销毁
+        JMessageClient.unRegisterEventReceiver(this);
+        super.onDestroy();
+    }
+    //**********************************************************************************
+    //发送消息的返回值
+    class getdata implements DataCall{
 
-    //咨询医生请求到的数据;
-    class getdatausername implements DataCall<String> {
         @Override
-        public void success(String data, Object... args) {
-            if (data == null) {
-                Snackbar.make(chatlayout, "连接失败", Snackbar.LENGTH_SHORT).show();
-            }else{
-                Conversation.createSingleConversation(data, appkey);
-            }
-            //返回回来医生的username
-            //创建会话
-            Log.i("kkkk", "success: " + data);
+        public void success(Object data, Object... args) {
+
         }
 
         @Override
         public void fail(ApiException data, Object... args) {
+
         }
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        List<String> intt = new LoginDaoUtil().intt(ConsultChatMainActivity.this);
-        consultADoctorPresenter.reqeust(intt.get(0), intt.get(1), id);//请求咨询
+    //**********************************************************************************
+    //--------------------------------------------------------------------------------------------------
+    public void initData() {
+        /*List<Conversation> msgList = JMessageClient.getConversationList();
+        if (msgList != null){
+            if (msgList.size() > 0) {
+                if (msgList.get() != null) {
+                    Conversation conversation = msgList.get(position);
+                    //重置会话未读消息数
+                    conversation.resetUnreadCount();
+                }
+            }
+        }*/
+        if (singleConversation != null) {
+            //使列表滚动到底部
+            if (singleConversation.getAllMessage() != null) {
+                if (singleConversation.getAllMessage().size() > 0) {
+                    jg_details_adapter.setData(singleConversation.getAllMessage());
+                    //设置刷新不闪屏
+                    ((SimpleItemAnimator) Chatrecycler.getItemAnimator()).setSupportsChangeAnimations(false);
+                    if (one) {
+                        jg_details_adapter.notifyDataSetChanged();
+                    } else {
+                        jg_details_adapter.notifyItemInserted(singleConversation.getAllMessage().size() - 1);
+                    }
+                    Chatrecycler.scrollToPosition(singleConversation.getAllMessage().size() - 1);
+                }
+            }
+            /*mAdapter.setOnItemClickListener(new JG_details_Adapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    switch (view.getId()) {
+                        case R.id.item_jg_details_img:
+                            ImageContent imageContent = (ImageContent) singleConversation.getAllMessage().get(position).getContent();
+                            startActivity(new Intent(ConsultChatMainActivity.this, Activity_img.class)
+                                    .putExtra("ImgUrl", imageContent.getLocalThumbnailPath()));
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);//动画
+                            break;
+                    }
+                }
+            });*/
+        }else{
+            Toast.makeText(this, "没有消息对象", Toast.LENGTH_SHORT).show();
+        }
+        one=false; // 代表不是第一次initData
     }
 }

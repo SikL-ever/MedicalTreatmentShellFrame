@@ -3,10 +3,10 @@
     package="com.wd.Im">
 
     <application>
-        <activity android:name="com.wd.im.activity.ConsultChatMainActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            >
-        </activity>
+        <activity
+            android:name="com.wd.im.activity.ConsultChatMainActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+        <activity android:name="com.wd.im.activity.ChatListActivity"></activity>
     </application>
 
 </manifest>

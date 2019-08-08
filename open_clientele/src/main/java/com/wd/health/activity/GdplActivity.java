@@ -11,7 +11,6 @@ import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
-import com.wd.health.adapter.homepageadapter.PjAdapter;
 import com.wd.health.adapter.homepageadapter.PjgdAdapter;
 import com.wd.health.presenter.homepagepresenter.YsxqPresenter;
 

@@ -11,6 +11,7 @@ public class Result<T> {
     public String status;
     public String message;
     public T result;
+    public T doctorUserName;
 
     public Result(String status, String message) {
         this.status = status;

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/we"
+        android:orientation="vertical"
+        android:background="#F2F2F2"
+        android:layout_width="match_parent"
+        android:layout_height="6dp">
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/myuserhistoryimage"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="116dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="140dp" />
+        <TextView
+            android:id="@+id/myuserhistoryname"
+            android:text="123"
+            android:layout_toRightOf="@id/myuserhistoryimage"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/myuserhistoryzhiwei"
+            android:text="123"
+            android:textSize="10sp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/myuserhistoryname"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/li_textw"
+            android:layout_below="@id/myuserhistoryname"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp"
+            android:layout_toRightOf="@id/myuserhistoryimage"
+            android:layout_marginLeft="20dp"
+            android:text="问诊时间"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/myuserhistorytime"
+            android:layout_toRightOf="@id/li_textw"
+            android:layout_below="@id/myuserhistoryzhiwei"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:background="@drawable/myusernew_bttwo"
+            android:id="@+id/myuserhistorybtone"
+            android:text="查看问诊记录"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_below="@id/myuserhistorytime"
+            android:layout_toRightOf="@id/myuserhistoryimage"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#ffff"
+            android:layout_width="84dp"
+            android:layout_height="34dp" />
+        <TextView
+            android:background="@drawable/myusernew_bttwo"
+            android:id="@+id/myuserhistorybttwo"
+            android:text="去评价"
+            android:textSize="12sp"
+            android:layout_below="@id/myuserhistorytime"
+            android:layout_toRightOf="@+id/myuserhistorybtone"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="32dp"
+            android:gravity="center"
+            android:textColor="#ffff"
+            android:layout_width="58dp"
+            android:layout_height="34dp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

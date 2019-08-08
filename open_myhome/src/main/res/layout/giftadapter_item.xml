@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/addrecord_edit">
+        <ImageView
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:id="@+id/hua"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"/>
+        <TextView
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textColor="#000"
+            android:textSize="@dimen/dp_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/hua"
+            android:layout_toRightOf="@id/hua"
+            android:id="@+id/huatext"/>
+        <TextView
+            android:id="@+id/huaprice"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textColor="#DC331D"
+            android:textSize="@dimen/dp_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/huatext"
+            android:layout_toRightOf="@id/hua"/>
+
+        <Button
+            android:id="@+id/huabt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@drawable/myusernew_bttwo"
+            android:text="立即赠送"
+            android:textColor="#fff" />
+    </RelativeLayout>
+</LinearLayout>
