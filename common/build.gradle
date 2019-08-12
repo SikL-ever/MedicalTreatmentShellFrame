@@ -97,4 +97,6 @@ dependencies {
     api 'com.makeramen:roundedimageview:2.2.1'
     api 'org.greenrobot:eventbus:3.1.1'
     //银行康提取文字
+
+
 }

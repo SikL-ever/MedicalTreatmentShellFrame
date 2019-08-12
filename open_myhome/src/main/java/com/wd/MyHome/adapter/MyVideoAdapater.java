@@ -31,6 +31,8 @@ public class MyVideoAdapater extends RecyclerView.Adapter<MyVideoAdapater.MYVIEW
     private SensorManager sensorManager;
     private JZVideoPlayer.JZAutoFullscreenListener jzAutoFullscreenListener;
     private List<MyVideo> list=new ArrayList<>();
+    private MyVideo myVideo;
+
     public MyVideoAdapater(Context context) {
         this.context = context;
     }
@@ -46,7 +48,7 @@ public class MyVideoAdapater extends RecyclerView.Adapter<MyVideoAdapater.MYVIEW
     @Override
     public void onBindViewHolder(@NonNull MyVideoAdapater.MYVIEWhOLDER holder, final int position) {
 
-
+        myVideo = list.get(position);
         holder.headline.setText(list.get(position).getTitle());
         //去除黑边
         holder.jiaozi.setVideoImageDisplayType(holder.jiaozi.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
@@ -80,6 +82,7 @@ public class MyVideoAdapater extends RecyclerView.Adapter<MyVideoAdapater.MYVIEW
         public void success(Object data, Object... args) {
 
             Toast.makeText(context,"删除成功",Toast.LENGTH_SHORT).show();
+            list.remove(myVideo);
             notifyDataSetChanged();
         }
 

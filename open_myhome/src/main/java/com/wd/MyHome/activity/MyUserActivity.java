@@ -1,9 +1,7 @@
 package com.wd.MyHome.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -36,7 +34,7 @@ import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
 import com.wd.MyHome.childactivity.MyDiseaseActivity;
 import com.wd.MyHome.childactivity.MyHMoneyActivity;
-import com.wd.MyHome.childactivity.MyInterestActivity;
+import com.wd.MyHome.childactivity.MyInteresterActivity;
 import com.wd.MyHome.childactivity.MyUserCollectActivity;
 import com.wd.MyHome.childactivity.MyUserEvaluateActivity;
 import com.wd.MyHome.childactivity.MyUserHistoryActivity;
@@ -51,9 +49,6 @@ import com.wd.MyHome.presenter.UserSignPresenter;
 import com.wd.MyHome.util.ABitMap;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -156,7 +151,6 @@ public class MyUserActivity extends WDActivity {
                 }else{
                     Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         //消息点击
@@ -265,32 +259,53 @@ public class MyUserActivity extends WDActivity {
         myVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyVideoActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyVideoActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //我的病友圈
         myDisease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyDiseaseActivity.class);
-                startActivity(intent);
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyDiseaseActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         //我的关注
         myInterest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyInterestActivity.class);
-                startActivity(intent);
+                if(intt!=null){
+                    Intent intent=new Intent(MyUserActivity.this,MyInteresterActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //我的任务
         myHMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserActivity.this, MyHMoneyActivity.class);
-                startActivity(intent);
+
+                if (intt != null) {
+                    //跳转
+                    Intent intent = new Intent(MyUserActivity.this, MyHMoneyActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MyUserActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //头像点击
@@ -329,14 +344,14 @@ public class MyUserActivity extends WDActivity {
         paizhao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*try {
+                try {
                     Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//开启相机应用程序获取并返回图片（capture：俘获）
                     intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
                             "head.jpg")));//指明存储图片或视频的地址URI
                     startActivityForResult(intent2, 200);//采用ForResult打开
                 } catch (Exception e) {
                     Toast.makeText(MyUserActivity.this, "相机无法启动，请先开启相机权限", Toast.LENGTH_LONG).show();
-                }*/
+                }
                 window.dismiss();
                 Snackbar.make(myuserlayout, "待开发", Snackbar.LENGTH_SHORT).show();
             }
@@ -372,9 +387,9 @@ public class MyUserActivity extends WDActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //
         if (requestCode == 200 &&resultCode == RESULT_OK) {
-            /*File temp = new File(Environment.getExternalStorageDirectory()
+            File temp = new File(Environment.getExternalStorageDirectory()
                     + "/head.jpg");
-            crop(Uri.fromFile(temp));//裁剪图片*/
+            crop(Uri.fromFile(temp));//裁剪图片
 
         }
 
@@ -395,7 +410,7 @@ public class MyUserActivity extends WDActivity {
             Bitmap bitmap = data.getParcelableExtra("data");
             //setPicToView(bitmap);//保存在SD卡中
             ABitMap aBitMap = new ABitMap();
-            file = aBitMap.compressImage(bitmap);
+            File file = aBitMap.compressImage(bitmap);
             myUserUpdataHead.reqeust(uid,sid,file);
             myuserheadportrait.setImageBitmap(bitmap);
             mLoadDialog.show();
@@ -479,6 +494,7 @@ public class MyUserActivity extends WDActivity {
                 }
             });
 
+            Glide.with(MyUserActivity.this).load(data).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
             mLoadDialog.cancel();
             window.dismiss();
             Snackbar.make(myuserlayout, "更换成功", Snackbar.LENGTH_SHORT).show();
@@ -502,6 +518,8 @@ public class MyUserActivity extends WDActivity {
             Glide.with(MyUserActivity.this).load(intt.get(2)).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//头像
             myusername.setText(intt.get(3));//昵称
+
+
         }else{
             myusername.setText("请先登录!");//设置昵称
             Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).

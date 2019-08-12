@@ -10,9 +10,12 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/identify" />
+            <option value="$PROJECT_DIR$/open_Im" />
             <option value="$PROJECT_DIR$/open_clientele" />
             <option value="$PROJECT_DIR$/open_login" />
             <option value="$PROJECT_DIR$/open_myhome" />
+            <option value="$PROJECT_DIR$/open_mymessage" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

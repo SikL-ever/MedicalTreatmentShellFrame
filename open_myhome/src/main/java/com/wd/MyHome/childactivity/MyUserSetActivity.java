@@ -1,10 +1,15 @@
 package com.wd.MyHome.childactivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +22,16 @@ import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.LoginBeanDao;
 import com.dingtao.common.util.Constant;
+import com.dingtao.common.util.DataCleanManager;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.activity.MyUserActivity;
+import com.wd.MyHome.activity.PmldActivity;
+import com.wd.MyHome.activity.WdxxActivity;
+import com.wd.MyHome.activity.XgmmActivity;
 import com.wd.MyHome.childthreeactivity.SichangyongMyShenfenActivity;
+import com.wd.MyHome.childthreeactivity.XieqiyinhangkaActivity;
 import com.wd.MyHome.util.TopView;
 import com.wd.health.util.MyDialog;
 
@@ -29,6 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.jpush.im.android.api.JMessageClient;
 
 public class MyUserSetActivity extends WDActivity {
@@ -42,9 +54,32 @@ public class MyUserSetActivity extends WDActivity {
     TextView myusersetName;
     @BindView(R2.id.logout)
     RelativeLayout logout;
+    @BindView(R2.id.grxx)
+    ImageView grxx;
+    @BindView(R2.id.xgmm)
+    ImageView xgmm;
+    @BindView(R2.id.qchc)
+    ImageView qchc;
+    @BindView(R2.id.hc)
+    TextView hc;
+    @BindView(R2.id.pmld)
+    ImageView pmld;
+    @BindView(R2.id.bbjc)
+    ImageView bbjc;
+    @BindView(R2.id.bzzx)
+    ImageView bzxx;
+    @BindView(R2.id.gywm)
+    ImageView gywm;
+    @BindView(R2.id.yqhy)
+    ImageView yqhy;
     @BindView(R2.id.myusersetmy)
     RelativeLayout myusersetmy;
+    @BindView(R2.id.bdyhk)
+    RelativeLayout bdyhk;
     private LoginBeanDao dao;//数据库
+    private  boolean iosInterceptFlag;
+    private PopupWindow window;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_user_set;
@@ -54,7 +89,74 @@ public class MyUserSetActivity extends WDActivity {
     protected void initView() {
         //顶部栏
         myusersetTop.setTitle("设置");
-        dao=DaoMaster.newDevSession(this,LoginBeanDao.TABLENAME).getLoginBeanDao();//数据库
+        dao = DaoMaster.newDevSession(this, LoginBeanDao.TABLENAME).getLoginBeanDao();//数据库@Override
+
+        grxx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,WdxxActivity.class));
+            }
+        });
+        xgmm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,XgmmActivity.class));
+            }
+        });
+        String totalCacheSize = null;
+        try {
+            totalCacheSize = DataCleanManager.getTotalCacheSize(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        hc.setText(totalCacheSize);
+
+        qchc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //清除缓存弹窗
+                View inflate = View.inflate(MyUserSetActivity.this, R.layout.activity_clcle_popupwindow, null);
+                TextView quxiao , que;
+                window = new PopupWindow(inflate,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+                quxiao = inflate.findViewById(R.id.cicle_qu);
+                que = inflate.findViewById(R.id.cicle_que);
+                window.setTouchable(true);
+                window.setFocusable(true);
+                //window.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.lan_3087ea)));
+                window.showAtLocation(inflate, Gravity.CENTER,0,0);
+                window.showAsDropDown(inflate,100,100);
+
+                //点击取消
+                quxiao.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        window.dismiss();
+                    }
+                });
+
+                //点击确定
+                que.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DataCleanManager.clearAllCache(getApplicationContext());
+                        //获取缓存的大小
+                        try {
+                            String totalCacheSize = DataCleanManager.getTotalCacheSize(getApplicationContext());
+                            hc.setText(totalCacheSize);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        window.dismiss();
+                    }
+                });
+            }
+        });
+        pmld.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,PmldActivity.class));
+            }
+        });
         //退出登录点击
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,11 +200,16 @@ public class MyUserSetActivity extends WDActivity {
             }
         });
         //绑定银行卡
+        bdyhk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         myusersetmy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyUserSetActivity.this,SichangyongMyShenfenActivity.class);
-                startActivity(intent);
+
             }
         });
         //退出状态下的头像点击
@@ -112,12 +219,14 @@ public class MyUserSetActivity extends WDActivity {
                 if (new LoginDaoUtil().intt(MyUserSetActivity.this) == null) {
                     //跳转登录
                     intentByRouter(Constant.ACTIVITY_LOGIN_LOGIN);
-                }else{
+                } else {
                     //无操作
                 }
             }
         });
     }
+
+
 
     @Override
     protected void destoryData() {
@@ -147,4 +256,13 @@ public class MyUserSetActivity extends WDActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+
 }

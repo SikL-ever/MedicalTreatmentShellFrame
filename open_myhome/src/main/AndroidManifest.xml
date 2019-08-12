@@ -13,18 +13,27 @@
         <activity android:name=".childactivity.MyUserSetActivity" />
         <activity android:name=".childactivity.MyVideoActivity" />
         <activity android:name=".childactivity.MyDiseaseActivity" />
-        <activity android:name=".childactivity.MyInterestActivity" />
+        <activity android:name=".childactivity.MyInteresterActivity"/>
         <activity android:name=".childactivity.MyHMoneyActivity" />
         <activity android:name=".childactivity.MyUserSetActivity" />
+        <activity android:name=".activity.WdxxActivity" />
+        <activity android:name=".activity.SzncActivity" />
+        <activity android:name=".activity.XbActivity" />
+        <activity android:name=".activity.TzActivity" />
         <activity android:name=".childactivity.MyUserNewInquiryActivity" />
         <activity android:name=".childactivity.MyUserEvaluateActivity" />
         <activity android:name=".childthreeactivity.FinishActivity" />
         <activity android:name=".childactivity.MyUserHistoryActivity" />
-        <activity android:name=".childthreeactivity.SichangyongMyShenfenActivity"></activity>
+        <activity android:name=".childthreeactivity.SichangyongMyShenfenActivity" />
         <activity
             android:name="com.baidu.ocr.ui.camera.CameraActivity"
             android:configChanges="screenSize|orientation"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"/>
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
+        <activity android:name=".childthreeactivity.XieqiyinhangkaActivity" />
+        <activity android:name=".childthreeactivity.XieqibangdingyinhangkaActivity" />
+        <activity android:name=".childthreeactivity.YzyhkActivity" />
+        <activity android:name=".activity.XgmmActivity" />
+        <activity android:name=".activity.PmldActivity"></activity>
     </application>
 
 </manifest>

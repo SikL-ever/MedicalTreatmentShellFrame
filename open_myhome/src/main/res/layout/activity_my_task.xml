@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent"
+              tools:context=".childactivity.MyTaskActivity">
+
+
+    <RelativeLayout
+            android:id="@+id/suggest1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50">
+        <ImageView
+                android:id="@+id/suggest_back"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:src="@drawable/common_icon_back_black_n" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的任务"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+        <RelativeLayout
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_36">
+            <TextView
+
+                    android:id="@+id/my_task_title"
+                    android:background="@drawable/my_task_title"
+                    android:text="签到条"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/sp_14"
+                    android:gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_36" />
+            <TextView
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:textColor="#3087ea"
+                    android:textSize="@dimen/sp_10"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="注:连续签到H币将会积累"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <!--<com.wd.MyHome.seekbarutils.IndicatorStayLayout-->
+                <!--android:id="@+id/relat"-->
+                <!--android:layout_marginTop="@dimen/dp_22"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dp_20"-->
+                <!--android:layout_marginRight="@dimen/dp_20">-->
+
+        <!--</com.wd.MyHome.seekbarutils.IndicatorStayLayout>-->
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                <TextView
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:background="@drawable/my_task_title"
+                        android:text="每日任务"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/sp_14"
+                        android:gravity="center"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_36" />
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/recyclerView01"/>
+                <TextView
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:background="@drawable/my_task_title"
+                        android:text="一次性任务"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/sp_12"
+                        android:gravity="center"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_36" />
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/recyclerView02"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>

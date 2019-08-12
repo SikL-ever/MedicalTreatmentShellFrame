@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +39,11 @@ import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.wd.health.R;
 import com.wd.health.R2;
 import com.wd.health.adapter.homepageadapter.AAdapter;
@@ -86,7 +94,7 @@ public class WzzxActivity extends AppCompatActivity {
     @BindView(R2.id.image_sx)
     ImageView imageSx;
     @BindView(R2.id.image_big)
-    ImageView imageBig;
+    SimpleDraweeView imageBig;
     @BindView(R2.id.name_ys)
     TextView nameYs;
     @BindView(R2.id.guan)
@@ -139,6 +147,7 @@ public class WzzxActivity extends AppCompatActivity {
     private String sesssionId;
     private String myname;//医生名字
 
+    private int screenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +167,8 @@ public class WzzxActivity extends AppCompatActivity {
                 return viewPager.dispatchTouchEvent(event);
             }
         });*/
+
+
 
         aRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         aAdapter = new AAdapter(this);
@@ -409,14 +420,56 @@ public class WzzxActivity extends AppCompatActivity {
 
 
     }
-
+    private void adjustSdv(SimpleDraweeView image,int width,int height){
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) image.getLayoutParams();
+        params.width = screenWidth;
+        params.height = (int) ((float)height/width * screenWidth);
+        image.setLayoutParams(params);
+    }
     private void setKognajina(String img,String name,String zrys,String yiyuan,String aho,int zhsu,int jiage,int doctorId) {
         RoundedCorners roundedCorners= new RoundedCorners(4);
         RequestOptions options=RequestOptions.bitmapTransform(roundedCorners);
+       /* DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setOldController(imageBig.getController())
+                .setControllerListener(new ControllerListener<ImageInfo>() {
+                    @Override
+                    public void onSubmit(String id, Object callerContext) {
+
+                    }
+
+                    @Override
+                    public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                        adjustSdv(imageBig,imageInfo.getWidth(),imageInfo.getHeight());
+                    }
+
+                    @Override
+                    public void onIntermediateImageSet(String id, ImageInfo imageInfo) {
+
+                    }
+
+                    @Override
+                    public void onIntermediateImageFailed(String id, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onFailure(String id, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onRelease(String id) {
+
+                    }
+                })
+                .setUri(img)
+                .build();
+        imageBig.setController(controller);*/
         if(img==null){
-            Glide.with(WzzxActivity.this).load(R.drawable.system_image7).apply(options).into(imageBig);
+          //  Glide.with(WzzxActivity.this).load(R.drawable.system_image7).apply(options).into(imageBig);
         }else{
-            Glide.with(WzzxActivity.this).load(img).apply(options).into(imageBig);
+           // Glide.with(WzzxActivity.this).load(img).apply(options).into(imageBig);
+            imageBig.setImageURI(img);
         }
         nameYs.setText(name);
         guan.setText(zrys);

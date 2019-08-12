@@ -1,1 +1,1 @@
-include ':app', ':open_clientele', ':common', ':open_login', ':open_myhome', ':open_Im', ':open_mymessage', ':identify', ':open_ImTwo'
+include ':app', ':open_clientele', ':common', ':open_login', ':open_myhome', ':open_Im', ':open_mymessage'
