@@ -43,10 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/dp_55" />
-
-
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
@@ -62,17 +58,28 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:src="@drawable/common_icon_voice_n" />
 
-            <EditText
-                android:id="@+id/chat_endit"
+            <RelativeLayout
+                android:id="@+id/three"
                 android:layout_width="@dimen/dp_250"
                 android:layout_height="@dimen/dp_32"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_toRightOf="@+id/imag_IM_yuyin"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_8"
-                android:paddingRight="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_8" />
+                android:layout_toRightOf="@+id/imag_IM_yuyin" >
+                <EditText
+                    android:background="@null"
+                    android:id="@+id/chat_endit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:text="按住说话"
+                    android:id="@+id/chat_text"
+                    android:layout_width="@dimen/dp_250"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/image_IM_xiao"
@@ -81,7 +88,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginBottom="@dimen/dp_10"
-                android:layout_toRightOf="@+id/chat_endit"
+                android:layout_toRightOf="@+id/three"
                 android:src="@drawable/common_icon_expression_n" />
 
             <ImageView
@@ -106,11 +113,6 @@
                 android:src="@drawable/common_icon_send_n" />
         </RelativeLayout>
     </RelativeLayout>
-    <FrameLayout
-        android:id="@+id/fragment_IM_show"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 
 
 </RelativeLayout>

@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -38,4 +38,6 @@ dependencies {
 
     implementation project(path: ':common')
     implementation project(path: ':open_Im')
+
+    //implementation files('libs/Ad_Android_SDK.jar')
 }

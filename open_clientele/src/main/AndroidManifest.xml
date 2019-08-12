@@ -18,7 +18,7 @@
         <activity android:name=".activity.WzzxActivity" />
         <activity android:name=".activity.YsxqActivity" />
         <activity android:name=".activity.GdplActivity" />
-        <activity android:name=".activity.WebActivity"></activity>
+        <activity android:name=".activity.WebActivity" />
     </application>
 
 </manifest>

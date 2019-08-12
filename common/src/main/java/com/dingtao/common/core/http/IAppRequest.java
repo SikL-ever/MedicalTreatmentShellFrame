@@ -167,7 +167,7 @@ public interface IAppRequest {
     //上传图片
     //上传用户档案相关图片
     //@Multipart
-    @POST("/user/verify/v1/modifyHeadPic")
+    @POST("user/verify/v1/uploadArchivesPicture")
     Observable<Result> addrecordphoto(@Header("userId") String userId,
                                       @Header("sessionId") String sessionId,
                                       @Body MultipartBody body);

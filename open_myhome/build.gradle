@@ -37,6 +37,7 @@ dependencies {
     implementation project(path: ':open_clientele')
     implementation project(path: ':common')
     implementation project(path: ':open_Im')
+    implementation project(path: ':open_ImTwo')
     implementation project(path: ':identify')//这个是获取银行卡信息
 
     implementation files('libs/ocr-sdk.jar')

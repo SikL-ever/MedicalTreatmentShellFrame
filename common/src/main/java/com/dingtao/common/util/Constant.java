@@ -23,6 +23,7 @@ public class Constant {
 
     public final static String ACTIVITY_MYUSERMESSAGE = "/open_mymessage/MyUserMessageActivity";//消息页面
     public final static String ACTIVITY_MODE_MYUSERNEW_INQUIRY  = "/open_myhome/MyUserNewInquiryActivity";//我的当前问诊
+    public final static String ACTIVITY_MESSAGEACTIVITY  = "/open_Im/ConsultChatMainActivity";//聊天页面
 
 
     //-----------佀常勇----都不要动我的开放登录变量，谁动谁傻叉-----

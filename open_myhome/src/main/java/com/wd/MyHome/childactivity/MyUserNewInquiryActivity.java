@@ -67,7 +67,7 @@ public class MyUserNewInquiryActivity extends WDActivity {
     private int doctorIdb;
     private String username,name;//医生的username
     private MyDialog dialog;//弹框
-
+    private String appkey = "b5f102cc307091e167ce52e0";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_user_new_inquiry;
@@ -103,6 +103,7 @@ public class MyUserNewInquiryActivity extends WDActivity {
                 confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        JMessageClient.deleteSingleConversation(username,appkey);
                         myUserEndNewInquiryPresenter.reqeust(intt.get(0), intt.get(1), id);
                     }
                 });

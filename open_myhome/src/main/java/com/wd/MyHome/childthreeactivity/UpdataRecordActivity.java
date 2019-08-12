@@ -3,7 +3,6 @@ package com.wd.MyHome.childthreeactivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,14 +21,12 @@ import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDActivity;
 import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.LoginDaoUtil;
-import com.dingtao.common.util.StringUtils;
 import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
-import com.wd.MyHome.adapter.ImageAdapter;
 import com.wd.MyHome.presenter.AddRecordPhotoPresenter;
 import com.wd.MyHome.presenter.UpRecordPresenter;
 import com.wd.MyHome.presenter.UserRecordPresenter;
@@ -39,7 +36,6 @@ import com.wd.health.PhotoXuan.MainConstant;
 import com.wd.health.PhotoXuan.PictureSelectorConfig;
 import com.wd.health.PhotoXuan.PlusImageActivity;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,10 +43,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.recyclerview.widget.GridLayoutManager;
 import butterknife.BindView;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class UpdataRecordActivity extends WDActivity {
@@ -162,6 +156,8 @@ public class UpdataRecordActivity extends WDActivity {
                 }
             }
         });
+        initGridView();
+
     }
     class getupdata implements DataCall{
         @Override
@@ -183,7 +179,7 @@ public class UpdataRecordActivity extends WDActivity {
             for (int i = 0; i < listimage.length; i++) {
                 mlist.add(listimage[i]);
             }
-            initGridView();
+            mGridViewAddImgAdapter.notifyDataSetChanged();
         }
         @Override
         public void fail(ApiException data, Object... args) {

@@ -188,7 +188,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/uprecord_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_150"
                 android:layout_margin="15dp"
                 android:columnWidth="60dp"
                 android:horizontalSpacing="10dp"
