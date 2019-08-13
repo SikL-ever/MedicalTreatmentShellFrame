@@ -62,7 +62,7 @@ public class HActivity extends WDActivity {
     protected void onResume() {
         super.onResume();
         List<String> intt = new LoginDaoUtil().intt(HActivity.this);
-        myUserHPresenter.reqeust(intt.get(0), intt.get(1), 1, 10);
+        myUserHPresenter.reqeust(intt.get(0), intt.get(1), 1, 20);
     }
 
     //-----------------------------------------

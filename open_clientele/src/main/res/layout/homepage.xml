@@ -421,13 +421,13 @@
                     android:textSize="12sp"
                     android:textColor="#fff"
                     android:layout_height="32dp" />
-                <CheckBox
+                <ImageView
                     android:id="@+id/xiaoxi"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="12dp"
                     android:button="@null"
-                    android:background="@drawable/sele1"
+                    android:background="@drawable/common_nav_message_white_n"
                     android:layout_alignBottom="@+id/edit"
                     android:layout_alignParentRight="true"/>
                 <RelativeLayout

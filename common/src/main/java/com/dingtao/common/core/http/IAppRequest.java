@@ -12,6 +12,7 @@ import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.MyUser.YhBean;
 import com.dingtao.common.bean.MyUserMessage;
+import com.dingtao.common.bean.MyUserNoBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.homepage.CjypBean;
@@ -43,6 +44,8 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -261,8 +264,8 @@ public interface IAppRequest {
     //结束当前问诊
     @PUT("user/inquiry/verify/v1/endInquiry")
     Observable<Result> endnewinquiry(@Header("userId") String userId,
-                                      @Header("sessionId") String sessionId,
-                                      @Query("recordId") int recordId);
+                                     @Header("sessionId") String sessionId,
+                                     @Query("recordId") int recordId);
     //7. 用户评论问诊服务
     //接口地址：http://172.17.8.100/health/
     @PUT("user/inquiry/verify/v1/evaluationInquiry")
@@ -281,16 +284,16 @@ public interface IAppRequest {
     //接口地址：http://172.17.8.100/health/
     @PUT("user/inquiry/verify/v1/handselGift")
     Observable<Result> giveGift(@Header("userId") String userId,
-                                      @Header("sessionId") String sessionId,
-                                      @Query("inquiryRecordId") int inquiryRecordId,
-                                      @Query("giftId") int giftId);
+                                @Header("sessionId") String sessionId,
+                                @Query("inquiryRecordId") int inquiryRecordId,
+                                @Query("giftId") int giftId);
     //10.查看历史问诊
     //接口地址：http://172.17.8.100/health/
     @GET("user/inquiry/verify/v1/findHistoryInquiryRecord")
     Observable<Result<List<MyUserHistoryBean>>> myuserhistory(@Header("userId") String userId,
-                                                               @Header("sessionId") String sessionId,
-                                                               @Query("page") int page,
-                                                               @Query("count") int count);
+                                                              @Header("sessionId") String sessionId,
+                                                              @Query("page") int page,
+                                                              @Query("count") int count);
 
     //.问诊-发送消息
     @FormUrlEncoded
@@ -302,6 +305,14 @@ public interface IAppRequest {
                                              @Field("content") String content,
                                              @Field("type") int type,
                                                 @Field("doctorId") int doctorId);
+    //查询用户未读消息数
+    @GET("user/verify/v1/findUserNoticeReadNum")
+    Observable<Result<List<MyUserNoBean>>> nolook(@Header("userId") String userId,
+                                                  @Header("sessionId") String sessionId);
+    //修改消息状态为全部已读
+    @PUT("user/verify/v1/modifyAllStatus")
+    Observable<Result> lookMessage(@Header("userId") String userId,
+                                   @Header("sessionId") String sessionId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 
