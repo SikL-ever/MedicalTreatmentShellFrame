@@ -59,6 +59,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import retrofit2.http.GET;
 
 /**
  * 佀常勇
@@ -82,7 +83,7 @@ public class HomePagerFragement extends WDFragment {
     @BindView(R2.id.ckgd)
     TextView ckgd;
     @BindView(R2.id.xiaoxi)
-    CheckBox xiaoxi;
+    ImageView xiaoxi;
     @BindView(R2.id.zsbd)
     LinearLayout zsbd;
     @BindView(R2.id.cjbz_image)
@@ -138,6 +139,18 @@ public class HomePagerFragement extends WDFragment {
 
     @Override
     protected void initView() {
+        //消息点击
+        xiaoxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> intt = new LoginDaoUtil().intt(getContext());
+                if (intt != null) {
+                    intentByRouter(Constant.ACTIVITY_MYUSERMESSAGE);
+                }else{
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         //ScrollView和recyclerview的滑动冲突解决
         recycler.setNestedScrollingEnabled(false);
         frage.setNestedScrollingEnabled(false);

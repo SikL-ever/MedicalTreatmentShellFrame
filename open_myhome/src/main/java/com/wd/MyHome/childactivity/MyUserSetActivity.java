@@ -76,10 +76,6 @@ public class MyUserSetActivity extends WDActivity {
     ImageView gywm;
     @BindView(R2.id.yqhy)
     ImageView yqhy;
-    @BindView(R2.id.myusersetmy)
-    RelativeLayout myusersetmy;
-    @BindView(R2.id.bdyhk)
-    RelativeLayout bdyhk;
     private LoginBeanDao dao;//数据库
     private  boolean iosInterceptFlag;
     private PopupWindow window;
@@ -227,19 +223,6 @@ public class MyUserSetActivity extends WDActivity {
                 }
             }
         });
-        //绑定银行卡
-        bdyhk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        myusersetmy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         //退出状态下的头像点击
         myusersetImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,12 +268,6 @@ public class MyUserSetActivity extends WDActivity {
         super.onDestroy();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
 
 }

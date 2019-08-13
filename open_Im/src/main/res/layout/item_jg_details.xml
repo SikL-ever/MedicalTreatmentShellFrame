@@ -22,19 +22,21 @@
             android:paddingBottom="30px"
             android:paddingLeft="30px"
             android:paddingTop="30px"
-            android:visibility="gone" />
+            android:visibility="gone"/>
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_margin="40px"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <TextView
+            <LinearLayout
                 android:id="@+id/item_jg_details_tc"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:visibility="visible" />
+                android:orientation="vertical"
+                android:visibility="gone">
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,7 +52,57 @@
                     android:paddingRight="18px"
                     android:paddingTop="10px"
                     android:textSize="15sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
+                <RelativeLayout
+                    android:background="@drawable/liaotianbeijing"
+                    android:layout_marginBottom="30px"
+                    android:layout_marginTop="40px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="18px"
+                    android:paddingRight="18px"
+                    android:paddingTop="10px"
+                    android:visibility="gone"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/yuyinwode">
+                    <TextView
+                        android:textColor="#fff"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/yuyinwtext"
+                        android:gravity="center_vertical"/>
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:id="@+id/yuyinwimage"
+                        android:layout_alignParentLeft="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:background="@drawable/liaotianbeijing"
+                    android:layout_marginBottom="30px"
+                    android:layout_marginTop="40px"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="18px"
+                    android:paddingRight="18px"
+                    android:paddingTop="10px"
+                    android:visibility="gone"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/yuyintade">
+                    <TextView
+                        android:textColor="#fff"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/yuyinttext"
+                        android:gravity="center_vertical"/>
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:id="@+id/yuyintimage"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/item_jg_details_img"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -63,23 +115,23 @@
                     app:riv_tile_mode="repeat" />
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
+                    android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/item_jg_details_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:padding="8px"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
+                    android:textSize="12sp" />
             </LinearLayout>
-            <TextView
+            <LinearLayout
                 android:id="@+id/item_jg_details_tc1"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:visibility="gone" />
+                android:orientation="vertical"
+                android:visibility="gone">
+            </LinearLayout>
         </LinearLayout>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/item_jg_details_head1"
@@ -88,15 +140,8 @@
             android:paddingBottom="30px"
             android:paddingRight="30px"
             android:paddingTop="30px"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </LinearLayout>
-
-
-
-
-
-
-
 
 
 </LinearLayout >

@@ -6,6 +6,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.wd.Im.R;
 
@@ -17,7 +18,7 @@ import cn.jpush.im.android.api.model.Message;
 
 
 public class JG_details_Adapter extends RecyclerView.Adapter {
-    private OnItemClickListener mOnItemClickListener = null;
+    private OnItemClickListener mOnItemClickListener=null;
     private Context MyContext;
     private List<Message> mList;
     public JG_details_Adapter(Context context) {

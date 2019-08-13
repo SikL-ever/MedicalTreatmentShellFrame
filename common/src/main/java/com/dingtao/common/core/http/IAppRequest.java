@@ -12,6 +12,7 @@ import com.dingtao.common.bean.MyUser.MyUserWalletLookBean;
 import com.dingtao.common.bean.MyUser.UserRecordBean;
 import com.dingtao.common.bean.MyUser.YhBean;
 import com.dingtao.common.bean.MyUserMessage;
+import com.dingtao.common.bean.MyUserNoBean;
 import com.dingtao.common.bean.Result;
 import com.dingtao.common.bean.homepage.Banner;
 import com.dingtao.common.bean.homepage.CjypBean;
@@ -166,7 +167,7 @@ public interface IAppRequest {
                                  @Body RequestBody body);
     //上传图片
     //上传用户档案相关图片
-    @Multipart
+    //@Multipart
     @POST("/user/verify/v1/modifyHeadPic")
     Observable<Result> addrecordphoto(@Header("userId") String userId,
                                       @Header("sessionId") String sessionId,
@@ -234,7 +235,6 @@ public interface IAppRequest {
 
     //查询消息
     //.查询用户系统通知列表
-    //接口地址：http://172.17.8.100/health/
     @GET("user/verify/v1/findSystemNoticeList")
     Observable<Result<List<MyUserMessage>>> myusersystemMessage(@Header("userId") String userId,
                                                           @Header("sessionId") String sessionId,
@@ -295,7 +295,6 @@ public interface IAppRequest {
                                                               @Query("page") int page,
                                                               @Query("count") int count);
 
-
     //.问诊-发送消息
     @FormUrlEncoded
     @POST("user/video/verify/v1/addVideoComment")
@@ -306,6 +305,14 @@ public interface IAppRequest {
                                              @Field("content") String content,
                                              @Field("type") int type,
                                                 @Field("doctorId") int doctorId);
+    //查询用户未读消息数
+    @GET("user/verify/v1/findUserNoticeReadNum")
+    Observable<Result<List<MyUserNoBean>>> nolook(@Header("userId") String userId,
+                                                  @Header("sessionId") String sessionId);
+    //修改消息状态为全部已读
+    @PUT("user/verify/v1/modifyAllStatus")
+    Observable<Result> lookMessage(@Header("userId") String userId,
+                                   @Header("sessionId") String sessionId);
     //sichangyong-------------------------------------------------------------------别动我的
 
 

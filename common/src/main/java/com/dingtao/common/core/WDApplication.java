@@ -14,11 +14,14 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.dingtao.common.dao.DaoMaster;
 import com.dingtao.common.dao.DaoSession;
+import com.dingtao.common.util.MyException;
+import com.dingtao.common.util.NotificationClickEventReceiver;
 import com.facebook.common.internal.Supplier;
 import com.facebook.common.util.ByteConstants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
@@ -87,9 +90,17 @@ public class WDApplication extends Application {
         instance = this;
         //初始化即时通讯IM
         JMessageClient.init(context);
+        //设置Notification的模式
+        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND | JMessageClient.FLAG_NOTIFY_WITH_LED | JMessageClient.FLAG_NOTIFY_WITH_VIBRATE);
+        //注册Notification点击的接收器
+        new NotificationClickEventReceiver(getApplicationContext());
         //初始化极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+        //注册全局捕获异常
+        Thread.setDefaultUncaughtExceptionHandler(new MyException(this));
+        //腾讯bugly
+        CrashReport.initCrashReport(getApplicationContext(), "cd59c07e02", false);
     }
 
     @Override

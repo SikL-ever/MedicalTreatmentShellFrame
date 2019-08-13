@@ -87,7 +87,7 @@ public class SichangyongMyShenfenActivity extends WDActivity {
 
                                                       @Override
                                                       public void onResult(AccessToken accessToken) {
-                                                          Log.d("MainActivity", "onResult: " + accessToken.toString());
+                                                          Log.d("IMTwoActivity", "onResult: " + accessToken.toString());
                                                           runOnUiThread(new Runnable() {
                                                               @Override
                                                               public void run() {
@@ -99,7 +99,7 @@ public class SichangyongMyShenfenActivity extends WDActivity {
                                                       @Override
                                                       public void onError(OCRError ocrError) {
                                                           ocrError.printStackTrace();
-                                                          Log.e("MainActivity", "onError: " + ocrError.getMessage());
+                                                          Log.e("IMTwoActivity", "onError: " + ocrError.getMessage());
                                                           runOnUiThread(new Runnable() {
                                                               @Override
                                                               public void run() {

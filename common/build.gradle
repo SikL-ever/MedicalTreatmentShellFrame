@@ -14,6 +14,10 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi'
+        }
     }
 
     buildTypes {
@@ -97,7 +101,9 @@ dependencies {
     api 'com.makeramen:roundedimageview:2.2.1'
     api 'org.greenrobot:eventbus:3.1.1'
     //银行康提取文字
-
+    //腾讯异常上报
+    api 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    api 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 
     //二维码依赖
     api 'com.google.zxing:core:3.3.0'

@@ -49,7 +49,6 @@ public abstract class WDPresenter<T> {
         if (running) {
             return;
         }
-
         running = true;
         Observable  observable = getModel(args);
 

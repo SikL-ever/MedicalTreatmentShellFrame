@@ -51,6 +51,7 @@ dependencies {
     implementation project(path: ':open_login')
     implementation project(path: ':open_myhome')
     implementation project(path: ':open_Im')
+    implementation project(path: ':open_ImTwo')
     implementation project(path: ':open_mymessage')
     implementation project(path: ':identify')
 }

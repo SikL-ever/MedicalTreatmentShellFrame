@@ -3,12 +3,10 @@ package com.wd.MyHome.presenter;
 import android.util.Log;
 
 import com.dingtao.common.core.DataCall;
-import com.dingtao.common.core.WDApplication;
 import com.dingtao.common.core.WDPresenter;
 import com.dingtao.common.core.http.IAppRequest;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -34,9 +32,13 @@ public class AddRecordPhotoPresenter extends WDPresenter<IAppRequest> {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
         //builder.addFormDataPart("picture", (String)args[2]);
-        List<Object> list = (List<Object>) args[2];
-        if (list.size()>1) {
-            for (int i = 1; i < list.size(); i++) {
+        if (args[2]==null){
+            builder.addFormDataPart("picture", "",
+                    RequestBody.create(MediaType.parse("multipart/form-data"),
+                            ""));
+        }else{
+            List<Object> list = (List<Object>) args[2];
+            for (int i = 0; i < list.size(); i++) {
                 File file = new File((String) list.get(i));
                 builder.addFormDataPart("picture", file.getName(),
                         RequestBody.create(MediaType.parse("multipart/form-data"),

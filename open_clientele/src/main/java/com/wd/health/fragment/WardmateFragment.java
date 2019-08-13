@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -19,6 +20,7 @@ import com.dingtao.common.bean.wardBean.WardLieBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDFragment;
 import com.dingtao.common.core.exception.ApiException;
+import com.dingtao.common.util.Constant;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.health.R;
 import com.wd.health.R2;
@@ -82,7 +84,17 @@ public class WardmateFragment extends WDFragment {
     @SuppressLint({"WrongConstant", "NewApi"})
     @Override
     protected void initView() {
-
+        bull.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> intt = new LoginDaoUtil().intt(getContext());
+                if (intt != null) {
+                    intentByRouter(Constant.ACTIVITY_MYUSERMESSAGE);
+                }else{
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         LoginDaoUtil loginDaoUtil=new LoginDaoUtil();
         List<String> intt = loginDaoUtil.intt(getActivity());
         if (intt!=null){

@@ -122,6 +122,7 @@ public abstract class WDActivity extends AppCompatActivity {
                 .navigation(this);
     }
 
+
     /**
      * 初始化加载框
      */
