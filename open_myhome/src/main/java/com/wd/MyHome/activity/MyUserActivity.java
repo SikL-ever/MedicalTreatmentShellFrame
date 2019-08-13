@@ -21,6 +21,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.dingtao.common.bean.MyUserNoBean;
 import com.dingtao.common.bean.login.LoginBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.WDActivity;
@@ -44,6 +45,7 @@ import com.wd.MyHome.childactivity.MyUserSetActivity;
 import com.wd.MyHome.childactivity.MyUserSuggestActivity;
 import com.wd.MyHome.childactivity.MyUserWalletActivity;
 import com.wd.MyHome.childactivity.MyVideoActivity;
+import com.wd.MyHome.presenter.MyUserNoLookPresenter;
 import com.wd.MyHome.presenter.MyUserUpdataHead;
 import com.wd.MyHome.presenter.UserSignPresenter;
 import com.wd.MyHome.util.ABitMap;
@@ -114,6 +116,7 @@ public class MyUserActivity extends WDActivity {
     private LoginBeanDao dao;
     private static String path = "/sdcard/DemoHead/";//sd路径
     private File file;//头像
+    private MyUserNoLookPresenter myUserNoLookPresenter;
 
     //布局
     @Override
@@ -129,6 +132,7 @@ public class MyUserActivity extends WDActivity {
         //p
         userSignPresenter = new UserSignPresenter(new getsigndata());
         myUserUpdataHead = new MyUserUpdataHead(new gethead());
+        myUserNoLookPresenter = new MyUserNoLookPresenter(new getnolook());
         //头像popup
         inflate = View.inflate(MyUserActivity.this, R.layout.updata_head, null);
         paizhao=inflate.findViewById(R.id.paizhao);
@@ -505,6 +509,21 @@ public class MyUserActivity extends WDActivity {
 
         }
     }
+    //查看有没有读的消息
+    class getnolook implements DataCall<List<MyUserNoBean>>{
+        @Override
+        public void success(List<MyUserNoBean> data, Object... args) {
+            /*for (int i = 0; i < data.size(); i++) {
+                if (data.get(i).notReadNum!=0){
+                    Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).
+                            apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//设置头像
+                }
+            } */
+        }
+        @Override
+        public void fail(ApiException data, Object... args) {
+        }
+    }
     //---------------------------------------------------------------获取焦点
     @Override
     protected void onResume() {
@@ -525,6 +544,8 @@ public class MyUserActivity extends WDActivity {
             Glide.with(this).load(R.drawable.register_icon_invitatiion_code_n).
                     apply(RequestOptions.bitmapTransform(new CircleCrop())).into(myuserheadportrait);//设置头像
         }
+        //这里进行一个消息请求
+        myUserNoLookPresenter.reqeust(uid,sid);
     }
     //销毁
     @Override

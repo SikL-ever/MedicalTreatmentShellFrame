@@ -50,8 +50,8 @@
             <ImageView
                 android:id="@+id/grxx"
                 android:background="@drawable/my_icon_next_n"
-                android:layout_width="@dimen/dp_18"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="@dimen/dp_13"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_10"/>
@@ -74,8 +74,8 @@
             <ImageView
                 android:id="@+id/xgmm"
                 android:background="@drawable/my_icon_next_n"
-                android:layout_width="@dimen/dp_18"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="@dimen/dp_13"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_10"/>
@@ -112,8 +112,8 @@
                 <ImageView
                     android:id="@+id/qchc"
                     android:background="@drawable/my_icon_next_n"
-                    android:layout_width="@dimen/dp_18"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_13"
+                    android:layout_height="@dimen/dp_18"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
@@ -135,8 +135,8 @@
                 <ImageView
                     android:id="@+id/pmld"
                     android:background="@drawable/my_icon_next_n"
-                    android:layout_width="@dimen/dp_18"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_13"
+                    android:layout_height="@dimen/dp_18"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
@@ -158,8 +158,8 @@
                 <ImageView
                     android:id="@+id/bbjc"
                     android:background="@drawable/my_icon_next_n"
-                    android:layout_width="@dimen/dp_18"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_13"
+                    android:layout_height="@dimen/dp_18"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
@@ -189,8 +189,8 @@
                 <ImageView
                     android:id="@+id/bzzx"
                     android:background="@drawable/my_icon_next_n"
-                    android:layout_width="@dimen/dp_18"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_13"
+                    android:layout_height="@dimen/dp_18"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
@@ -212,8 +212,8 @@
                 <ImageView
                     android:id="@+id/gywm"
                     android:background="@drawable/my_icon_next_n"
-                    android:layout_width="@dimen/dp_18"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_13"
+                    android:layout_height="@dimen/dp_18"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
@@ -237,8 +237,8 @@
             <ImageView
                 android:id="@+id/yqhy"
                 android:background="@drawable/my_icon_next_n"
-                android:layout_width="@dimen/dp_18"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="@dimen/dp_13"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_10"/>

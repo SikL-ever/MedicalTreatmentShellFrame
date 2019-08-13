@@ -42,6 +42,7 @@ public abstract class WDActivity extends AppCompatActivity {
     private static WDActivity mForegroundActivity = null;
     //网络监听
     private Network netBroadcastReceiver;
+    private boolean isRegistered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +58,21 @@ public abstract class WDActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         //动态注册网络监听
         //Android 7.0以上需要动态注册在页面加载后注册广播监听网络
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            //实例化IntentFilter对象
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-            filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            netBroadcastReceiver = new Network();
-            registerReceiver(netBroadcastReceiver, filter);
-        }
-
+        //开启子线程进行请求网络
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //注册网络状态监听广播
+                netBroadcastReceiver = new Network();
+                IntentFilter filter = new IntentFilter();
+                filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+                filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+                filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+                registerReceiver(netBroadcastReceiver, filter);
+                isRegistered = true;
+                //需要在子线程中处理的逻辑
+            }
+        }).start();
     }
 
     /**
@@ -149,7 +155,10 @@ public abstract class WDActivity extends AppCompatActivity {
         super.onDestroy();
         destoryData();
         //取消网络监听
-        //unregisterReceiver(netBroadcastReceiver);
+        //解绑
+        if (isRegistered) {
+            unregisterReceiver(netBroadcastReceiver);
+        }
     }
 
     //取消操作：请求或者其他
