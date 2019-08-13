@@ -99,4 +99,8 @@ dependencies {
     //银行康提取文字
 
 
+    //二维码依赖
+    api 'com.google.zxing:core:3.3.0'
+
+
 }

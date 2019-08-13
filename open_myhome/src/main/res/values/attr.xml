@@ -63,4 +63,9 @@
             <enum name="serif" value="3" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="CustomContainer">
+        <attr name="mColor" format="color" />
+        <attr name="mGap" format="dimension" />
+        <attr name="mHalfRadius" format="dimension" />
+    </declare-styleable>
 </resources>

@@ -14,7 +14,6 @@ import com.dingtao.common.bean.wardBean.MyDoctorBean;
 import com.dingtao.common.core.DataCall;
 import com.dingtao.common.core.exception.ApiException;
 import com.dingtao.common.util.LoginDaoUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.MyHome.R;
 
 import java.util.ArrayList;

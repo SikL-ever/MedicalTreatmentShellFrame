@@ -44,9 +44,9 @@ public class SzncActivity extends AppCompatActivity {
     EditText setnameEdit;
     @BindView(R2.id.x)
     ImageView x;
-    private List<String> intt;
     private int a = 0;
     private int b = 0;
+    private List<String> intt;
     private String userId;
     private String sessionId;
     private LoginBeanDao dao;
@@ -59,9 +59,9 @@ public class SzncActivity extends AppCompatActivity {
         szncTop.setTitle("设置昵称");
 
         intt = new LoginDaoUtil().intt(this);
-        setnameEdit.setText(intt.get(3));
         userId = intt.get(0);
         sessionId = intt.get(1);
+        setnameEdit.setText(intt.get(3));
         wc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

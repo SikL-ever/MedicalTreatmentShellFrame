@@ -252,7 +252,9 @@ public class SousuoAcitivity extends AppCompatActivity {
 
     private void queryHistory() {
         list.clear();
-        list.addAll(SearchHistoryDao.queryAll());
+        if (SearchHistoryDao.queryAll().size()>0){
+            list.addAll(SearchHistoryDao.queryAll());
+        }
         if (list.size()<1){
             searchRecordsLl1.setVisibility(View.GONE);
             ssshoew.setVisibility(View.GONE);

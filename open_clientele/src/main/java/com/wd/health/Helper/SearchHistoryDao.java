@@ -33,7 +33,7 @@ public class SearchHistoryDao {
     /**
      * 查询全部数据
      *
-     * @return List<SearchHistory>
+     * @-+·- List<SearchHistory>
      */
     public static List<LsjlBean> queryAll() {
         return WDApplication.getDaoInstant().getLsjlBeanDao().loadAll();
@@ -45,4 +45,5 @@ public class SearchHistoryDao {
     public static void clearAll() {
         WDApplication.getDaoInstant().getLsjlBeanDao().deleteAll();
     }
+
 }

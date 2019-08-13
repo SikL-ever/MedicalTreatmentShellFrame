@@ -13,12 +13,7 @@ import com.wd.MyHome.R;
 
 import androidx.annotation.Nullable;
 
-/**
- * 佀常勇
- *
- * @Data:2019/7/17 20:34
- * 描述：
- */
+
 public class TopView extends RelativeLayout {
 
     private ImageView topviewfinish;

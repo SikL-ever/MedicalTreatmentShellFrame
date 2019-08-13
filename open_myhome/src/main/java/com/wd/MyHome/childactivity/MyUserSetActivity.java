@@ -26,10 +26,14 @@ import com.dingtao.common.util.DataCleanManager;
 import com.dingtao.common.util.LoginDaoUtil;
 import com.wd.MyHome.R;
 import com.wd.MyHome.R2;
+import com.wd.MyHome.activity.BzzxActivity;
+import com.wd.MyHome.activity.GywmActivity;
 import com.wd.MyHome.activity.MyUserActivity;
 import com.wd.MyHome.activity.PmldActivity;
+import com.wd.MyHome.activity.VersionsActivity;
 import com.wd.MyHome.activity.WdxxActivity;
 import com.wd.MyHome.activity.XgmmActivity;
+import com.wd.MyHome.activity.YqhyActivity;
 import com.wd.MyHome.childthreeactivity.SichangyongMyShenfenActivity;
 import com.wd.MyHome.childthreeactivity.XieqiyinhangkaActivity;
 import com.wd.MyHome.util.TopView;
@@ -155,6 +159,30 @@ public class MyUserSetActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MyUserSetActivity.this,PmldActivity.class));
+            }
+        });
+        bbjc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,VersionsActivity.class));
+            }
+        });
+        bzxx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,BzzxActivity.class));
+            }
+        });
+        gywm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,GywmActivity.class));
+            }
+        });
+        yqhy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyUserSetActivity.this,YqhyActivity.class));
             }
         });
         //退出登录点击

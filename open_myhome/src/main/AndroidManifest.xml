@@ -13,7 +13,7 @@
         <activity android:name=".childactivity.MyUserSetActivity" />
         <activity android:name=".childactivity.MyVideoActivity" />
         <activity android:name=".childactivity.MyDiseaseActivity" />
-        <activity android:name=".childactivity.MyInteresterActivity"/>
+        <activity android:name=".childactivity.MyInteresterActivity" />
         <activity android:name=".childactivity.MyHMoneyActivity" />
         <activity android:name=".childactivity.MyUserSetActivity" />
         <activity android:name=".activity.WdxxActivity" />
@@ -33,7 +33,11 @@
         <activity android:name=".childthreeactivity.XieqibangdingyinhangkaActivity" />
         <activity android:name=".childthreeactivity.YzyhkActivity" />
         <activity android:name=".activity.XgmmActivity" />
-        <activity android:name=".activity.PmldActivity"></activity>
+        <activity android:name=".activity.PmldActivity" />
+        <activity android:name=".activity.VersionsActivity" />
+        <activity android:name=".activity.BzzxActivity" />
+        <activity android:name=".activity.GywmActivity"></activity>
+        <activity android:name=".activity.YqhyActivity"></activity>
     </application>
 
 </manifest>

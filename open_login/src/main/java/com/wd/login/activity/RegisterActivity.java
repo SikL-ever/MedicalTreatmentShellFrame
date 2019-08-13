@@ -73,7 +73,7 @@ public class RegisterActivity extends WDActivity {
                 String passone=regpasstextone.getText().toString().trim();//一次密码
                 String passtwo=regpasstexttwo.getText().toString().trim();//二次密码
                 String yaoqingcode=Invitationcodetext.getText().toString().trim();//邀请码
-                if(TextUtils.isEmpty(em)||TextUtils.isEmpty(code)||TextUtils.isEmpty(passone)||TextUtils.isEmpty(passtwo)){
+                if(TextUtils.isEmpty(em)||TextUtils.isEmpty(code)||TextUtils.isEmpty(passone)||TextUtils.isEmpty(passtwo)||em.equals("")){
                     Toast.makeText(RegisterActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
                 }else{
                     if (passone.equals(passtwo)) {//如果两次密码一样进行邮箱判断

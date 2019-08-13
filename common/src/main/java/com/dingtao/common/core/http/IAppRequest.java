@@ -507,6 +507,10 @@ public interface IAppRequest {
     Observable<Result<YhBean>> cxyhShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
     @PUT("user/verify/v1/updateUserPwd")
     Observable<Result> xgmmShow(@Header("userId") String userId, @Header("sessionId") String sessionId,@Query("oldPwd") String oldPwd,@Query("newPwd") String newPwd);
+    @POST("user/verify/v1/makeInvitationCode")
+    Observable<Result> scyqmShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
+    @GET("user/verify/v1/findUserInvitationCode")
+    Observable<Result<String>> cxyqmShow(@Header("userId") String userId, @Header("sessionId") String sessionId);
 
     //xieqi-------------------------------------------------------------------别动我的
 }
